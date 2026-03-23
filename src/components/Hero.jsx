@@ -105,7 +105,7 @@ export default function Hero() {
 
             {/* Profile Image */}
             <motion.img
-              src="https://i.ibb.co/XxBdDZtZ/mehedirobidev.png"
+              src="https://i.ibb.co/yn3q9rhd/mehedirobi.png"
               alt="Mehedi Robi - Frontend Developer"
               className="relative rounded-full w-56 h-56 md:w-64 md:h-64 lg:w-80 lg:h-80 object-cover border-4 md:border-5 border-blue-400/60 shadow-2xl ring ring-white ring-opacity-20"
               loading="lazy"
