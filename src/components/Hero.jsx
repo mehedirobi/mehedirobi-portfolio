@@ -219,7 +219,7 @@ export default function Hero() {
           </motion.a>
 
           <motion.a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/mehedirobii/"
             target="_blank"
             rel="noopener noreferrer"
             className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-blue-500 hover:to-cyan-500 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
@@ -231,7 +231,7 @@ export default function Hero() {
           </motion.a>
 
           <motion.a
-            href="https://x.com/mehedirobi01"
+            href="https://x.com/mehedirobii"
             target="_blank"
             rel="noopener noreferrer"
             className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-sky-400 hover:to-sky-500 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
@@ -243,7 +243,7 @@ export default function Hero() {
           </motion.a>
 
           <motion.a
-            href="https://www.facebook.com/mehedirobi01"
+            href="https://www.facebook.com/mehedirobii"
             target="_blank"
             rel="noopener noreferrer"
             className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-blue-600 hover:to-blue-700 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
