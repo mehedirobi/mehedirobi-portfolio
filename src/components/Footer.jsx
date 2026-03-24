@@ -6,7 +6,7 @@ export default function Footer() {
   const socialLinks = [
     { icon: 'fab fa-github', url: 'https://github.com/mehedirobi', label: 'GitHub', color: 'from-gray-500 to-gray-600' },
     { icon: 'fab fa-linkedin', url: 'https://www.linkedin.com/in/mehedi-robi-76b38739b/', label: 'LinkedIn', color: 'from-blue-500 to-blue-600' },
-    { icon: 'fab fa-twitter', url: 'https://x.com/mehedirobi01', label: 'Twitter', color: 'from-sky-400 to-sky-500' }
+    { icon: 'fab fa-twitter', url: 'https://x.com/mehedirobi01', label: 'Twitter', color: 'from-blue-400 to-blue-500' }
   ];
 
   const containerVariants = {
@@ -72,7 +72,7 @@ export default function Footer() {
             variants={itemVariants}
           >
             <p className="text-body font-medium" style={{ color: 'var(--text-secondary)' }}>
-              Built with <span className="text-red-400">❤</span> using React, JavaScript & Tailwind CSS
+              Built with <span className="text-red-400"></span> using React, JavaScript & Tailwind CSS
             </p>
             <p className="text-caption" style={{ color: 'var(--text-muted)' }}>
               &copy; {currentYear} Mehedi Robi. All rights reserved.

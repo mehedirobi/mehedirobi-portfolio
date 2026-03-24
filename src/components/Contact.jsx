@@ -48,7 +48,7 @@ export default function Contact() {
   };
 
   const copyPhone = async () => {
-    const phone = '01336458100';
+    const phone = '+8801336458100';
     try {
       await navigator.clipboard.writeText(phone);
       setPhoneCopied(true);
@@ -189,7 +189,7 @@ export default function Contact() {
                   {[
                     { href: 'https://github.com/mehedirobi', icon: 'fab fa-github', label: 'GitHub', color: 'from-gray-500 to-gray-600' },
                     { href: 'https://www.linkedin.com/in/mehedi-robi-76b38739b/', icon: 'fab fa-linkedin', label: 'LinkedIn', color: 'from-blue-500 to-blue-600' },
-                    { href: 'https://x.com/mehedirobi01', icon: 'fab fa-twitter', label: 'Twitter', color: 'from-sky-400 to-sky-500' },
+                    { href: 'https://x.com/mehedirobi01', icon: 'fab fa-twitter', label: 'Twitter', color: 'from-blue-400 to-blue-500' },
                   ].map((link) => (
                     <motion.a
                       key={link.label}

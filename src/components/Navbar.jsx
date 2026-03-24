@@ -67,27 +67,6 @@ export default function Navbar() {
           <span className="sm:hidden">Portfolio</span>
         </motion.a>
 
-        {/* Theme Toggle & Mobile Menu Button */}
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-          <motion.button
-            id="hamburger-button"
-            onClick={() => setOpen(!open)}
-            className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2 transition duration-300"
-            style={{
-              color: 'var(--text-primary)',
-              backgroundColor: 'var(--bg-secondary)'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--bg-tertiary)'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--bg-secondary)'}
-            aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isNavOpen}
-            whileTap={{ scale: 0.95 }}
-          >
-            <i className={`fas fa-${isNavOpen ? 'times' : 'bars'} text-xl`}></i>
-          </motion.button>
-        </div>
-
         {/* Navigation Links */}
         <AnimatePresence>
           {(isNavOpen || window.innerWidth >= 768) && (
@@ -141,6 +120,27 @@ export default function Navbar() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Theme Toggle & Mobile Menu Button */}
+        <div className="flex items-center gap-2 ml-4">
+          <ThemeToggle />
+          <motion.button
+            id="hamburger-button"
+            onClick={() => setOpen(!open)}
+            className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2 transition duration-300"
+            style={{
+              color: 'var(--text-primary)',
+              backgroundColor: 'var(--bg-secondary)'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--bg-tertiary)'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--bg-secondary)'}
+            aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isNavOpen}
+            whileTap={{ scale: 0.95 }}
+          >
+            <i className={`fas fa-${isNavOpen ? 'times' : 'bars'} text-xl`}></i>
+          </motion.button>
+        </div>
       </div>
     </nav>
   );

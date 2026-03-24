@@ -103,10 +103,10 @@ export default function Projects() {
           transition={{ duration: 0.6 }}
         >
           <h2 className="text-heading-1 mb-4" style={{ color: 'var(--text-primary)' }}>
-            My Latest <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Projects</span>
+            My Latest <span className="bg-gradient-to-r from-blue-800 to-blue-400 text-transparent bg-clip-text">Projects</span>
           </h2>
           <motion.div
-            className="h-1 w-24 bg-gradient-to-r from-blue-400 to-cyan-400 mx-auto rounded-full"
+            className="h-1 w-24 bg-gradient-to-r from-blue-800 to-blue-400 mx-auto rounded-full"
             initial={{ width: 0 }}
             whileInView={{ width: '96px' }}
             transition={{ delay: 0.3, duration: 0.8 }}
@@ -305,8 +305,8 @@ const projectData = [
       'Implement community rating system for improved accountability.'
     ],
     links: {
-      live: 'https://urban-fix.netlify.app/',
-      github: 'https://github.com/mehdixun/urban-fix-client.git'
+      live: 'https://urban-fix-project-01.netlify.app/',
+      github: 'https://github.com/mehedirobi/urban-fix-project'
     }
   },
   {
@@ -330,8 +330,8 @@ const projectData = [
       'Create community forum for pet owners.'
     ],
     links: {
-      live: 'https://toyverse-project-01.netlify.app/',
-      github: 'https://github.com/mehdixun/pawmart.git'
+      live: 'https://pawmart-project-01.netlify.app/',
+      github: 'https://github.com/mehedirobi/pawmart-project'
     }
   },
   {
@@ -356,7 +356,7 @@ const projectData = [
     ],
     links: {
       live: 'https://hero-web-app-01.netlify.app/',
-      github: 'https://github.com/mehdixun/Hero-app.git'
+      github: 'https://github.com/mehedirobi/hero-web-app'
     }
   }
 ];

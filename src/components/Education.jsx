@@ -38,7 +38,7 @@ const Education = () => {
         </h2>
 
         {/* Education Cards */}
-        <div className="space-y-6">
+        <div className="space-y-8">
           {educationData.map((item, index) => (
             <motion.div
               key={index}

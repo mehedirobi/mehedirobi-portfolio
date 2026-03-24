@@ -229,7 +229,7 @@ export default function Hero() {
 
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.98 }}>
             <a
-              href="https://drive.google.com/file/d/1f35oYWSu3n_BsvshWm-fMDHHhIEPn4l8/view?usp=sharing"
+              href="https://drive.google.com/file/d/1pTiuE_5Cyxb110Z2s0vAhALfQ6F9J5-J/view?usp=sharing"
               target="_blank"
               download
               className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 border rounded-lg font-semibold transition-all duration-300"

@@ -71,7 +71,7 @@ export default function Skills() {
     { skill: 'React & JavaScript', level: 90, color: 'from-blue-500 to-blue-900' },
     { skill: 'Tailwind CSS & UI Design', level: 95, color: 'from-purple-500 to-purple-900' },
     { skill: 'Node.js & Backend', level: 80, color: 'from-green-500 to-green-900' },
-    { skill: 'Web Performance & Optimization', level: 85, color: 'from-orange-500 to-orange-900' },
+    { skill: 'Web Performance & Optimization', level: 85, color: 'from-yellow-500 to-yellow-900' },
   ];
 
   const containerVariants = {
