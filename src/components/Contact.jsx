@@ -74,7 +74,9 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-800 to-gray-900">
+    <section id="contact" className="py-20 md:py-32 px-4" style={{
+      background: 'linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary))'
+    }}>
       <div className="container mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div
@@ -84,7 +86,7 @@ export default function Contact() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-heading-1 mb-4" style={{ color: 'var(--text-primary)' }}>
             Get in <span className="bg-gradient-to-r from-pink-400 to-pink-800 text-transparent bg-clip-text">Touch</span>
           </h2>
           <motion.div
@@ -93,7 +95,7 @@ export default function Contact() {
             whileInView={{ width: '96px' }}
             transition={{ delay: 0.3, duration: 0.8 }}
           />
-          <p className="text-gray-300 text-lg mt-4">
+          <p className="text-body-large mt-4" style={{ color: 'var(--text-secondary)' }}>
             Let's connect. I'd love to hear from you!
           </p>
         </motion.div>
@@ -110,10 +112,10 @@ export default function Contact() {
             className="flex flex-col h-full"
             variants={itemVariants}
           >
-            <Card hover={false} className="p-6 md:p-8 flex flex-col flex-1 bg-gray-800 border border-gray-700 space-y-6">
+            <Card hover={false} className="p-6 md:p-8 flex flex-col flex-1 space-y-6">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-2">Contact Information</h3>
-                <p className="text-gray-400">
+                <h3 className="text-heading-3 mb-2" style={{ color: 'var(--text-primary)' }}>Contact Information</h3>
+                <p className="text-body-small" style={{ color: 'var(--text-muted)' }}>
                   Connect with me on these platforms or send me a message directly.
                 </p>
               </div>
@@ -121,15 +123,28 @@ export default function Contact() {
               {/* Email */}
               <motion.button
                 onClick={copyEmail}
-                className="group flex items-center gap-4 p-4 rounded-lg bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-blue-400 transition-all text-left"
+                className="group flex items-center gap-4 p-4 rounded-lg border transition-all text-left"
+                style={{
+                  backgroundColor: 'var(--bg-tertiary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.borderColor = 'var(--accent-color)';
+                  e.target.style.transform = 'scale(1.02) translateX(5px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.borderColor = 'var(--border-color)';
+                  e.target.style.transform = 'scale(1) translateX(0)';
+                }}
                 whileHover={{ scale: 1.02, x: 5 }}
               >
                 <div className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-2xl text-blue-400 group-hover:text-blue-300 transition">
                   <i className="fas fa-envelope"></i>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-400">Email</p>
-                  <p className="text-white font-semibold truncate">mehedirobidev@gmail.com</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Email</p>
+                  <p className="font-semibold truncate" style={{ color: 'var(--text-primary)' }}>mehedirobidev@gmail.com</p>
                   <p className="text-xs text-green-400 mt-1">
                     {emailCopied ? '✓ Copied!' : 'Click to copy'}
                   </p>
@@ -139,15 +154,28 @@ export default function Contact() {
               {/* Phone */}
               <motion.button
                 onClick={copyPhone}
-                className="group flex items-center gap-4 p-4 rounded-lg bg-gray-700 hover:bg-gray-600 border border-gray-600 hover:border-green-400 transition-all text-left"
+                className="group flex items-center gap-4 p-4 rounded-lg border transition-all text-left"
+                style={{
+                  backgroundColor: 'var(--bg-tertiary)',
+                  borderColor: 'var(--border-color)',
+                  color: 'var(--text-primary)'
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.borderColor = '#10b981';
+                  e.target.style.transform = 'scale(1.02) translateX(5px)';
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.borderColor = 'var(--border-color)';
+                  e.target.style.transform = 'scale(1) translateX(0)';
+                }}
                 whileHover={{ scale: 1.02, x: 5 }}
               >
                 <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center text-2xl text-green-400 group-hover:text-green-300 transition">
                   <i className="fas fa-phone"></i>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm text-gray-400">Phone</p>
-                  <p className="text-white font-semibold">+880 1336 458100</p>
+                  <p className="text-sm" style={{ color: 'var(--text-muted)' }}>Phone</p>
+                  <p className="font-semibold" style={{ color: 'var(--text-primary)' }}>+880 1336 458100</p>
                   <p className="text-xs text-green-400 mt-1">
                     {phoneCopied ? '✓ Copied!' : 'Click to copy'}
                   </p>
@@ -156,7 +184,7 @@ export default function Contact() {
 
               {/* Social Links */}
               <div>
-                <p className="text-sm text-gray-400 mb-4">Connect on social media</p>
+                <p className="text-sm mb-4" style={{ color: 'var(--text-muted)' }}>Connect on social media</p>
                 <div className="flex gap-3">
                   {[
                     { href: 'https://github.com/mehedirobi', icon: 'fab fa-github', label: 'GitHub', color: 'from-gray-500 to-gray-600' },
@@ -183,7 +211,7 @@ export default function Contact() {
 
           {/* Contact Form */}
           <motion.div variants={itemVariants}>
-            <Card hover={false} className="p-6 md:p-8 bg-gray-800 border border-gray-700">
+            <Card hover={false} className="p-6 md:p-8">
               {submitted && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }}
@@ -198,16 +226,21 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">Name</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Name</label>
                   <motion.input
                     type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
                     placeholder="Your name"
-                    className={`w-full px-4 py-3 bg-gray-700 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                      errors.name ? 'border-red-500' : 'border-gray-600'
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                      errors.name ? 'border-red-500' : ''
                     }`}
+                    style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                      borderColor: errors.name ? '#ef4444' : 'var(--border-color)'
+                    }}
                     whileFocus={{ scale: 1.01 }}
                   />
                   {errors.name && <p className="text-red-400 text-sm mt-1">{errors.name}</p>}
@@ -215,16 +248,21 @@ export default function Contact() {
 
                 {/* Email */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">Email</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Email</label>
                   <motion.input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="your.email@example.com"
-                    className={`w-full px-4 py-3 bg-gray-700 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                      errors.email ? 'border-red-500' : 'border-gray-600'
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                      errors.email ? 'border-red-500' : ''
                     }`}
+                    style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                      borderColor: errors.email ? '#ef4444' : 'var(--border-color)'
+                    }}
                     whileFocus={{ scale: 1.01 }}
                   />
                   {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
@@ -232,16 +270,21 @@ export default function Contact() {
 
                 {/* Subject */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">Subject</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Subject</label>
                   <motion.input
                     type="text"
                     name="subject"
                     value={formData.subject}
                     onChange={handleChange}
                     placeholder="Message subject"
-                    className={`w-full px-4 py-3 bg-gray-700 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
-                      errors.subject ? 'border-red-500' : 'border-gray-600'
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition ${
+                      errors.subject ? 'border-red-500' : ''
                     }`}
+                    style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                      borderColor: errors.subject ? '#ef4444' : 'var(--border-color)'
+                    }}
                     whileFocus={{ scale: 1.01 }}
                   />
                   {errors.subject && <p className="text-red-400 text-sm mt-1">{errors.subject}</p>}
@@ -249,16 +292,21 @@ export default function Contact() {
 
                 {/* Message */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-300 mb-2">Message</label>
+                  <label className="block text-sm font-semibold mb-2" style={{ color: 'var(--text-secondary)' }}>Message</label>
                   <motion.textarea
                     name="message"
                     value={formData.message}
                     onChange={handleChange}
                     placeholder="Your message here..."
                     rows="5"
-                    className={`w-full px-4 py-3 bg-gray-700 border rounded-lg text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition ${
-                      errors.message ? 'border-red-500' : 'border-gray-600'
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition ${
+                      errors.message ? 'border-red-500' : ''
                     }`}
+                    style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      color: 'var(--text-primary)',
+                      borderColor: errors.message ? '#ef4444' : 'var(--border-color)'
+                    }}
                     whileFocus={{ scale: 1.01 }}
                   />
                   {errors.message && <p className="text-red-400 text-sm mt-1">{errors.message}</p>}

@@ -30,7 +30,11 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-900 to-gray-800 text-white flex justify-center"
+      className="py-20 md:py-32 px-4 flex justify-center"
+      style={{
+        background: 'linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary))',
+        color: 'var(--text-primary)'
+      }}
     >
       <motion.div
         className="max-w-4xl w-full space-y-12"
@@ -44,7 +48,7 @@ export default function About() {
           className="text-center space-y-4"
           variants={itemVariants}
         >
-          <h2 className="text-5xl md:text-7xl font-black">
+          <h2 className="text-heading-1">
             About <span className="bg-gradient-to-r from-blue-400 to-blue-800 text-transparent bg-clip-text">Me</span>
           </h2>
           <motion.div
@@ -53,7 +57,7 @@ export default function About() {
             whileInView={{ width: '96px' }}
             transition={{ delay: 0.3, duration: 0.8 }}
           />
-          <p className="text-gray-300 text-lg md:text-xl pt-2">
+          <p className="text-body-large pt-2" style={{ color: 'var(--text-secondary)' }}>
             Turning ideas into beautiful, functional digital experiences
           </p>
         </motion.div>
@@ -62,7 +66,7 @@ export default function About() {
         <motion.div
           variants={itemVariants}
         >
-          <Card hover={true} className="space-y-8 p-8 md:p-12 bg-gray-800 border border-gray-700">
+          <Card hover={true} className="space-y-8 p-8 md:p-12">
             <motion.div
               className="space-y-6"
               initial={{ opacity: 0 }}
@@ -71,13 +75,13 @@ export default function About() {
               viewport={{ once: true }}
             >
               <div className="space-y-4">
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-body leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   <span className="text-blue-400 font-semibold">👨‍💻 Frontend Specialist</span> - I specialize in frontend development with React, JavaScript, and modern CSS frameworks. I build responsive, accessible, and high-performance web applications that users love.
                 </p>
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-body leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   <span className="text-green-400 font-semibold">📚 Continuous Learner</span> - I'm passionate about staying up-to-date with modern web technologies and best practices, always focused on clean code and meaningful design that solves real problems.
                 </p>
-                <p className="text-gray-300 leading-relaxed text-lg">
+                <p className="text-body leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
                   <span className="text-purple-400 font-semibold">🎯 User-Centered</span> - My goal is to deliver real value to users and craft smooth, enjoyable digital experiences. I believe great interfaces are intuitive, fast, and beautifully designed.
                 </p>
               </div>
@@ -94,11 +98,16 @@ export default function About() {
                 ].map((item, idx) => (
                   <motion.div
                     key={idx}
-                    className="p-3 rounded-lg bg-gray-700 border border-gray-600 text-center"
+                    className="p-3 rounded-lg border text-center"
+                    style={{
+                      backgroundColor: 'var(--bg-tertiary)',
+                      borderColor: 'var(--border-color)',
+                      color: 'var(--text-primary)'
+                    }}
                     whileHover={{ scale: 1.05, borderColor: '#60A5FA' }}
                   >
                     <span className="text-2xl block mb-1">{item.icon}</span>
-                    <p className="text-sm font-semibold text-gray-300">{item.label}</p>
+                    <p className="text-sm font-semibold" style={{ color: 'var(--text-secondary)' }}>{item.label}</p>
                   </motion.div>
                 ))}
               </div>
@@ -106,7 +115,8 @@ export default function About() {
 
             {/* Stats Section */}
             <motion.div
-              className="grid grid-cols-3 gap-6 pt-8 border-t border-gray-600"
+              className="grid grid-cols-3 gap-6 pt-8 border-t"
+              style={{ borderColor: 'var(--border-color)' }}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -121,7 +131,7 @@ export default function About() {
                   <div className={`bg-gradient-to-br ${stat.color} rounded-lg p-4 mb-3 shadow-lg group-hover:shadow-xl transition-all`}>
                     <p className="text-3xl md:text-4xl font-black text-white">{stat.value}</p>
                   </div>
-                  <p className="text-gray-400 text-sm font-semibold">{stat.label}</p>
+                  <p className="text-sm font-semibold" style={{ color: 'var(--text-muted)' }}>{stat.label}</p>
                 </motion.div>
               ))}
             </motion.div>

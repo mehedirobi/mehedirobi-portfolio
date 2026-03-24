@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
+import { ThemeProvider } from './components/ThemeContext.jsx'
 import './styles/global.css'
 
 // Inject CDN styles (Tailwind + Font Awesome) so index.html can remain minimal.
@@ -20,14 +21,16 @@ if (typeof document !== 'undefined') {
     fa.setAttribute('data-injected-fa', 'true')
     head.appendChild(fa)
   }
-  // Preserve original body utility classes used by components
+  // Remove hardcoded body classes - theme will be applied via CSS variables
   if (document.body) {
-    document.body.classList.add('bg-gray-900','text-gray-200','font-sans','leading-normal','tracking-normal')
+    document.body.classList.remove('bg-gray-900','text-gray-200','font-sans','leading-normal','tracking-normal')
   }
 }
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </React.StrictMode>
 )

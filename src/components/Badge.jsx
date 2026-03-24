@@ -13,8 +13,8 @@ export default function Badge({
     green: 'bg-green-600 text-white',
     purple: 'bg-purple-600 text-white',
     red: 'bg-red-600 text-white',
-    gray: 'bg-gray-700 text-gray-200 border border-gray-600',
-    outline: 'border-2 border-blue-400 text-blue-400',
+    gray: 'bg-gray-200 text-gray-800 border border-gray-300 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600',
+    outline: 'border-2 border-blue-400 text-blue-600 dark:text-blue-400',
   };
 
   const sizes = {

@@ -25,7 +25,11 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gradient-to-t from-gray-900 to-gray-800 py-12 px-4 text-center text-gray-400 border-t border-gray-700">
+    <footer className="py-12 px-4 text-center border-t" style={{
+      background: 'linear-gradient(to top, var(--bg-secondary), var(--bg-primary))',
+      color: 'var(--text-muted)',
+      borderColor: 'var(--border-color)'
+    }}>
       <div className="container mx-auto max-w-6xl">
         <motion.div
           variants={containerVariants}
@@ -67,10 +71,10 @@ export default function Footer() {
             className="space-y-4"
             variants={itemVariants}
           >
-            <p className="text-sm md:text-base text-gray-300 font-medium">
+            <p className="text-body font-medium" style={{ color: 'var(--text-secondary)' }}>
               Built with <span className="text-red-400">❤</span> using React, JavaScript & Tailwind CSS
             </p>
-            <p className="text-xs md:text-sm text-gray-500">
+            <p className="text-caption" style={{ color: 'var(--text-muted)' }}>
               &copy; {currentYear} Mehedi Robi. All rights reserved.
             </p>
             <motion.div
@@ -97,7 +101,19 @@ export default function Footer() {
           {/* Back to Top Button */}
           <motion.button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="mx-auto flex items-center gap-2 px-4 py-2 bg-gray-700 hover:bg-blue-600 rounded-lg transition-colors text-gray-300 hover:text-white text-sm"
+            className="mx-auto flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm"
+            style={{
+              backgroundColor: 'var(--bg-tertiary)',
+              color: 'var(--text-secondary)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = 'var(--accent-color)';
+              e.target.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = 'var(--bg-tertiary)';
+              e.target.style.color = 'var(--text-secondary)';
+            }}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.95 }}
             aria-label="Scroll back to top"

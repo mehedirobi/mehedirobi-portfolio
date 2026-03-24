@@ -8,9 +8,14 @@ export default function Card({
 }) {
   return (
     <div
-      className={`bg-gray-800 rounded-lg border border-gray-700 shadow-lg ${
+      className={`rounded-lg border shadow-lg ${
         hover ? 'hover:shadow-2xl hover:border-blue-500 transition-all duration-300 hover:scale-105' : ''
       } p-6 ${className}`}
+      style={{
+        backgroundColor: 'var(--card-bg)',
+        borderColor: 'var(--border-color)',
+        boxShadow: hover ? 'var(--shadow-color)' : 'none'
+      }}
       {...props}
     >
       {children}

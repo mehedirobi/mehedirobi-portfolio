@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import ThemeToggle from './ThemeToggle';
 
 const SECTIONS = ['home', 'about', 'skills', 'education', 'experience', 'projects', 'contact'];
 
@@ -44,7 +45,11 @@ export default function Navbar() {
 
   return (
     <nav
-      className="bg-gray-900/95 backdrop-blur-md p-4 fixed w-full z-50 shadow-xl border-b border-gray-800 transition-all duration-300"
+      className="backdrop-blur-md p-4 fixed w-full z-50 shadow-xl border-b transition-all duration-300"
+      style={{
+        backgroundColor: 'var(--nav-bg)',
+        borderColor: 'var(--nav-border)'
+      }}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -53,7 +58,8 @@ export default function Navbar() {
         <motion.a
           href="#home"
           onClick={(e) => handleNavClick(e, 'home')}
-          className="text-white text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text hover:scale-110 transition-transform duration-300 flex items-center gap-2"
+          className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text hover:scale-110 transition-transform duration-300 flex items-center gap-2"
+          style={{ color: 'var(--text-primary)' }}
           aria-label="Portfolio home"
           whileHover={{ scale: 1.05 }}
         >
@@ -61,24 +67,36 @@ export default function Navbar() {
           <span className="sm:hidden">Portfolio</span>
         </motion.a>
 
-        {/* Mobile Menu Button */}
-        <motion.button
-          id="hamburger-button"
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-white focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2 transition duration-300 hover:bg-gray-800"
-          aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={isNavOpen}
-          whileTap={{ scale: 0.95 }}
-        >
-          <i className={`fas fa-${isNavOpen ? 'times' : 'bars'} text-xl`}></i>
-        </motion.button>
+        {/* Theme Toggle & Mobile Menu Button */}
+        <div className="flex items-center gap-2">
+          <ThemeToggle />
+          <motion.button
+            id="hamburger-button"
+            onClick={() => setOpen(!open)}
+            className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2 transition duration-300"
+            style={{
+              color: 'var(--text-primary)',
+              backgroundColor: 'var(--bg-secondary)'
+            }}
+            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--bg-tertiary)'}
+            onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--bg-secondary)'}
+            aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
+            aria-expanded={isNavOpen}
+            whileTap={{ scale: 0.95 }}
+          >
+            <i className={`fas fa-${isNavOpen ? 'times' : 'bars'} text-xl`}></i>
+          </motion.button>
+        </div>
 
         {/* Navigation Links */}
         <AnimatePresence>
           {(isNavOpen || window.innerWidth >= 768) && (
             <motion.div
               id="nav-links"
-              className="md:flex space-x-1 md:space-x-1 absolute md:relative top-16 md:top-0 left-0 md:left-auto w-full md:w-auto bg-gray-900 md:bg-transparent flex-col md:flex-row overflow-hidden"
+              className="md:flex space-x-1 md:space-x-1 absolute md:relative top-16 md:top-0 left-0 md:left-auto w-full md:w-auto flex-col md:flex-row overflow-hidden"
+              style={{
+                backgroundColor: 'var(--nav-bg)'
+              }}
               initial={{ height: 0, opacity: 0 }}
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
@@ -96,8 +114,22 @@ export default function Navbar() {
                     className={`px-4 py-3 md:py-2 rounded-lg text-sm md:text-base font-medium transition-all duration-300 block md:inline-block ${
                       isActive
                         ? 'text-blue-400 bg-blue-500/10 md:bg-transparent border-b-2 border-blue-400'
-                        : 'text-gray-300 hover:text-blue-400 hover:bg-gray-800 md:hover:bg-transparent'
+                        : 'hover:text-blue-400 md:hover:bg-transparent'
                     }`}
+                    style={{
+                      color: isActive ? 'var(--accent-color)' : 'var(--text-secondary)',
+                      backgroundColor: isActive ? 'rgba(59, 130, 246, 0.1)' : 'transparent'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) {
+                        e.target.style.backgroundColor = 'var(--bg-tertiary)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) {
+                        e.target.style.backgroundColor = 'transparent';
+                      }
+                    }}
                     role="menuitem"
                     whileHover={{ x: 2 }}
                     transition={{ delay: idx * 0.05 }}

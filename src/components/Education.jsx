@@ -30,11 +30,11 @@ const Education = () => {
   ];
 
   return (
-    <section id="education" className="py-20 px-4 bg-gray-800">
+    <section id="education" className="py-20 px-4" style={{ backgroundColor: 'var(--bg-secondary)' }}>
       <div className="container mx-auto max-w-4xl">
         {/* Section Heading */}
-        <h2 className="text-5xl font-extrabold text-white text-center mb-12">
-          My <span className="text-blue-400">Education</span>
+        <h2 className="text-heading-1 text-center mb-12" style={{ color: 'var(--text-primary)' }}>
+          My <span style={{ color: 'var(--accent-color)' }}>Education</span>
         </h2>
 
         {/* Education Cards */}
@@ -46,7 +46,12 @@ const Education = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className="bg-gray-700 p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 border-blue-400 transform hover:scale-105"
+              className="p-6 rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 border-l-4 transform hover:scale-105"
+              style={{
+                backgroundColor: 'var(--card-bg)',
+                borderLeftColor: 'var(--accent-color)',
+                boxShadow: 'var(--shadow-color)'
+              }}
             >
               {/* Top Row */}
               <div className="flex justify-between items-start mb-4 flex-wrap gap-4">
@@ -55,24 +60,28 @@ const Education = () => {
                     <i className={`fas ${item.icon}`}></i>
                   </div>
                   <div className="min-w-0">
-                    <h3 className="text-xl font-bold text-white hover:text-blue-300 transition-colors">
+                    <h3 className="text-xl font-bold hover:text-blue-300 transition-colors" style={{ color: 'var(--text-primary)' }}>
                       {item.title}
                     </h3>
-                    <p className="text-sm font-medium text-gray-300 mt-1">
+                    <p className="text-sm font-medium mt-1" style={{ color: 'var(--text-secondary)' }}>
                       {item.institute}
                     </p>
                   </div>
                 </div>
 
-                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${item.status === "Completed" ? "bg-green-600 text-white" : "bg-yellow-500 text-white"} flex-shrink-0`}>
+                <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+                  item.status === "Completed"
+                    ? "bg-green-600 text-white"
+                    : "bg-yellow-100 text-yellow-800 dark:bg-yellow-500 dark:text-white"
+                }`}>
                   {item.status}
                 </span>
               </div>
 
               {/* Details */}
               <div className="flex flex-col gap-2 pl-10">
-                <p className="text-sm text-gray-400 font-medium">{item.year}</p>
-                <p className="text-sm text-gray-300 leading-relaxed">{item.description}</p>
+                <p className="text-sm font-medium" style={{ color: 'var(--text-muted)' }}>{item.year}</p>
+                <p className="text-sm leading-relaxed" style={{ color: 'var(--text-secondary)' }}>{item.description}</p>
               </div>
             </motion.div>
           ))}

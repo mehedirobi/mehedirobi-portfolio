@@ -3,33 +3,67 @@ import { motion } from 'framer-motion';
 import Button from './Button';
 
 export default function Hero() {
-  // Animation variants
+  // Enhanced Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.2,
+        staggerChildren: 0.15,
+        delayChildren: 0.3,
       },
     },
   };
 
   const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        delay: 0.8,
+        ease: 'easeOut'
+      },
+    },
+  };
+
+  const socialVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: 'easeOut' },
+      transition: {
+        duration: 0.6,
+        delay: 1.0,
+        ease: 'easeOut'
+      },
     },
   };
 
   const imageVariants = {
-    hidden: { opacity: 0, scale: 0.9 },
+    hidden: { opacity: 0, scale: 0.9, rotate: -5 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: { duration: 0.8, ease: 'easeOut' },
+      rotate: 0,
+      transition: {
+        duration: 1.0,
+        delay: 0.5,
+        ease: 'easeOut'
+      },
     },
   };
 
@@ -44,7 +78,10 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col justify-center items-center text-center px-4 py-20 md:py-28 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden"
+      className="min-h-screen flex flex-col justify-center items-center text-center px-4 py-20 md:py-28 relative overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 50%, var(--bg-primary) 100%)'
+      }}
     >
       {/* Background Decorative Shapes - pushed behind content */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
@@ -132,7 +169,7 @@ export default function Hero() {
           className="mb-4 md:mb-6"
           variants={itemVariants}
         >
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight mb-3">
+          <h1 className="text-display leading-tight mb-3" style={{ color: 'var(--text-primary)' }}>
             Hello, I'm{' '}
             <span className="relative inline-block">
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 text-transparent bg-clip-text">
@@ -151,7 +188,8 @@ export default function Hero() {
 
         {/* Subheading */}
         <motion.p
-          className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-5 md:mb-7 font-medium leading-relaxed"
+          className="text-body-large mb-5 md:mb-7 leading-relaxed"
+          style={{ color: 'var(--text-secondary)' }}
           variants={itemVariants}
         >
           A Passionate{' '}
@@ -164,7 +202,8 @@ export default function Hero() {
 
         {/* Description */}
         <motion.p
-          className="text-base md:text-lg text-gray-400 max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed"
+          className="text-base md:text-lg max-w-2xl mx-auto mb-10 md:mb-12 leading-relaxed"
+          style={{ color: 'var(--text-muted)' }}
           variants={itemVariants}
         >
           I specialize in building responsive, modern web applications with React, JavaScript, and Tailwind CSS. 
@@ -193,7 +232,22 @@ export default function Hero() {
               href="https://drive.google.com/file/d/1f35oYWSu3n_BsvshWm-fMDHHhIEPn4l8/view?usp=sharing"
               target="_blank"
               download
-              className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 bg-gray-800 hover:bg-gray-700 text-white border border-gray-600 hover:border-purple-400 rounded-lg font-semibold transition-all duration-300"
+              className="inline-flex items-center justify-center gap-2 px-6 md:px-8 py-3 md:py-4 border rounded-lg font-semibold transition-all duration-300"
+              style={{
+                backgroundColor: 'var(--bg-tertiary)',
+                color: 'var(--text-primary)',
+                borderColor: 'var(--border-color)'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = 'var(--accent-color)';
+                e.target.style.borderColor = 'var(--accent-hover)';
+                e.target.style.color = 'var(--bg-primary)';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'var(--bg-tertiary)';
+                e.target.style.borderColor = 'var(--border-color)';
+                e.target.style.color = 'var(--text-primary)';
+              }}
             >
               <i className="fas fa-download"></i>
               Download CV
@@ -210,7 +264,19 @@ export default function Hero() {
             href="https://github.com/mehedirobi"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-blue-500 hover:to-blue-600 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
+            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full text-lg md:text-xl transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))',
+              color: 'var(--text-secondary)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #3b82f6, #06b6d4)';
+              e.target.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))';
+              e.target.style.color = 'var(--text-secondary)';
+            }}
             whileHover={{ scale: 1.15, y: -3 }}
             whileTap={{ scale: 0.9 }}
             aria-label="GitHub"
@@ -222,7 +288,19 @@ export default function Hero() {
             href="https://www.linkedin.com/in/mehedirobii/"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-blue-500 hover:to-cyan-500 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
+            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full text-lg md:text-xl transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))',
+              color: 'var(--text-secondary)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #3b82f6, #06b6d4)';
+              e.target.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))';
+              e.target.style.color = 'var(--text-secondary)';
+            }}
             whileHover={{ scale: 1.15, y: -3 }}
             whileTap={{ scale: 0.9 }}
             aria-label="LinkedIn"
@@ -234,7 +312,19 @@ export default function Hero() {
             href="https://x.com/mehedirobii"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-sky-400 hover:to-sky-500 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
+            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full text-lg md:text-xl transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))',
+              color: 'var(--text-secondary)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #0ea5e9, #06b6d4)';
+              e.target.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))';
+              e.target.style.color = 'var(--text-secondary)';
+            }}
             whileHover={{ scale: 1.15, y: -3 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Twitter"
@@ -246,7 +336,19 @@ export default function Hero() {
             href="https://www.facebook.com/mehedirobii"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full bg-gradient-to-br from-gray-700 to-gray-800 hover:from-blue-600 hover:to-blue-700 text-lg md:text-xl text-gray-300 hover:text-white transition-all duration-300"
+            className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full text-lg md:text-xl transition-all duration-300"
+            style={{
+              background: 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))',
+              color: 'var(--text-secondary)'
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, #2563eb, #1d4ed8)';
+              e.target.style.color = 'var(--bg-primary)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = 'linear-gradient(135deg, var(--bg-tertiary), var(--bg-secondary))';
+              e.target.style.color = 'var(--text-secondary)';
+            }}
             whileHover={{ scale: 1.15, y: -3 }}
             whileTap={{ scale: 0.9 }}
             aria-label="Facebook"

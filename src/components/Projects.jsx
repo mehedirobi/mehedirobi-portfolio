@@ -12,9 +12,9 @@ const ProjectCard = ({ project, onSelect, index }) => (
     transition={{ duration: 0.6, delay: index * 0.15 }}
     onClick={() => onSelect(project)}
   >
-    <Card className="flex flex-col h-full overflow-hidden cursor-pointer group border-0 bg-gray-800 hover:border-blue-500 hover:border hover:shadow-2xl transition-all duration-300">
+    <Card className="flex flex-col h-full overflow-hidden cursor-pointer group border-0 hover:border-blue-500 hover:border hover:shadow-2xl transition-all duration-300">
       {/* Image Container */}
-      <div className="relative overflow-hidden rounded-lg mb-6 h-56 bg-gray-700">
+      <div className="relative overflow-hidden rounded-lg mb-6 h-56" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
         <motion.img
           src={project.image}
           alt={project.name}
@@ -41,12 +41,13 @@ const ProjectCard = ({ project, onSelect, index }) => (
       {/* Content */}
       <div className="flex flex-col flex-grow">
         <motion.h3
-          className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors"
+          className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors"
+          style={{ color: 'var(--text-primary)' }}
           whileHover={{ x: 5 }}
         >
           {project.name}
         </motion.h3>
-        <p className="text-gray-400 text-sm mb-4 flex-grow leading-relaxed">
+        <p className="text-sm mb-4 flex-grow leading-relaxed" style={{ color: 'var(--text-muted)' }}>
           {project.description.length > 100
             ? project.description.substring(0, 100) + '...'
             : project.description}
@@ -89,7 +90,9 @@ export default function Projects() {
   }, [selected]);
 
   return (
-    <section id="projects" className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-900 to-gray-800">
+    <section id="projects" className="py-20 md:py-32 px-4" style={{
+      background: 'linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary))'
+    }}>
       <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
@@ -99,7 +102,7 @@ export default function Projects() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-5xl md:text-7xl font-black text-white mb-4">
+          <h2 className="text-heading-1 mb-4" style={{ color: 'var(--text-primary)' }}>
             My Latest <span className="bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">Projects</span>
           </h2>
           <motion.div
@@ -143,15 +146,29 @@ export default function Projects() {
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.8, opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="bg-gray-900 rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-gray-700"
+            className="rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border"
+            style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--border-color)',
+              boxShadow: 'var(--shadow-color)'
+            }}
           >
-            <div className="sticky top-0 bg-gray-900 p-6 border-b border-gray-700 flex justify-between items-center">
+            <div className="sticky top-0 p-6 border-b flex justify-between items-center" style={{
+              backgroundColor: 'var(--card-bg)',
+              borderColor: 'var(--border-color)'
+            }}>
               <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
                 {selected.name}
               </h3>
               <motion.button
                 onClick={() => setSelected(null)}
-                className="text-2xl text-gray-400 hover:text-white transition-colors p-2"
+                className="text-2xl p-2 transition-colors"
+                style={{
+                  color: 'var(--text-muted)',
+                  backgroundColor: 'transparent'
+                }}
+                onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
                 aria-label="Close modal"
                 whileHover={{ rotate: 90, scale: 1.1 }}
               >
@@ -162,7 +179,7 @@ export default function Projects() {
             <div className="p-6 md:p-8 space-y-8">
               {/* Tech Stack */}
               <div>
-                <h4 className="text-lg font-semibold text-gray-300 mb-3">Tech Stack</h4>
+                <h4 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>Tech Stack</h4>
                 <p className="text-blue-400 font-semibold text-lg">
                   {selected.techStack}
                 </p>
@@ -170,8 +187,8 @@ export default function Projects() {
 
               {/* Description */}
               <div>
-                <h4 className="text-lg font-semibold text-gray-300 mb-3">Overview</h4>
-                <p className="text-gray-400 leading-relaxed text-lg">
+                <h4 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>Overview</h4>
+                <p className="leading-relaxed text-lg" style={{ color: 'var(--text-muted)' }}>
                   {selected.fullDescription}
                 </p>
               </div>
@@ -214,7 +231,7 @@ export default function Projects() {
 
               {/* Challenges */}
               <div>
-                <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <i className="fas fa-exclamation-circle text-orange-400"></i>
                   Challenges Faced
                 </h4>
@@ -222,7 +239,8 @@ export default function Projects() {
                   {selected.challenges.map((ch, idx) => (
                     <motion.li
                       key={idx}
-                      className="text-gray-400 flex gap-3 items-start"
+                      className="flex gap-3 items-start"
+                      style={{ color: 'var(--text-muted)' }}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
@@ -236,7 +254,7 @@ export default function Projects() {
 
               {/* Future Improvements */}
               <div>
-                <h4 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
                   <i className="fas fa-lightbulb text-yellow-400"></i>
                   Future Improvements
                 </h4>
@@ -244,7 +262,8 @@ export default function Projects() {
                   {selected.improvements.map((imp, idx) => (
                     <motion.li
                       key={idx}
-                      className="text-gray-400 flex gap-3 items-start"
+                      className="flex gap-3 items-start"
+                      style={{ color: 'var(--text-muted)' }}
                       initial={{ opacity: 0, x: -10 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ delay: idx * 0.1 }}
