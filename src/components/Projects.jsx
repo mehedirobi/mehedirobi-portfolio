@@ -289,7 +289,7 @@ const projectData = [
     name: 'Urban Fix Website',
     description: 'Developed a responsive "Urban Fix" website using HTML, CSS, JavaScript, and React, allowing users to report issues in their city and track their resolution.',
     image: 'https://i.ibb.co.com/Z1Rpx4Jb/Screenshot-2026-01-08-183414.png',
-    tech: ['React', 'Node.js', 'MongoDB', 'Stripe', 'Tailwind CSS'],
+    tech: [],
     techStack: 'React, Node.js, Express, MongoDB, Tailwind CSS',
     fullDescription: 'Developed a robust full-stack e-commerce platform featuring secure user authentication, product listing, shopping cart functionality, and order processing. Implemented a responsive design for optimal viewing on various devices. Users can report issues in their local community with real-time tracking and resolution updates.',
     challenges: [
@@ -314,7 +314,7 @@ const projectData = [
     name: 'Pawmart Website',
     description: 'Developed a responsive "PawMart" website using HTML, CSS, JavaScript, and React, where users can adopt pets and purchase pet-related products.',
     image: 'https://i.ibb.co.com/spBB7YbP/Screenshot-2026-01-08-183616.png',
-    tech: ['Vue.js', 'Firebase', 'Vuetify', 'CSS3'],
+    tech: [],
     techStack: 'Vue.js, Firebase, CSS3',
     fullDescription: 'Created an intuitive pet marketplace application with features like pet adoption listings, product catalog, shopping cart, and secure checkout. Utilized Firebase for real-time data synchronization and Vuetify for responsive component design.',
     challenges: [
@@ -339,7 +339,7 @@ const projectData = [
     name: 'Hero APP Website',
     description: 'Developed a "Hero APP" website using HTML, CSS, JavaScript, and React that showcases a collection of superheroes with detailed profiles.',
     image: 'https://i.ibb.co.com/3mxVn19W/Screenshot-2026-01-08-184922.png',
-    tech: ['Next.js', 'GraphQL', 'MDX', 'Vercel'],
+    tech: [],
     techStack: 'Next.js, Markdown, GraphQL',
     fullDescription: 'Built a modern superhero database platform with detailed character profiles, abilities, origin stories, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
     challenges: [
