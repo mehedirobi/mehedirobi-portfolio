@@ -358,5 +358,55 @@ const projectData = [
       live: 'https://hero-web-app-01.netlify.app/',
       github: 'https://github.com/mehedirobi/hero-web-app'
     }
+  },
+  {
+    id: 4,
+    name: 'ToyVerse Website',
+    description: 'Developed a "ToyVerse" website using HTML, CSS, JavaScript, and React that showcases a collection of toys and games with detailed profiles.',
+    image: 'https://i.ibb.co/ynXZQfqz/Screenshot-2026-03-28-190350.png',
+    tech: [],
+    techStack: 'Next.js, Markdown, GraphQL',
+    fullDescription: 'Built a modern toy and game database platform with detailed product profiles, specifications, reviews, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
+    challenges: [
+      'Organizing and displaying large datasets efficiently.',
+      'Implementing powerful search and filtering capabilities.',
+      'Optimizing image loading for toy galleries.',
+      'Creating engaging narratives for each product profile.'
+    ],
+    improvements: [
+      'Add product comparison tool.',
+      'Implement universe/franchise filtering system.',
+      'Add news feed for toy releases and events.',
+      'Create interactive feature visualization.'
+    ],
+    links: {
+      live: 'https://toyverse-project-01.netlify.app/',
+      github: 'https://github.com/mehedirobi/toyverse-project'
+    }
+  },
+  {
+    id: 5,
+    name: 'CS Ticket System Website',
+    description: 'Developed a "CS Ticket System" website using HTML, CSS, JavaScript, and React that showcases a collection of ticketing solutions with detailed profiles.',
+    image: 'https://i.ibb.co/7st42CW/Screenshot-2026-03-28-203941.png',
+    tech: [],
+    techStack: 'Next.js, Markdown, GraphQL',
+    fullDescription: 'Built a modern ticketing platform with detailed solution profiles, specifications, reviews, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
+    challenges: [
+      'Organizing and displaying large datasets efficiently.',
+      'Implementing powerful search and filtering capabilities.',
+      'Optimizing image loading for toy galleries.',
+      'Creating engaging narratives for each product profile.'
+    ],
+    improvements: [
+      'Add product comparison tool.',
+      'Implement universe/franchise filtering system.',
+      'Add news feed for toy releases and events.',
+      'Create interactive feature visualization.'
+    ],
+    links: {
+      live: 'https://cs-ticket-system-website-01.netlify.app/',
+      github: 'https://github.com/mehedirobi/cs-ticket-system-website'
+    }
   }
 ];

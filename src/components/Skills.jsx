@@ -67,13 +67,6 @@ export default function Skills() {
     },
   ];
 
-  const proficiency = [
-    { skill: 'React & JavaScript', level: 90, color: 'from-blue-500 to-blue-900' },
-    { skill: 'Tailwind CSS & UI Design', level: 95, color: 'from-purple-500 to-purple-900' },
-    { skill: 'Node.js & Backend', level: 80, color: 'from-green-500 to-green-900' },
-    { skill: 'Web Performance & Optimization', level: 85, color: 'from-yellow-500 to-yellow-900' },
-  ];
-
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -110,7 +103,7 @@ export default function Skills() {
 
         {/* Skill Categories Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-3 gap-8"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
@@ -119,55 +112,6 @@ export default function Skills() {
           {skillsData.map((category, index) => (
             <SkillCategory key={index} {...category} />
           ))}
-        </motion.div>
-
-        {/* Proficiency Levels Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.8 }}
-          className="rounded-lg p-8 md:p-12 shadow-lg"
-          style={{
-            backgroundColor: 'var(--card-bg)',
-            borderColor: 'var(--border-color)',
-            boxShadow: 'var(--shadow-color)'
-          }}
-        >
-          <h3 className="text-3xl font-bold mb-10 text-center" style={{ color: 'var(--text-primary)' }}>Proficiency Levels</h3>
-          <div className="space-y-8">
-            {proficiency.map((item, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.6 }}
-              >
-                <div className="flex justify-between items-center mb-3">
-                  <span className="font-semibold text-lg" style={{ color: 'var(--text-secondary)' }}>{item.skill}</span>
-                  <motion.span
-                    className={`bg-gradient-to-r ${item.color} text-white font-bold px-3 py-1 rounded-full text-sm`}
-                    initial={{ scale: 0 }}
-                    whileInView={{ scale: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.15 + 0.3, duration: 0.4 }}
-                  >
-                    {item.level}%
-                  </motion.span>
-                </div>
-                <div className="w-full rounded-full h-4 overflow-hidden shadow-inner" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
-                  <motion.div
-                    className={`bg-gradient-to-r ${item.color} h-4 rounded-full shadow-lg`}
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${item.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ delay: idx * 0.15 + 0.3, duration: 1.2, ease: 'easeOut' }}
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
         </motion.div>
       </div>
     </section>
