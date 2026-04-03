@@ -2,7 +2,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import Card from './Card';
 
-// Enhanced Skill Category Card
 const SkillCategory = ({ icon, title, color, skills, gradient }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
@@ -10,27 +9,25 @@ const SkillCategory = ({ icon, title, color, skills, gradient }) => (
     viewport={{ once: true, amount: 0.2 }}
     transition={{ duration: 0.6 }}
   >
-    <Card className={`border-t-4 ${color} hover:shadow-2xl transition-all duration-300 flex flex-col h-full border-l-0 border-r-0 border-b-0`}>
+    <Card
+      className={`border-t-4 ${color} hover:shadow-2xl transition-all duration-300 flex flex-col h-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
+    >
       <div className="flex items-center gap-4 mb-6">
         <div className={`p-3 rounded-lg bg-gradient-to-br ${gradient} shadow-lg`}>
-          <i className={`fas ${icon} text-2xl`} style={{ color: 'var(--text-primary)' }}></i>
+          <i className={`fas ${icon} text-2xl text-white`} />
         </div>
-        <h3 className="text-2xl font-bold" style={{ color: 'var(--text-primary)' }}>{title}</h3>
+        <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h3>
       </div>
+
       <div className="flex flex-wrap gap-3 mt-auto">
         {skills.map((skill, idx) => (
           <motion.span
             key={skill}
-            className="text-sm px-4 py-2 rounded-full shadow-md border hover:border-blue-400 transition-all duration-300"
-            style={{
-              backgroundColor: 'var(--bg-tertiary)',
-              color: 'var(--text-secondary)',
-              borderColor: 'var(--border-color)'
-            }}
-            whileHover={{ 
-              scale: 1.1, 
-              backgroundColor: '#374151',
-              borderColor: '#3B82F6' 
+            className="text-sm px-4 py-2 rounded-full shadow-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-300 cursor-default"
+            whileHover={{
+              scale: 1.1,
+              backgroundColor: 'var(--tw-bg-opacity)', // maintain gradient fallback
+              borderColor: 'var(--tw-border-opacity)',
             }}
             transition={{ delay: idx * 0.05 }}
           >
@@ -67,20 +64,11 @@ export default function Skills() {
     },
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
   return (
-    <section id="skills" className="py-20 md:py-32 px-4" style={{
-      background: 'linear-gradient(to bottom, var(--bg-secondary), var(--bg-primary))'
-    }}>
+    <section
+      id="skills"
+      className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500"
+    >
       <div className="container mx-auto max-w-5xl">
         {/* Section Header */}
         <motion.div
@@ -90,7 +78,7 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-heading-1 mb-4" style={{ color: 'var(--text-primary)' }}>
+          <h2 className="text-4xl md:text-5xl font-bold">
             My <span className="bg-gradient-to-r from-green-400 to-green-800 text-transparent bg-clip-text">Skills</span>
           </h2>
           <motion.div
@@ -101,16 +89,15 @@ export default function Skills() {
           />
         </motion.div>
 
-        {/* Skill Categories Grid */}
+        {/* Skill Categories */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
         >
-          {skillsData.map((category, index) => (
-            <SkillCategory key={index} {...category} />
+          {skillsData.map((category, idx) => (
+            <SkillCategory key={idx} {...category} />
           ))}
         </motion.div>
       </div>

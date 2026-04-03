@@ -1,3 +1,4 @@
+// ThemeToggle.jsx
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useTheme } from './ThemeContext';
@@ -12,6 +13,7 @@ const ThemeToggle = () => {
       whileTap={{ scale: 0.95 }}
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
+      {/* Sun */}
       <motion.div
         initial={false}
         animate={{
@@ -23,6 +25,8 @@ const ThemeToggle = () => {
       >
         <i className="fas fa-sun text-yellow-500 text-lg"></i>
       </motion.div>
+
+      {/* Moon */}
       <motion.div
         initial={false}
         animate={{

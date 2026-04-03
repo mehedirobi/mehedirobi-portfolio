@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import Card from './Card';
-import Badge from './Badge';
-import Button from './Button';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Card from "./Card";
+import Badge from "./Badge";
+import Button from "./Button";
+import { projectData } from "../data/projectData";
 
 const ProjectCard = ({ project, onSelect, index }) => (
   <motion.div
     initial={{ opacity: 0, y: 30 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: 0.2 }}
-    transition={{ duration: 0.6, delay: index * 0.15 }}
+    transition={{ duration: 0.6, delay: index * 0.1 }}
     onClick={() => onSelect(project)}
+    className="cursor-pointer"
   >
-    <Card className="flex flex-col h-full overflow-hidden cursor-pointer group border-0 hover:border-blue-500 hover:border hover:shadow-2xl transition-all duration-300">
-      {/* Image Container */}
-      <div className="relative overflow-hidden rounded-lg mb-6 h-56" style={{ backgroundColor: 'var(--bg-tertiary)' }}>
+    <Card className="flex flex-col h-full overflow-hidden group border-0 hover:border-blue-500 hover:shadow-2xl transition-all duration-300 bg-card-bg dark:bg-gray-800">
+      {/* Image */}
+      <div className="relative overflow-hidden rounded-lg h-56 mb-4">
         <motion.img
           src={project.image}
           alt={project.name}
@@ -24,14 +26,19 @@ const ProjectCard = ({ project, onSelect, index }) => (
           transition={{ duration: 0.4 }}
         />
         <motion.div
-          className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"
+          className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"
           initial={{ opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.3 }}
         />
         <div className="absolute top-3 right-3 flex gap-2">
           {project.tech.slice(0, 2).map((tech, idx) => (
-            <Badge key={idx} variant="blue" size="sm" className="backdrop-blur-sm">
+            <Badge
+              key={idx}
+              variant="blue"
+              size="sm"
+              className="backdrop-blur-sm"
+            >
               {tech}
             </Badge>
           ))}
@@ -40,21 +47,17 @@ const ProjectCard = ({ project, onSelect, index }) => (
 
       {/* Content */}
       <div className="flex flex-col flex-grow">
-        <motion.h3
-          className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors"
-          style={{ color: 'var(--text-primary)' }}
-          whileHover={{ x: 5 }}
-        >
+        <motion.h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors text-gray-900 dark:text-white">
           {project.name}
         </motion.h3>
-        <p className="text-sm mb-4 flex-grow leading-relaxed" style={{ color: 'var(--text-muted)' }}>
+        <p className="text-sm mb-4 flex-grow text-gray-600 dark:text-gray-300">
           {project.description.length > 100
-            ? project.description.substring(0, 100) + '...'
+            ? project.description.substring(0, 100) + "..."
             : project.description}
         </p>
 
-        {/* Tech Stack */}
-        <div className="flex flex-wrap gap-2 mb-6">
+        {/* Tech badges */}
+        <div className="flex flex-wrap gap-2 mb-4">
           {project.tech.slice(0, 3).map((tech, idx) => (
             <Badge key={idx} variant="gray" size="sm">
               {tech}
@@ -67,13 +70,9 @@ const ProjectCard = ({ project, onSelect, index }) => (
           )}
         </div>
 
-        {/* View Details Button */}
-        <motion.div whileHover={{ scale: 1.02 }}>
-          <Button variant="primary" size="sm" className="w-full justify-center group/btn">
-            <i className="fas fa-arrow-right group-hover/btn:translate-x-1 transition-transform"></i>
-            View Details
-          </Button>
-        </motion.div>
+        <Button variant="primary" size="sm" className="w-full justify-center">
+          View Details
+        </Button>
       </div>
     </Card>
   </motion.div>
@@ -83,330 +82,142 @@ export default function Projects() {
   const [selected, setSelected] = useState(null);
 
   useEffect(() => {
-    document.body.style.overflow = selected ? 'hidden' : '';
+    document.body.style.overflow = selected ? "hidden" : "";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
   }, [selected]);
 
   return (
-    <section id="projects" className="py-20 md:py-32 px-4" style={{
-      background: 'linear-gradient(to bottom, var(--bg-primary), var(--bg-secondary))'
-    }}>
+    <section
+      id="projects"
+      className="py-20 md:py-32 px-4 dark:bg-gray-950 transition-colors duration-500"
+    >
       <div className="container mx-auto max-w-6xl">
-        {/* Section Header */}
+        {/* Header */}
         <motion.div
           className="text-center mb-16"
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-heading-1 mb-4" style={{ color: 'var(--text-primary)' }}>
-            My Latest <span className="bg-gradient-to-r from-blue-800 to-blue-400 text-transparent bg-clip-text">Projects</span>
+          <h2 className="text-4xl font-bold mb-4 text-white">
+            My Latest{" "}
+            <span className="bg-gradient-to-r from-blue-500 to-cyan-400 text-transparent bg-clip-text">
+              Projects
+            </span>
           </h2>
           <motion.div
-            className="h-1 w-24 bg-gradient-to-r from-blue-800 to-blue-400 mx-auto rounded-full"
+            className="h-1 w-24 bg-gradient-to-r from-blue-500 to-cyan-400 mx-auto rounded-full"
             initial={{ width: 0 }}
-            whileInView={{ width: '96px' }}
+            whileInView={{ width: "96px" }}
             transition={{ delay: 0.3, duration: 0.8 }}
           />
         </motion.div>
 
-        {/* Projects Grid */}
+        {/* Grid */}
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true }}
           variants={{
             hidden: {},
             visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
           {projectData.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} onSelect={setSelected} />
+            <ProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              onSelect={setSelected}
+            />
           ))}
         </motion.div>
-      </div>
 
-      {/* Project Details Modal */}
-      {selected && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black bg-opacity-75 backdrop-blur-sm flex items-center justify-center z-50 p-4"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setSelected(null);
-          }}
-        >
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0, y: 20 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
-            exit={{ scale: 0.8, opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            className="rounded-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border"
-            style={{
-              backgroundColor: 'var(--card-bg)',
-              borderColor: 'var(--border-color)',
-              boxShadow: 'var(--shadow-color)'
-            }}
+        {/* Modal */}
+        <AnimatePresence>
+  {selected && (
+    <motion.div
+      className="fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center z-50 px-4 py-10"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={(e) => e.target === e.currentTarget && setSelected(null)}
+    >
+      <motion.div
+        className="
+          bg-white dark:bg-gray-900
+          w-full max-w-2xl
+          max-h-[88vh]
+          overflow-y-auto
+          rounded-xl
+          p-6
+          shadow-2xl
+          border border-gray-200 dark:border-gray-700
+        "
+        initial={{ y: 40, opacity: 0, scale: 0.96 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 40, opacity: 0, scale: 0.96 }}
+        transition={{ duration: 0.25 }}
+      >
+        {/* Header */}
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-2xl font-semibold text-gray-900 dark:text-white leading-tight">
+            {selected.name}
+          </h3>
+
+          <button
+            onClick={() => setSelected(null)}
+            className="
+              text-gray-400 hover:text-gray-900 dark:hover:text-white
+              text-xl transition-colors
+            "
           >
-            <div className="sticky top-0 p-6 border-b flex justify-between items-center" style={{
-              backgroundColor: 'var(--card-bg)',
-              borderColor: 'var(--border-color)'
-            }}>
-              <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 text-transparent bg-clip-text">
-                {selected.name}
-              </h3>
-              <motion.button
-                onClick={() => setSelected(null)}
-                className="text-2xl p-2 transition-colors"
-                style={{
-                  color: 'var(--text-muted)',
-                  backgroundColor: 'transparent'
-                }}
-                onMouseEnter={(e) => e.target.style.color = 'var(--text-primary)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-muted)'}
-                aria-label="Close modal"
-                whileHover={{ rotate: 90, scale: 1.1 }}
-              >
-                <i className="fas fa-times"></i>
-              </motion.button>
-            </div>
+            ✕
+          </button>
+        </div>
 
-            <div className="p-6 md:p-8 space-y-8">
-              {/* Tech Stack */}
-              <div>
-                <h4 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>Tech Stack</h4>
-                <p className="text-blue-400 font-semibold text-lg">
-                  {selected.techStack}
-                </p>
-              </div>
+        {/* Description */}
+        <p className="text-sm text-gray-600 dark:text-gray-300 mb-5 leading-relaxed">
+          {selected.fullDescription}
+        </p>
 
-              {/* Description */}
-              <div>
-                <h4 className="text-lg font-semibold mb-3" style={{ color: 'var(--text-secondary)' }}>Overview</h4>
-                <p className="leading-relaxed text-lg" style={{ color: 'var(--text-muted)' }}>
-                  {selected.fullDescription}
-                </p>
-              </div>
+        {/* Tech Stack */}
+        <div className="mb-5">
+          <h4 className="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Tech Stack
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {selected.tech.map((tech, i) => (
+              <Badge key={i} variant="gray" size="sm">
+                {tech}
+              </Badge>
+            ))}
+          </div>
+        </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4">
-                <motion.div whileHover={{ scale: 1.05 }} className="flex-1 min-w-[200px]">
-                  <Button
-                    variant="primary"
-                    size="md"
-                    asChild
-                    className="w-full justify-center"
-                  >
-                    <a
-                      href={selected.links.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i className="fas fa-external-link-alt"></i> Live Demo
-                    </a>
-                  </Button>
-                </motion.div>
-                <motion.div whileHover={{ scale: 1.05 }} className="flex-1 min-w-[200px]">
-                  <Button
-                    variant="secondary"
-                    size="md"
-                    asChild
-                    className="w-full justify-center"
-                  >
-                    <a
-                      href={selected.links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <i className="fab fa-github"></i> GitHub Repo
-                    </a>
-                  </Button>
-                </motion.div>
-              </div>
+        {/* Actions */}
+        <div className="flex gap-3 mt-6">
+          <Button asChild size="sm" className="flex-1">
+            <a href={selected.links.live} target="_blank" rel="noopener noreferrer">
+              Live Demo
+            </a>
+          </Button>
 
-              {/* Challenges */}
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                  <i className="fas fa-exclamation-circle text-orange-400"></i>
-                  Challenges Faced
-                </h4>
-                <ul className="space-y-3">
-                  {selected.challenges.map((ch, idx) => (
-                    <motion.li
-                      key={idx}
-                      className="flex gap-3 items-start"
-                      style={{ color: 'var(--text-muted)' }}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                    >
-                      <i className="fas fa-check-circle text-green-400 mt-1 flex-shrink-0"></i>
-                      <span>{ch}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-
-              {/* Future Improvements */}
-              <div>
-                <h4 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ color: 'var(--text-primary)' }}>
-                  <i className="fas fa-lightbulb text-yellow-400"></i>
-                  Future Improvements
-                </h4>
-                <ul className="space-y-3">
-                  {selected.improvements.map((imp, idx) => (
-                    <motion.li
-                      key={idx}
-                      className="flex gap-3 items-start"
-                      style={{ color: 'var(--text-muted)' }}
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: idx * 0.1 }}
-                    >
-                      <i className="fas fa-arrow-right text-purple-400 mt-1 flex-shrink-0"></i>
-                      <span>{imp}</span>
-                    </motion.li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
+          <Button asChild variant="secondary" size="sm" className="flex-1">
+            <a href={selected.links.github} target="_blank" rel="noopener noreferrer">
+              Source Code
+            </a>
+          </Button>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+      </div>
     </section>
   );
 }
-
-// Project Data
-const projectData = [
-  {
-    id: 1,
-    name: 'Urban Fix Website',
-    description: 'Developed a responsive "Urban Fix" website using HTML, CSS, JavaScript, and React, allowing users to report issues in their city and track their resolution.',
-    image: 'https://i.ibb.co.com/Z1Rpx4Jb/Screenshot-2026-01-08-183414.png',
-    tech: [],
-    techStack: 'React, Node.js, Express, MongoDB, Tailwind CSS',
-    fullDescription: 'Developed a robust full-stack e-commerce platform featuring secure user authentication, product listing, shopping cart functionality, and order processing. Implemented a responsive design for optimal viewing on various devices. Users can report issues in their local community with real-time tracking and resolution updates.',
-    challenges: [
-      'Managing complex state across multiple components with React Context.',
-      'Implementing secure authentication and authorization flows.',
-      'Optimizing database queries for issue filtering and geolocation search.',
-      'Creating real-time notifications system for issue updates.'
-    ],
-    improvements: [
-      'Integrate real-time geolocation mapping with Google Maps API.',
-      'Add push notifications for issue updates.',
-      'Introduce AI-powered issue categorization and priority ranking.',
-      'Implement community rating system for improved accountability.'
-    ],
-    links: {
-      live: 'https://urban-fix-project-01.netlify.app/',
-      github: 'https://github.com/mehedirobi/urban-fix-project'
-    }
-  },
-  {
-    id: 2,
-    name: 'Pawmart Website',
-    description: 'Developed a responsive "PawMart" website using HTML, CSS, JavaScript, and React, where users can adopt pets and purchase pet-related products.',
-    image: 'https://i.ibb.co.com/spBB7YbP/Screenshot-2026-01-08-183616.png',
-    tech: [],
-    techStack: 'Vue.js, Firebase, CSS3',
-    fullDescription: 'Created an intuitive pet marketplace application with features like pet adoption listings, product catalog, shopping cart, and secure checkout. Utilized Firebase for real-time data synchronization and Vuetify for responsive component design.',
-    challenges: [
-      'Implementing efficient filtering for pet breeds and product categories.',
-      'Ensuring real-time inventory updates across multiple user sessions.',
-      'Designing a clean and user-friendly interface for pet discovery.',
-      'Managing complex payment flows for adoption and product purchases.'
-    ],
-    improvements: [
-      'Add virtual pet care calculator and health tracking.',
-      'Implement veterinarian appointment booking system.',
-      'Add pet adoption matching algorithm based on lifestyle.',
-      'Create community forum for pet owners.'
-    ],
-    links: {
-      live: 'https://pawmart-project-01.netlify.app/',
-      github: 'https://github.com/mehedirobi/pawmart-project'
-    }
-  },
-  {
-    id: 3,
-    name: 'Hero APP Website',
-    description: 'Developed a "Hero APP" website using HTML, CSS, JavaScript, and React that showcases a collection of superheroes with detailed profiles.',
-    image: 'https://i.ibb.co.com/3mxVn19W/Screenshot-2026-01-08-184922.png',
-    tech: [],
-    techStack: 'Next.js, Markdown, GraphQL',
-    fullDescription: 'Built a modern superhero database platform with detailed character profiles, abilities, origin stories, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
-    challenges: [
-      'Organizing and displaying large datasets efficiently.',
-      'Implementing powerful search and filtering capabilities.',
-      'Optimizing image loading for superhero galleries.',
-      'Creating engaging narratives for each character profile.'
-    ],
-    improvements: [
-      'Add character comparison tool.',
-      'Implement universe/franchise filtering system.',
-      'Add news feed for superhero movies and comics.',
-      'Create interactive power level visualization.'
-    ],
-    links: {
-      live: 'https://hero-web-app-01.netlify.app/',
-      github: 'https://github.com/mehedirobi/hero-web-app'
-    }
-  },
-  {
-    id: 4,
-    name: 'ToyVerse Website',
-    description: 'Developed a "ToyVerse" website using HTML, CSS, JavaScript, and React that showcases a collection of toys and games with detailed profiles.',
-    image: 'https://i.ibb.co/ynXZQfqz/Screenshot-2026-03-28-190350.png',
-    tech: [],
-    techStack: 'Next.js, Markdown, GraphQL',
-    fullDescription: 'Built a modern toy and game database platform with detailed product profiles, specifications, reviews, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
-    challenges: [
-      'Organizing and displaying large datasets efficiently.',
-      'Implementing powerful search and filtering capabilities.',
-      'Optimizing image loading for toy galleries.',
-      'Creating engaging narratives for each product profile.'
-    ],
-    improvements: [
-      'Add product comparison tool.',
-      'Implement universe/franchise filtering system.',
-      'Add news feed for toy releases and events.',
-      'Create interactive feature visualization.'
-    ],
-    links: {
-      live: 'https://toyverse-project-01.netlify.app/',
-      github: 'https://github.com/mehedirobi/toyverse-project'
-    }
-  },
-  {
-    id: 5,
-    name: 'CS Ticket System Website',
-    description: 'Developed a "CS Ticket System" website using HTML, CSS, JavaScript, and React that showcases a collection of ticketing solutions with detailed profiles.',
-    image: 'https://i.ibb.co/7st42CW/Screenshot-2026-03-28-203941.png',
-    tech: [],
-    techStack: 'Next.js, Markdown, GraphQL',
-    fullDescription: 'Built a modern ticketing platform with detailed solution profiles, specifications, reviews, and high-quality images. Features include dynamic routing, search functionality, and SEO optimization. Styled with a modern theme and smooth animations.',
-    challenges: [
-      'Organizing and displaying large datasets efficiently.',
-      'Implementing powerful search and filtering capabilities.',
-      'Optimizing image loading for toy galleries.',
-      'Creating engaging narratives for each product profile.'
-    ],
-    improvements: [
-      'Add product comparison tool.',
-      'Implement universe/franchise filtering system.',
-      'Add news feed for toy releases and events.',
-      'Create interactive feature visualization.'
-    ],
-    links: {
-      live: 'https://cs-ticket-system-website-01.netlify.app/',
-      github: 'https://github.com/mehedirobi/cs-ticket-system-website'
-    }
-  }
-];

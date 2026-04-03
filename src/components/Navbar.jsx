@@ -7,141 +7,132 @@ const SECTIONS = ['home', 'about', 'skills', 'education', 'experience', 'project
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState('home');
+  const [isMobile, setIsMobile] = useState(false);
 
+  // Mobile detection
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Smooth scroll & close mobile menu
   const handleNavClick = useCallback((e, id) => {
     e.preventDefault();
-    if (id === 'home' && window && window.location && window.location.pathname !== '/') {
-      try {
-        window.history.pushState({}, '', '/');
-      } catch {}
-    }
     const el = document.getElementById(id);
-    if (el) {
-      try {
-        el.setAttribute('tabindex', '-1');
-        el.focus({ preventScroll: true });
-      } catch {}
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
     setOpen(false);
   }, []);
 
+  // Observe active section
   useEffect(() => {
-    const options = { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 };
-    const callback = (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    };
-    const observer = new IntersectionObserver(callback, options);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActive(entry.target.id);
+        });
+      },
+      { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+    );
+
     SECTIONS.forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
+
     return () => observer.disconnect();
   }, []);
 
-  const isNavOpen = open;
+  // Framer motion variants
+  const menuVariants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.08, ease: 'easeOut' } },
+  };
+
+  const linkVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0 },
+  };
 
   return (
-    <nav
-      className="backdrop-blur-md p-4 fixed w-full z-50 shadow-xl border-b transition-all duration-300"
-      style={{
-        backgroundColor: 'var(--nav-bg)',
-        borderColor: 'var(--nav-border)'
-      }}
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      <div className="container mx-auto flex justify-between items-center max-w-7xl px-4">
+    <nav className="fixed w-full z-50 bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 transition-colors">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
         {/* Logo */}
         <motion.a
           href="#home"
           onClick={(e) => handleNavClick(e, 'home')}
-          className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 text-transparent bg-clip-text hover:scale-110 transition-transform duration-300 flex items-center gap-2"
-          style={{ color: 'var(--text-primary)' }}
-          aria-label="Portfolio home"
+          className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text hover:scale-105 transition-transform duration-300"
           whileHover={{ scale: 1.05 }}
         >
-          <span className="hidden sm:inline">Mehedi Robi</span>
-          <span className="sm:hidden">Portfolio</span>
+          Mehedi Robi
         </motion.a>
 
-        {/* Navigation Links */}
-        <AnimatePresence>
-          {(isNavOpen || window.innerWidth >= 768) && (
-            <motion.div
-              id="nav-links"
-              className="md:flex space-x-1 md:space-x-1 absolute md:relative top-16 md:top-0 left-0 md:left-auto w-full md:w-auto flex-col md:flex-row overflow-hidden"
-              style={{
-                backgroundColor: 'var(--nav-bg)'
-              }}
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: 'auto', opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {SECTIONS.map((link, idx) => {
-                const label = link.charAt(0).toUpperCase() + link.slice(1);
-                const isActive = active === link;
-                const hrefValue = link === 'home' ? '/' : `#${link}`;
-                return (
-                  <motion.a
-                    key={link}
-                    href={hrefValue}
-                    onClick={(e) => handleNavClick(e, link)}
-                    className={`px-4 py-3 md:py-2 rounded-lg text-sm md:text-base font-medium transition-all duration-300 block md:inline-block ${
-                      isActive
-                        ? 'text-blue-400 bg-blue-500/10 md:bg-transparent border-b-2 border-blue-400'
-                        : 'hover:text-blue-400 md:hover:bg-transparent'
-                    }`}
-                    style={{
-                      color: isActive ? 'var(--accent-color)' : 'var(--text-secondary)',
-                      backgroundColor: isActive ? 'rgba(59, 130, 246, 0.1)' : 'transparent'
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        e.target.style.backgroundColor = 'var(--bg-tertiary)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        e.target.style.backgroundColor = 'transparent';
-                      }
-                    }}
-                    role="menuitem"
-                    whileHover={{ x: 2 }}
-                    transition={{ delay: idx * 0.05 }}
-                  >
-                    {label}
-                  </motion.a>
-                );
-              })}
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Desktop Links */}
+        <div className="hidden md:flex items-center space-x-6">
+          {SECTIONS.map((link) => {
+            const isActive = active === link;
+            return (
+              <a
+                key={link}
+                href={`#${link}`}
+                onClick={(e) => handleNavClick(e, link)}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                  isActive
+                    ? 'text-blue-500 border-b-2 border-blue-500'
+                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-500'
+                }`}
+              >
+                {link.charAt(0).toUpperCase() + link.slice(1)}
+              </a>
+            );
+          })}
+        </div>
 
-        {/* Theme Toggle & Mobile Menu Button */}
-        <div className="flex items-center gap-2 ml-4">
+        {/* Mobile & Theme Toggle */}
+        <div className="flex items-center gap-2">
           <ThemeToggle />
-          <motion.button
-            id="hamburger-button"
+          <button
+            className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-300"
             onClick={() => setOpen(!open)}
-            className="md:hidden focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-lg p-2 transition duration-300"
-            style={{
-              color: 'var(--text-primary)',
-              backgroundColor: 'var(--bg-secondary)'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--bg-tertiary)'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = 'var(--bg-secondary)'}
-            aria-label={isNavOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={isNavOpen}
-            whileTap={{ scale: 0.95 }}
+            aria-label={open ? 'Close menu' : 'Open menu'}
           >
-            <i className={`fas fa-${isNavOpen ? 'times' : 'bars'} text-xl`}></i>
-          </motion.button>
+            <i className={`fas fa-${open ? 'times' : 'bars'} text-xl text-gray-800 dark:text-gray-200`} />
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {open && isMobile && (
+          <motion.div
+            variants={menuVariants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className="md:hidden flex flex-col space-y-2 px-4 pb-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg rounded-b-md"
+          >
+            {SECTIONS.map((link) => {
+              const isActive = active === link;
+              return (
+                <motion.a
+                  key={link}
+                  variants={linkVariants}
+                  href={`#${link}`}
+                  onClick={(e) => handleNavClick(e, link)}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-500'
+                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {link.charAt(0).toUpperCase() + link.slice(1)}
+                </motion.a>
+              );
+            })}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
