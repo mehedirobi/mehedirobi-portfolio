@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// Contact.jsx
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Button from "./Button";
 import Card from "./Card";
@@ -10,7 +11,6 @@ export default function Contact() {
   const [emailCopied, setEmailCopied] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
 
-  // Validation
   const validateForm = () => {
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = "Name is required";
@@ -23,8 +23,8 @@ export default function Contact() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors(prev => ({ ...prev, [name]: "" }));
   };
 
   const handleSubmit = (e) => {
@@ -41,28 +41,24 @@ export default function Contact() {
     try {
       await navigator.clipboard.writeText(text);
       type === "email" ? setEmailCopied(true) : setPhoneCopied(true);
-      setTimeout(() => (type === "email" ? setEmailCopied(false) : setPhoneCopied(false)), 2200);
+      setTimeout(() => type === "email" ? setEmailCopied(false) : setPhoneCopied(false), 2200);
     } catch {
       if (type === "email") window.location.href = `mailto:${text}`;
     }
   };
 
-  // Motion Variants
   const containerVariants = { hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0, transition: { duration: 0.8, staggerChildren: 0.15 } } };
   const itemVariants = { hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } };
 
   return (
-    <section id="contact" className="py-20 md:py-32 px-4 bg-gray-50 dark:bg-gray-950 transition-colors duration-500">
+    <section id="contact" className="py-24 md:py-32 px-4 dark:bg-gray-950 transition-colors duration-500">
       <div className="container mx-auto max-w-6xl">
         {/* Header */}
         <motion.div className="text-center mb-12" initial={{ opacity: 0, y: -30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900 dark:text-white">
             Get in{" "}
-            <span className="bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">
-              Touch
-            </span>
+            <span className="bg-gradient-to-r from-pink-500 to-purple-600 text-transparent bg-clip-text">Touch</span>
           </h2>
-          <motion.div className="h-1 w-24 bg-gradient-to-r from-pink-500 to-purple-600 mx-auto rounded-full" initial={{ width: 0 }} whileInView={{ width: "96px" }} transition={{ delay: 0.3, duration: 0.8 }} />
           <p className="text-gray-600 dark:text-gray-300 mt-4">Let's connect. I'd love to hear from you!</p>
         </motion.div>
 
@@ -103,8 +99,8 @@ export default function Contact() {
                 <div className="flex gap-3">
                   {[
                     { href: "https://github.com/mehedirobi", icon: "fab fa-github", color: "from-gray-500 to-gray-600" },
-                    { href: "https://www.linkedin.com/in/mehedi-robi-76b38739b/", icon: "fab fa-linkedin", color: "from-blue-500 to-blue-600" },
-                    { href: "https://x.com/mehedirobi01", icon: "fab fa-twitter", color: "from-blue-400 to-blue-500" },
+                    { href: "https://www.linkedin.com/in/mehedirobii/", icon: "fab fa-linkedin", color: "from-blue-500 to-blue-600" },
+                    { href: "https://x.com/mehedirobii", icon: "fab fa-twitter", color: "from-blue-400 to-blue-500" },
                   ].map((link) => (
                     <motion.a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className={`w-12 h-12 flex items-center justify-center rounded-lg bg-gradient-to-br ${link.color} text-white shadow-lg hover:shadow-xl transition-all`} whileHover={{ scale: 1.1, y: -3 }} whileTap={{ scale: 0.95 }} aria-label={link.icon}>
                       <i className={`${link.icon} text-lg`}></i>
@@ -135,7 +131,6 @@ export default function Contact() {
                     {errors[field] && <p className="text-red-500 text-sm mt-1">{errors[field]}</p>}
                   </div>
                 ))}
-
                 <motion.div whileHover={{ scale: 1.02 }}>
                   <Button type="submit" variant="primary" size="md" className="w-full justify-center group">
                     <i className="fas fa-paper-plane group-hover:translate-x-1 transition-transform mr-2"></i> Send Message

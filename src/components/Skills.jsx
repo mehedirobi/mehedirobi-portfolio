@@ -10,10 +10,10 @@ const SkillCategory = ({ icon, title, color, skills, gradient }) => (
     transition={{ duration: 0.6 }}
   >
     <Card
-      className={`border-t-4 ${color} hover:shadow-2xl transition-all duration-300 flex flex-col h-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700`}
+      className={`border-t-4 ${color} hover:shadow-2xl transition-all duration-300 flex flex-col h-full bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-2xl`}
     >
       <div className="flex items-center gap-4 mb-6">
-        <div className={`p-3 rounded-lg bg-gradient-to-br ${gradient} shadow-lg`}>
+        <div className={`p-4 rounded-lg bg-gradient-to-br ${gradient} shadow-lg`}>
           <i className={`fas ${icon} text-2xl text-white`} />
         </div>
         <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h3>
@@ -23,12 +23,8 @@ const SkillCategory = ({ icon, title, color, skills, gradient }) => (
         {skills.map((skill, idx) => (
           <motion.span
             key={skill}
-            className="text-sm px-4 py-2 rounded-full shadow-md border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-colors duration-300 cursor-default"
-            whileHover={{
-              scale: 1.1,
-              backgroundColor: 'var(--tw-bg-opacity)', // maintain gradient fallback
-              borderColor: 'var(--tw-border-opacity)',
-            }}
+            className="text-sm px-4 py-2 rounded-full shadow-sm border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 transition-all duration-300 cursor-default"
+            whileHover={{ scale: 1.08 }}
             transition={{ delay: idx * 0.05 }}
           >
             {skill}
@@ -67,9 +63,9 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="py-20 md:py-32 px-4 bg-gradient-to-b from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500"
+      className="py-24 md:py-36 px-4 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-500"
     >
-      <div className="container mx-auto max-w-5xl">
+      <div className="container mx-auto max-w-6xl">
         {/* Section Header */}
         <motion.div
           className="text-center mb-16"
@@ -78,11 +74,11 @@ export default function Skills() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <h2 className="text-4xl md:text-5xl font-bold">
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
             My <span className="bg-gradient-to-r from-green-400 to-green-800 text-transparent bg-clip-text">Skills</span>
           </h2>
           <motion.div
-            className="h-1 w-24 bg-gradient-to-r from-green-400 to-green-800 mx-auto rounded-full"
+            className="h-1 w-24 mx-auto rounded bg-gradient-to-r from-green-400 to-green-800 mt-4"
             initial={{ width: 0 }}
             whileInView={{ width: '96px' }}
             transition={{ delay: 0.3, duration: 0.8 }}

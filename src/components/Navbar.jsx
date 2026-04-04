@@ -1,31 +1,61 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import ThemeToggle from './ThemeToggle';
+import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
-const SECTIONS = ['home', 'about', 'skills', 'education', 'experience', 'projects', 'contact'];
+const SECTIONS = [
+  "home",
+  "about",
+  "skills",
+  "education",
+  "experience",
+  "projects",
+  "contact",
+];
+
+// Reusable NavLink
+const NavLink = ({ id, active, onClick }) => {
+  const isActive = active === id;
+
+  return (
+    <a
+      href={`#${id}`}
+      onClick={(e) => onClick(e, id)}
+      className={`
+        relative px-4 py-2 text-sm font-medium rounded-full transition-all duration-300
+        ${isActive ? "text-white font-semibold" : "text-gray-700 dark:text-gray-300 hover:text-blue-500"}
+      `}
+    >
+      {isActive && (
+        <motion.span
+          layoutId="active-pill"
+          className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full -z-10"
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+        />
+      )}
+      {id.charAt(0).toUpperCase() + id.slice(1)}
+    </a>
+  );
+};
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const [active, setActive] = useState('home');
-  const [isMobile, setIsMobile] = useState(false);
+  const [active, setActive] = useState("home");
 
-  // Mobile detection
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Smooth scroll & close mobile menu
+  // Smooth scroll with offset
   const handleNavClick = useCallback((e, id) => {
     e.preventDefault();
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+
+    if (el) {
+      const yOffset = -80; // navbar height offset
+      const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
     setOpen(false);
   }, []);
 
-  // Observe active section
+  // Active section observer
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -33,7 +63,7 @@ export default function Navbar() {
           if (entry.isIntersecting) setActive(entry.target.id);
         });
       },
-      { root: null, rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+      { rootMargin: "-40% 0px -55% 0px" }
     );
 
     SECTIONS.forEach((id) => {
@@ -44,92 +74,70 @@ export default function Navbar() {
     return () => observer.disconnect();
   }, []);
 
-  // Framer motion variants
-  const menuVariants = {
-    hidden: { opacity: 0, y: -20 },
-    visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.08, ease: 'easeOut' } },
-  };
-
-  const linkVariants = {
-    hidden: { opacity: 0, y: -10 },
-    visible: { opacity: 1, y: 0 },
-  };
-
   return (
-    <nav className="fixed w-full z-50 bg-white dark:bg-gray-900 shadow-md border-b border-gray-200 dark:border-gray-700 transition-colors">
+    <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-white/20 dark:border-gray-700/50 transition-colors duration-500">
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
         {/* Logo */}
         <motion.a
           href="#home"
-          onClick={(e) => handleNavClick(e, 'home')}
-          className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text hover:scale-105 transition-transform duration-300"
+          onClick={(e) => handleNavClick(e, "home")}
+          className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 text-transparent bg-clip-text"
           whileHover={{ scale: 1.05 }}
         >
           Mehedi Robi
         </motion.a>
 
-        {/* Desktop Links */}
-        <div className="hidden md:flex items-center space-x-6">
-          {SECTIONS.map((link) => {
-            const isActive = active === link;
-            return (
-              <a
-                key={link}
-                href={`#${link}`}
-                onClick={(e) => handleNavClick(e, link)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                  isActive
-                    ? 'text-blue-500 border-b-2 border-blue-500'
-                    : 'text-gray-700 dark:text-gray-300 hover:text-blue-500'
-                }`}
-              >
-                {link.charAt(0).toUpperCase() + link.slice(1)}
-              </a>
-            );
-          })}
+        {/* Desktop Nav */}
+        <div className="hidden md:flex items-center gap-2">
+          {SECTIONS.map((link) => (
+            <NavLink key={link} id={link} active={active} onClick={handleNavClick} />
+          ))}
         </div>
 
-        {/* Mobile & Theme Toggle */}
-        <div className="flex items-center gap-2">
+        {/* Right controls */}
+        <div className="flex items-center gap-3">
           <ThemeToggle />
+
+          {/* Mobile menu toggle */}
           <button
-            className="md:hidden p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-300"
             onClick={() => setOpen(!open)}
-            aria-label={open ? 'Close menu' : 'Open menu'}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
           >
-            <i className={`fas fa-${open ? 'times' : 'bars'} text-xl text-gray-800 dark:text-gray-200`} />
+            <div className="w-5 h-5 relative">
+              <span
+                className={`absolute w-full h-0.5 bg-black dark:bg-white transition-all duration-300 ${
+                  open ? "rotate-45 top-2" : "top-1"
+                }`}
+              />
+              <span
+                className={`absolute w-full h-0.5 bg-black dark:bg-white transition-all duration-300 ${
+                  open ? "opacity-0" : "top-2"
+                }`}
+              />
+              <span
+                className={`absolute w-full h-0.5 bg-black dark:bg-white transition-all duration-300 ${
+                  open ? "-rotate-45 top-2" : "top-3"
+                }`}
+              />
+            </div>
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
       <AnimatePresence>
-        {open && isMobile && (
+        {open && (
           <motion.div
-            variants={menuVariants}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className="md:hidden flex flex-col space-y-2 px-4 pb-4 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 shadow-lg rounded-b-md"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="md:hidden px-4 pb-4"
           >
-            {SECTIONS.map((link) => {
-              const isActive = active === link;
-              return (
-                <motion.a
-                  key={link}
-                  variants={linkVariants}
-                  href={`#${link}`}
-                  onClick={(e) => handleNavClick(e, link)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
-                    isActive
-                      ? 'bg-blue-100 dark:bg-blue-900 text-blue-500'
-                      : 'text-gray-700 dark:text-gray-300 hover:text-blue-500 hover:bg-gray-100 dark:hover:bg-gray-800'
-                  }`}
-                >
-                  {link.charAt(0).toUpperCase() + link.slice(1)}
-                </motion.a>
-              );
-            })}
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-4 space-y-2">
+              {SECTIONS.map((link) => (
+                <NavLink key={link} id={link} active={active} onClick={handleNavClick} />
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

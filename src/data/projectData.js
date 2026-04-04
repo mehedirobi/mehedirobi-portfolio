@@ -6,7 +6,7 @@ export const projectData = [
       'Developed a responsive "Urban Fix" website using HTML, CSS, JavaScript, and React for reporting city issues.',
     image:
       'https://i.ibb.co/Z1Rpx4Jb/Screenshot-2026-01-08-183414.png',
-    tech: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
+    tech: [''],
     techStack: 'React, Node.js, Express, MongoDB, Tailwind CSS',
     fullDescription:
       'Robust full-stack platform with secure user authentication, issue reporting, real-time notifications, responsive design, and optimized performance.',
