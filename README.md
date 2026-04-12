@@ -1,4 +1,4 @@
-# 🚀 Mehedi Portfolio (React)
+# 🚀 Mehedi Robi Portfolio
 
 A modern, responsive, and production-style developer portfolio built with React and Tailwind CSS.
 
