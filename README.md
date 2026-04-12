@@ -27,7 +27,7 @@ This project is a React conversion of the original HTML/CSS portfolio, optimized
 
 ---
 
-## 🔗 Live Demo
+## 🔗 Live link
 https://mehedi-robi-portfolio.netlify.app/
 ---
 
