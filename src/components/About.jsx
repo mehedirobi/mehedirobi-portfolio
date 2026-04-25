@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 import Card from "./Card";
 
 const stats = [
@@ -107,6 +108,75 @@ export default function About() {
           </Card>
         </motion.div>
       </motion.div>
+=======
+
+export default function About() {
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
+  return (
+    <section
+      id="about"
+      className="py-20 px-6 bg-white dark:bg-gray-900"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={containerVariants}
+          className="max-w-3xl mx-auto text-center"
+        >
+          <motion.h2
+            variants={itemVariants}
+            className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-8"
+          >
+            About Me
+          </motion.h2>
+
+          <motion.div
+            variants={containerVariants}
+            className="space-y-6 text-lg text-gray-600 dark:text-gray-300 leading-relaxed"
+          >
+            <motion.p variants={itemVariants}>
+              Hi, I'm Mehedi Hasan, a passionate frontend developer based in Bangladesh. I specialize in creating modern, responsive web applications that deliver exceptional user experiences. With a strong foundation in React and JavaScript, I'm committed to building scalable solutions that users love.
+            </motion.p>
+
+            <motion.p variants={itemVariants}>
+              My career focuses on leveraging modern technologies like React, Tailwind CSS, and Framer Motion to craft performant digital solutions. I believe in writing clean, maintainable code and staying current with the latest web standards and best practices.
+            </motion.p>
+
+            <motion.p variants={itemVariants}>
+              My goal is to contribute to meaningful projects that make a positive impact on users' lives, while continuously growing my skills and helping others in the developer community. I'm always eager to learn new technologies and collaborate on exciting challenges.
+            </motion.p>
+          </motion.div>
+
+          {/* Skills Highlight */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-8 pt-8 border-t border-gray-200 dark:border-gray-700"
+          >
+          </motion.div>
+        </motion.div>
+      </div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
     </section>
   );
 }

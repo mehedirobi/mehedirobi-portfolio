@@ -37,7 +37,20 @@ export const ThemeProvider = ({ children }) => {
     });
   };
 
+<<<<<<< HEAD
   if (!isLoaded) return null;
+=======
+  if (!isLoaded) {
+    return (
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-white dark:bg-gray-900">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Loading...</h2>
+        </div>
+      </div>
+    );
+  }
+>>>>>>> a8ffe3d (upgarted my portfolio)
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Education.jsx
 import React from "react";
 import { motion } from "framer-motion";
@@ -92,6 +93,48 @@ export default function Education() {
             <EducationCard key={index} item={item} index={index} />
           ))}
         </div>
+=======
+import React from "react";
+import { motion } from "framer-motion";
+
+export default function Education() {
+  return (
+    <section
+      id="education"
+      className="py-20 px-6 bg-white dark:bg-gray-900"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            Education
+          </h2>
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          viewport={{ once: true }}
+          className="bg-gray-50 dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+        >
+          <div className="text-center">
+            <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-2">
+              Diploma in Computer Science and Technology
+            </h3>
+            <p className="text-lg text-gray-600 dark:text-gray-300 mb-2">
+              Ahsanullah Institute of Technical and Vocational Education and Training
+            </p>
+            <p className="text-base text-gray-500 dark:text-gray-400">
+              2023 - Present
+            </p>
+          </div>
+        </motion.div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
       </div>
     </section>
   );

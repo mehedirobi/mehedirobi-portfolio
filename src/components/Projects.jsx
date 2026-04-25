@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Projects.jsx
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -132,6 +133,117 @@ export default function Projects() {
             </motion.div>
           )}
         </AnimatePresence>
+=======
+import React from "react";
+import { motion } from "framer-motion";
+import Button from "./Button";
+
+const projects = [
+  {
+    id: 1,
+    name: 'Urban Fix Website',
+    description: 'A responsive platform for reporting city issues with user authentication and real-time notifications.',
+    image: 'https://i.ibb.co/Z1Rpx4Jb/Screenshot-2026-01-08-183414.png',
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Tailwind CSS'],
+    live: 'https://urban-fix-project-01.netlify.app/',
+    github: 'https://github.com/mehedirobi/urban-fix-project'
+  },
+  {
+    id: 2,
+    name: 'Pawmart Website',
+    description: 'An intuitive pet marketplace for adoption and product purchases with real-time inventory.',
+    image: 'https://i.ibb.co.com/spBB7YbP/Screenshot-2026-01-08-183616.png',
+    tech: ['Vue.js', 'Firebase', 'CSS3'],
+    live: 'https://pawmart-project-01.netlify.app/',
+    github: 'https://github.com/mehedirobi/pawmart-project'
+  },
+  {
+    id: 3,
+    name: 'Hero APP Website',
+    description: 'A modern superhero database with detailed profiles, search, and dynamic routing.',
+    image: 'https://i.ibb.co.com/3mxVn19W/Screenshot-2026-01-08-184922.png',
+    tech: ['Next.js', 'Markdown', 'GraphQL'],
+    live: 'https://hero-web-app-01.netlify.app/',
+    github: 'https://github.com/mehedirobi/hero-web-app'
+  },
+  {
+    id: 4,
+    name: 'ToyVerse Website',
+    description: 'A toy and game database platform with product profiles and SEO optimization.',
+    image: 'https://i.ibb.co/ynXZQfqz/Screenshot-2026-03-28-190350.png',
+    tech: ['Next.js', 'Markdown', 'GraphQL'],
+    live: 'https://toyverse-project-01.netlify.app/',
+    github: 'https://github.com/mehedirobi/toyverse-project'
+  }
+];
+
+export default function Projects() {
+  return (
+    <section
+      id="projects"
+      className="py-20 px-6 bg-white dark:bg-gray-900"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            Projects
+          </h2>
+        </motion.div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              className="bg-gray-50 dark:bg-gray-800 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-300 border border-gray-200 dark:border-gray-700"
+            >
+              <img
+                src={project.image}
+                alt={project.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {project.name}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  {project.description}
+                </p>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.tech.map((tech, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-1 text-xs bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+                <div className="flex gap-3">
+                  <Button asChild size="sm" className="flex-1">
+                    <a href={project.live} target="_blank" rel="noopener noreferrer">
+                      Live Demo
+                    </a>
+                  </Button>
+                  <Button asChild variant="secondary" size="sm" className="flex-1">
+                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                      GitHub
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
       </div>
     </section>
   );

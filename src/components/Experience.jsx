@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Experience.jsx
 import React from "react";
 import { motion } from "framer-motion";
@@ -80,6 +81,71 @@ export default function Experience() {
 
           {experienceData.map((item, index) => (
             <ExperienceCard key={index} item={item} index={index} />
+=======
+import React from "react";
+import { motion } from "framer-motion";
+
+const experiences = [
+  {
+    title: "Freelance Frontend Developer",
+    company: "Self-Employed",
+    period: "2023 - Present",
+    responsibilities: [
+      "Developed responsive web applications using React and Tailwind CSS",
+      "Collaborated with clients to deliver custom web solutions",
+      "Optimized code for performance and accessibility"
+    ]
+  }
+];
+
+export default function Experience() {
+  return (
+    <section
+      id="experience"
+      className="py-20 px-6 bg-gray-50 dark:bg-gray-900"
+    >
+      <div className="max-w-6xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white">
+            Experience
+          </h2>
+        </motion.div>
+        <div className="space-y-8">
+          {experiences.map((exp, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              viewport={{ once: true }}
+              className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700"
+            >
+              <div className="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                <div>
+                  <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-1">
+                    {exp.title}
+                  </h3>
+                  <p className="text-lg text-gray-600 dark:text-gray-300">
+                    {exp.company}
+                  </p>
+                </div>
+                <p className="text-base text-gray-500 dark:text-gray-400 mt-2 md:mt-0">
+                  {exp.period}
+                </p>
+              </div>
+              <ul className="list-disc list-inside space-y-2 text-gray-700 dark:text-gray-300">
+                {exp.responsibilities.map((resp, idx) => (
+                  <li key={idx}>{resp}</li>
+                ))}
+              </ul>
+            </motion.div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
           ))}
         </div>
       </div>

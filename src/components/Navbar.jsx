@@ -6,8 +6,13 @@ const SECTIONS = [
   "home",
   "about",
   "skills",
+<<<<<<< HEAD
   "education",
   "experience",
+=======
+  "experience",
+  "education",
+>>>>>>> a8ffe3d (upgarted my portfolio)
   "projects",
   "contact",
 ];
@@ -76,7 +81,11 @@ export default function Navbar() {
 
   return (
     <nav className="fixed top-0 w-full z-50 backdrop-blur-md bg-white/70 dark:bg-gray-900/70 border-b border-white/20 dark:border-gray-700/50 transition-colors duration-500">
+<<<<<<< HEAD
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-3">
+=======
+      <div className="max-w-6xl mx-auto flex justify-between items-center px-6 py-4">
+>>>>>>> a8ffe3d (upgarted my portfolio)
         {/* Logo */}
         <motion.a
           href="#home"
@@ -95,6 +104,7 @@ export default function Navbar() {
         </div>
 
         {/* Right controls */}
+<<<<<<< HEAD
         <div className="flex items-center gap-3">
           <ThemeToggle />
 
@@ -102,6 +112,27 @@ export default function Navbar() {
           <button
             onClick={() => setOpen(!open)}
             className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+=======
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="https://drive.google.com/file/d/1FTSrUD1chcEFB-2LlUP9l0UFjx3nPJSA/view"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full hover:shadow-lg transition-all duration-300"
+          >
+            Resume
+          </a>
+          <ThemeToggle />
+        </div>
+
+        {/* Mobile menu toggle */}
+        <div className="md:hidden flex items-center gap-3">
+          <ThemeToggle />
+          <button
+            onClick={() => setOpen(!open)}
+            className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+            aria-label="Toggle menu"
+>>>>>>> a8ffe3d (upgarted my portfolio)
           >
             <div className="w-5 h-5 relative">
               <span
@@ -131,12 +162,31 @@ export default function Navbar() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
+<<<<<<< HEAD
             className="md:hidden px-4 pb-4"
           >
             <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-4 space-y-2">
               {SECTIONS.map((link) => (
                 <NavLink key={link} id={link} active={active} onClick={handleNavClick} />
               ))}
+=======
+            className="md:hidden px-6 pb-4"
+          >
+            <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-lg rounded-2xl shadow-xl border border-gray-200 dark:border-gray-700 p-6 space-y-4">
+              {SECTIONS.map((link) => (
+                <NavLink key={link} id={link} active={active} onClick={handleNavClick} />
+              ))}
+              <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+                <a
+                  href="https://drive.google.com/file/d/1FTSrUD1chcEFB-2LlUP9l0UFjx3nPJSA/view"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-full text-center hover:shadow-lg transition-all duration-300"
+                >
+                  Resume
+                </a>
+              </div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
             </div>
           </motion.div>
         )}

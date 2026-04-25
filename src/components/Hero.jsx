@@ -1,16 +1,21 @@
 import React from "react";
 import { motion } from "framer-motion";
+<<<<<<< HEAD
 
 const socialLinks = [
   { href: "https://github.com/mehedirobi", icon: "fab fa-github" },
   { href: "https://www.linkedin.com/in/mehedirobii/", icon: "fab fa-linkedin" },
   { href: "https://x.com/mehedirobii", icon: "fab fa-twitter" },
 ];
+=======
+import Button from "./Button";
+>>>>>>> a8ffe3d (upgarted my portfolio)
 
 export default function Hero() {
   const scrollToContact = () =>
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
 
+<<<<<<< HEAD
   return (
     <section
       id="home"
@@ -98,6 +103,57 @@ export default function Hero() {
             />
           </motion.div>
         </motion.div>
+=======
+  const scrollToProjects = () =>
+    document.getElementById("projects")?.scrollIntoView({ behavior: "smooth" });
+
+  return (
+    <section
+      id="home"
+      className="min-h-screen flex items-center px-6 py-20 bg-gray-50 dark:bg-gray-900"
+    >
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* LEFT CONTENT */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center lg:text-left"
+          >
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-4">
+              Mehedi Hasan
+            </h1>
+            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8">
+              Frontend Developer
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button onClick={scrollToProjects} variant="primary">
+                View Projects
+              </Button>
+              <Button onClick={scrollToContact} variant="secondary">
+                Contact
+              </Button>
+            </div>
+          </motion.div>
+
+          {/* RIGHT IMAGE */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="flex justify-center lg:justify-end"
+          >
+            <div className="relative">
+              <img
+                src="https://i.ibb.co/yn3q9rhd/mehedirobi.png"
+                alt="Mehedi Hasan"
+                className="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-gray-200 dark:border-gray-700 shadow-lg"
+              />
+            </div>
+          </motion.div>
+        </div>
+>>>>>>> a8ffe3d (upgarted my portfolio)
       </div>
     </section>
   );
