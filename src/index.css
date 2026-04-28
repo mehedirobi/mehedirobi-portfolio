@@ -1,0 +1,266 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  min-height: 100%;
+  background-color: #ffffff;
+  color: #0f172a;
+  transition: background-color 0.25s ease, color 0.25s ease;
+  line-height: 1.6;
+  font-weight: 400;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+::selection {
+  background-color: rgba(37, 99, 235, 0.3);
+  color: #0f172a;
+}
+
+/* Design System Variables */
+:root {
+  --section-spacing-sm: 3rem;
+  --section-spacing: 5rem;
+  --section-spacing-lg: 7rem;
+  --border-radius: 0.75rem;
+  --border-radius-lg: 1rem;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+
+/* Section Components */
+.section {
+  padding: var(--section-spacing) 0;
+}
+
+.section-sm {
+  padding: var(--section-spacing-sm) 0;
+}
+
+.section-lg {
+  padding: var(--section-spacing-lg) 0;
+}
+
+/* Typography System */
+.section-heading {
+  font-size: 1.875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section-heading {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-heading {
+    font-size: 3rem;
+  }
+}
+
+.dark .section-heading {
+  color: #f8fafc;
+}
+
+.section-subheading {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #0284c7;
+  margin-bottom: 1rem;
+}
+
+.dark .section-subheading {
+  color: #38bdf8;
+}
+
+.section-description {
+  font-size: 1rem;
+  line-height: 1.7;
+  color: #475569;
+  max-width: 48rem;
+  margin: 0 auto 2rem;
+}
+
+@media (min-width: 768px) {
+  .section-description {
+    font-size: 1.125rem;
+  }
+}
+
+.dark .section-description {
+  color: #94a3b8;
+}
+
+/* Button System */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+
+.btn:focus {
+  outline: 2px solid #0ea5e9;
+  outline-offset: 2px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: #0ea5e9;
+  color: #ffffff;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0284c7;
+  box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+  background-color: #ffffff;
+  color: #334155;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  border: 1px solid #cbd5e1;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background-color: #f8fafc;
+  box-shadow: var(--shadow);
+}
+
+.dark .btn-secondary {
+  background-color: #0f172a;
+  color: #cbd5e1;
+  border-color: #334155;
+}
+
+.dark .btn-secondary:hover:not(:disabled) {
+  background-color: #1e293b;
+}
+
+/* Card System */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.dark .card {
+  background-color: #0f172a;
+  border-color: #334155;
+}
+
+/* Badge System */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 500;
+  border-radius: var(--border-radius);
+  font-size: 0.75rem;
+  padding: 0.25rem 0.625rem;
+}
+
+.badge-default {
+  background-color: #f1f5f9;
+  color: #475569;
+}
+
+.dark .badge-default {
+  background-color: #1e293b;
+  color: #cbd5e1;
+}
+
+.badge-primary {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.dark .badge-primary {
+  background-color: rgba(14, 165, 233, 0.1);
+  color: #38bdf8;
+}
+
+/* Utility Classes */
+.container {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+/* Focus States */
+.focus-ring {
+  @apply focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 dark:focus:ring-offset-slate-900;
+}
+
+/* Animation Classes */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(1rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
