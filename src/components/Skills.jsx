@@ -8,66 +8,59 @@ import { Section, Card } from "./UI";
 const categories = [
   {
     title: "Frontend",
-    description:
-      "Building responsive, scalable, and accessible user interfaces.",
+    description: "UI engineering with performance-focused architecture.",
     icon: TbLayoutDashboard,
-    tags: ["React", "JavaScript", "HTML5", "CSS3", "Tailwind CSS"],
-    accent: "text-sky-500",
-    bg: "bg-sky-100 dark:bg-sky-500/10",
+    skills: ["JavaScript", "React", "Tailwind CSS"],
   },
   {
     title: "Backend",
-    description: "API design, server logic, and data-driven architecture.",
+    description: "API development and server-side architecture.",
     icon: HiOutlineServerStack,
-    tags: ["Node.js", "Express", "MongoDB", "Firebase", "REST APIs"],
-    accent: "text-violet-500",
-    bg: "bg-violet-100 dark:bg-violet-500/10",
+    skills: ["Node.js", "Express", "MongoDB", "Firebase"],
   },
   {
     title: "Tools",
-    description:
-      "Development workflow, version control, and productivity tools.",
+    description: "Development workflow and productivity stack.",
     icon: FiTool,
-    tags: ["Git", "GitHub", "VS Code", "Figma", "Vite"],
-    accent: "text-emerald-500",
-    bg: "bg-emerald-100 dark:bg-emerald-500/10",
+    skills: ["Git", "GitHub", "VS Code", "Figma", "Vite"],
   },
 ];
 
-const SkillCard = ({ title, description, icon: Icon, tags, accent, bg }) => {
+const SkillCard = ({ title, description, icon: Icon, skills }) => {
   return (
-    <Card className="h-full transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-      <div className="space-y-5">
-        {/* Header */}
-        <div className="flex items-start gap-4">
-          <div
-            className={`mt-1 flex h-11 w-11 items-center justify-center rounded-2xl ${bg} ${accent}`}
-          >
-            <Icon className="h-5 w-5" />
-          </div>
+    <Card className="h-full group hover:-translate-y-1 transition-all duration-300">
 
-          <div>
-            <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
-              {title}
-            </h3>
-            <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-400">
-              {description}
-            </p>
-          </div>
+      {/* Header */}
+      <div className="flex items-start gap-4">
+
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+          <Icon className="h-5 w-5" />
         </div>
 
-        {/* Tags */}
-        <div className="flex flex-wrap gap-2 pt-1">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="rounded-md border border-slate-200 px-2 py-1 text-xs text-slate-600 dark:border-slate-800 dark:text-slate-300"
-            >
-              {tag}
-            </span>
-          ))}
+        <div>
+          <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
+            {title}
+          </h3>
+
+          <p className="mt-1 text-sm text-slate-600 dark:text-slate-400 leading-6">
+            {description}
+          </p>
         </div>
+
       </div>
+
+      {/* Skills (clean chips system) */}
+      <div className="mt-5 flex flex-wrap gap-2">
+        {skills.map((skill) => (
+          <span
+            key={skill}
+            className="px-2.5 py-1 text-xs rounded-md border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+          >
+            {skill}
+          </span>
+        ))}
+      </div>
+
     </Card>
   );
 };
@@ -75,36 +68,31 @@ const SkillCard = ({ title, description, icon: Icon, tags, accent, bg }) => {
 export default function Skills() {
   return (
     <Section id="skills">
+
       {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.5 }}
-        className="mb-14 text-center"
+        className="text-center mb-12"
       >
-        <h2 className="text-3xl font-bold text-slate-950 dark:text-white sm:text-4xl">
-          Skills
+        <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
+          Skills & Stack
         </h2>
 
-        <p className="mx-auto mt-3 max-w-2xl text-base text-slate-600 dark:text-slate-400 sm:text-lg">
-          A practical toolkit focused on building scalable and production-ready
-          web applications.
+        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400 text-base sm:text-lg">
+          Practical technologies I use to build scalable and production-ready web applications.
         </p>
       </motion.div>
 
       {/* Grid */}
-      <motion.div
-        initial={{ opacity: 0, y: 15 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
-        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
-      >
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
         {categories.map((item, index) => (
           <motion.div
             key={item.title}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
@@ -112,7 +100,9 @@ export default function Skills() {
             <SkillCard {...item} />
           </motion.div>
         ))}
-      </motion.div>
+
+      </div>
+
     </Section>
   );
 }

@@ -2,6 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Section, Card, Badge } from "./UI";
 
+/**
+ * EDUCATION DATA (clean + scalable)
+ */
 const education = [
   {
     degree: "Diploma in Computer Science and Technology",
@@ -24,13 +27,20 @@ const education = [
   },
 ];
 
+/**
+ * EDUCATION CARD
+ */
 const EducationCard = ({ item }) => {
+  const isCurrent = item.current;
+
   return (
-    <Card className="transition-all duration-300 hover:shadow-sm">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+    <Card className="p-7 hover:shadow-md transition-shadow duration-300">
+
+      {/* HEADER */}
+      <div className="flex items-start justify-between gap-6">
+
         <div>
-          <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
+          <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
             {item.degree}
           </h3>
 
@@ -39,58 +49,88 @@ const EducationCard = ({ item }) => {
           </p>
         </div>
 
-        <Badge variant={item.current ? "primary" : "default"}>
+        <Badge variant={isCurrent ? "primary" : "default"}>
           {item.status}
         </Badge>
+
       </div>
 
-      {/* Year */}
-      <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+      {/* META */}
+      <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
         {item.year}
       </p>
 
-      {/* Description */}
-      <p className="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
+      {/* DESCRIPTION */}
+      <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-300">
         {item.description}
       </p>
+
     </Card>
   );
 };
 
+/**
+ * MAIN COMPONENT
+ */
 export default function Education() {
   return (
     <Section id="education">
-      {/* Header */}
+
+      {/* HEADER */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-14"
+        className="text-center mb-16"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
           Education
         </h2>
 
-        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          Academic background supporting technical growth and problem-solving foundation.
+        <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
+          Academic background supporting problem-solving skills and technical growth.
         </p>
       </motion.div>
 
-      {/* Cards */}
-      <div className="max-w-6xl mx-auto space-y-6">
-        {education.map((item, index) => (
-          <motion.div
-            key={item.degree}
-            initial={{ opacity: 0, y: 10 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-          >
-            <EducationCard item={item} />
-          </motion.div>
-        ))}
+      {/* TIMELINE STYLE WRAPPER */}
+      <div className="relative max-w-4xl mx-auto">
+
+        {/* vertical line */}
+        <div className="absolute left-1.5 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800" />
+
+        <div className="space-y-10">
+
+          {education.map((item, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
+              className="relative pl-10"
+            >
+
+              {/* DOT */}
+              <div className="absolute left-0 top-2">
+                <span
+                  className={`block h-3 w-3 rounded-full ${
+                    item.current
+                      ? "bg-sky-500"
+                      : "bg-slate-400 dark:bg-slate-600"
+                  }`}
+                />
+              </div>
+
+              {/* CARD */}
+              <EducationCard item={item} />
+
+            </motion.div>
+          ))}
+
+        </div>
+
       </div>
+
     </Section>
   );
 }

@@ -2,106 +2,126 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Section, Card, Badge } from "./UI";
 
+/**
+ * EXPERIENCE DATA (clean + scalable)
+ */
 const experienceData = [
   {
     title: "Frontend Foundations",
     company: "Core Learning Phase",
     period: "2024",
     description:
-      "Built a strong foundation in frontend development through structured practice and real implementation.",
-    details: [
-      "HTML, CSS, JavaScript fundamentals with responsive design",
-      "Semantic UI and accessibility-focused development",
-      "Modern layout building with performance awareness",
+      "Built strong fundamentals in frontend development through structured practice.",
+    points: [
+      "HTML, CSS, JavaScript fundamentals",
+      "Responsive UI and accessibility principles",
+      "Modern layout and performance awareness",
     ],
-    current: false,
+    status: "completed",
   },
   {
     title: "React Development",
     company: "Advanced Skill Phase",
     period: "2025",
     description:
-      "Focused on component-based architecture and scalable frontend systems using React.",
-    details: [
+      "Focused on scalable component-based architecture using React.",
+    points: [
       "Reusable component architecture",
-      "Tailwind CSS integration in production workflows",
-      "Improved code structure and maintainability",
+      "Tailwind CSS in production workflows",
+      "Clean code and maintainable structure",
     ],
-    current: false,
+    status: "completed",
   },
   {
     title: "Real-World Projects",
     company: "Production Practice",
     period: "2025 - Present",
     description:
-      "Building production-level applications with modern engineering practices and UI standards.",
-    details: [
-      "Full-stack and frontend-focused applications",
-      "Performance optimization and clean architecture",
-      "UI/UX aligned with real-world product requirements",
+      "Building production-level applications with modern engineering practices.",
+    points: [
+      "Full-stack & frontend applications",
+      "Performance optimization",
+      "UI/UX aligned with real product standards",
     ],
-    current: true,
+    status: "current",
   },
 ];
 
+/**
+ * TIMELINE ITEM
+ */
 const TimelineItem = ({ item }) => {
+  const isCurrent = item.status === "current";
+
   return (
     <div className="relative pl-10">
-      {/* Dot */}
+
+      {/* DOT */}
       <div className="absolute left-0 top-2">
         <span
-          className={`h-3 w-3 rounded-full block ${
-            item.current ? "bg-sky-500" : "bg-slate-400 dark:bg-slate-600"
+          className={`block h-3 w-3 rounded-full ${
+            isCurrent ? "bg-sky-500" : "bg-slate-400 dark:bg-slate-600"
           }`}
         />
       </div>
 
-      {/* Card */}
-      <Card className="hover:shadow-sm transition-shadow duration-300">
-        {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+      {/* CARD */}
+      <Card className="p-6 hover:shadow-md transition-shadow">
+
+        {/* HEADER */}
+        <div className="flex items-start justify-between gap-4">
+
           <div>
             <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
               {item.title}
             </h3>
+
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
               {item.company}
             </p>
           </div>
 
-          <Badge variant={item.current ? "primary" : "default"}>
-            {item.current ? "Current" : item.period}
+          <Badge variant={isCurrent ? "primary" : "default"}>
+            {isCurrent ? "Current" : item.period}
           </Badge>
+
         </div>
 
-        {/* Description */}
-        <p className="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
+        {/* DESCRIPTION */}
+        <p className="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-6">
           {item.description}
         </p>
 
-        {/* Details */}
+        {/* POINTS */}
         <ul className="mt-4 space-y-2">
-          {item.details.map((detail, idx) => (
+          {item.points.map((point, idx) => (
             <li key={idx} className="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
+
               <span className="mt-2 h-1.5 w-1.5 rounded-full bg-sky-500 flex-shrink-0" />
-              <span>{detail}</span>
+
+              <span>{point}</span>
+
             </li>
           ))}
         </ul>
+
       </Card>
     </div>
   );
 };
 
+/**
+ * MAIN COMPONENT
+ */
 export default function Experience() {
   return (
     <Section id="experience">
-      {/* Header */}
+
+      {/* HEADER */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
         className="text-center mb-14"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
@@ -109,20 +129,21 @@ export default function Experience() {
         </h2>
 
         <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          A structured journey from fundamentals to real-world application development.
+          Structured journey from fundamentals to production-level development.
         </p>
       </motion.div>
 
-      {/* Timeline */}
-      <div className="relative max-w-6xl mx-auto">
-        {/* Line */}
+      {/* TIMELINE */}
+      <div className="relative max-w-5xl mx-auto">
+
+        {/* LINE */}
         <div className="absolute left-1.5 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800" />
 
         <div className="space-y-10">
-          {experienceData.map((item) => (
+          {experienceData.map((item, index) => (
             <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 10 }}
+              key={index}
+              initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4 }}
@@ -131,6 +152,7 @@ export default function Experience() {
             </motion.div>
           ))}
         </div>
+
       </div>
     </Section>
   );

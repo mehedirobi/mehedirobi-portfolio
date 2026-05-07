@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
-const socialLinks = [
+const SOCIALS = [
   {
     icon: FaGithub,
     href: "https://github.com/mehedirobi",
@@ -20,51 +20,67 @@ const socialLinks = [
   },
 ];
 
+const SocialIcon = ({ icon: Icon, href, label }) => {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      aria-label={label}
+      className="
+        h-10 w-10 flex items-center justify-center
+        rounded-lg border border-slate-200 dark:border-slate-800
+        text-slate-600 dark:text-slate-300
+        hover:bg-slate-900 hover:text-white
+        dark:hover:bg-white dark:hover:text-slate-900
+        transition-colors duration-300
+      "
+    >
+      <Icon className="h-5 w-5" />
+    </a>
+  );
+};
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
     <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-      <div className="mx-auto max-w-5xl px-6 py-12">
+
+      <div className="mx-auto max-w-6xl px-6 py-12">
 
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className="text-center space-y-6"
         >
-          
-          {/* Name */}
+
+          {/* BRAND */}
           <div>
             <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
               Mehedi Robi
             </h3>
+
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Frontend Developer
+              Frontend Developer • React • Next.js • Full Stack Learner
             </p>
           </div>
 
-          {/* Social Icons */}
+          {/* SOCIALS */}
           <div className="flex justify-center gap-4">
-            {socialLinks.map(({ icon: Icon, href, label }) => (
-              <a
-                key={label}
-                href={href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={label}
-                className="h-10 w-10 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-white hover:bg-slate-900 dark:hover:bg-white dark:hover:text-slate-900 transition-all duration-300"
-              >
-                <Icon className="h-5 w-5" />
-              </a>
+            {SOCIALS.map((item) => (
+              <SocialIcon key={item.label} {...item} />
             ))}
           </div>
 
-          {/* Bottom text */}
-          <div className="pt-2 text-xs text-slate-500 dark:text-slate-400 space-y-1">
+          {/* DIVIDER */}
+          <div className="h-px w-full bg-slate-200 dark:bg-slate-800" />
+
+          {/* META */}
+          <div className="text-xs text-slate-500 dark:text-slate-400 space-y-1">
             <p>© {year} Mehedi Robi. All rights reserved.</p>
-            <p>Built with React, Tailwind CSS & Framer Motion</p>
           </div>
 
         </motion.div>

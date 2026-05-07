@@ -1,32 +1,13 @@
 ﻿import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { HiOutlineMail } from "react-icons/hi";
-import { HiOutlineArrowRight, HiOutlineDownload } from "react-icons/hi";
+import { HiOutlineMail, HiOutlineArrowRight, HiOutlineDownload } from "react-icons/hi";
 import { OptimizedImage } from "./UI";
 
 const socials = [
-  {
-    href: "https://github.com/mehedirobi",
-    icon: FaGithub,
-    label: "GitHub",
-    color: "text-black dark:text-white",
-    hover: "hover:bg-slate-100 dark:hover:bg-slate-800",
-  },
-  {
-    href: "https://www.linkedin.com/in/mehedirobii/",
-    icon: FaLinkedin,
-    label: "LinkedIn",
-    color: "text-[#0A66C2]",
-    hover: "hover:bg-blue-50 dark:hover:bg-blue-900/20",
-  },
-  {
-    href: "mailto:mehedirobidev@gmail.com",
-    icon: HiOutlineMail,
-    label: "Email",
-    color: "text-slate-700 dark:text-slate-200",
-    hover: "hover:bg-slate-100 dark:hover:bg-slate-800",
-  },
+  { href: "https://github.com/mehedirobi", icon: FaGithub, label: "GitHub" },
+  { href: "https://www.linkedin.com/in/mehedirobii/", icon: FaLinkedin, label: "LinkedIn" },
+  { href: "mailto:mehedirobidev@gmail.com", icon: HiOutlineMail, label: "Email" },
 ];
 
 export default function Hero() {
@@ -40,97 +21,104 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative overflow-hidden bg-white dark:bg-slate-950"
+      className="relative bg-white dark:bg-slate-950 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-100/40 via-transparent to-violet-100/30 dark:from-sky-500/10 dark:to-violet-500/10" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-100/30 via-transparent to-violet-100/20 dark:from-sky-500/10 dark:to-violet-500/10" />
 
-      <div className="relative mx-auto max-w-6xl px-6 py-16 lg:py-20">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
+      <div className="relative max-w-6xl mx-auto px-6 py-20 lg:py-28 grid lg:grid-cols-2 items-center gap-14">
 
-          {/* LEFT */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="space-y-7"
-          >
-            <h1 className="text-4xl font-bold leading-tight text-slate-950 dark:text-white sm:text-5xl lg:text-6xl">
-              Hi, I'm{" "}
-              <span className="bg-gradient-to-r from-sky-500 to-violet-500 bg-clip-text text-transparent">
-                Mehedi
-              </span>
-            </h1>
+        {/* LEFT CONTENT */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="space-y-6"
+        >
+          {/* Badge */}
+          <div className="inline-flex items-center px-3 py-1 text-xs rounded-full border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300">
+            Frontend Developer • React
+          </div>
 
-            <h2 className="text-lg text-slate-600 dark:text-slate-300 sm:text-xl lg:text-2xl">
-              Building clean, scalable & high-performance web interfaces.
-            </h2>
+          {/* Title */}
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-slate-950 dark:text-white">
+            Hi, I'm{" "}
+            <span className="bg-gradient-to-r from-sky-500 to-violet-500 bg-clip-text text-transparent">
+              Mehedi
+            </span>
+          </h1>
 
-            <p className="max-w-xl text-base leading-7 text-slate-600 dark:text-slate-400">
-              I specialize in React, Tailwind CSS, and modern frontend engineering.
-            </p>
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl text-slate-600 dark:text-slate-300 leading-relaxed max-w-xl">
+            I build fast, scalable and clean web applications with modern frontend architecture.
+          </p>
 
-            {/* CTA */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button
-                onClick={scrollToProjects}
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-gradient-to-r from-sky-500 to-violet-500 hover:scale-[1.03] transition"
-              >
-                View Projects
-                <HiOutlineArrowRight className="h-4 w-4" />
-              </button>
+          {/* Description */}
+          <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400 max-w-lg">
+            Focused on performance, UI engineering, and production-ready React systems.
+          </p>
 
+          {/* CTA */}
+          <div className="flex flex-wrap gap-3 pt-2">
+            <button
+              onClick={scrollToProjects}
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold text-white bg-slate-900 dark:bg-white dark:text-black hover:opacity-90 transition"
+            >
+              View Projects
+              <HiOutlineArrowRight className="w-4 h-4" />
+            </button>
+
+            <a
+              href="resume.pdf"
+              download
+              className="flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-900 transition"
+            >
+              Resume
+              <HiOutlineDownload className="w-4 h-4" />
+            </a>
+          </div>
+
+          {/* Socials */}
+          <div className="flex items-center gap-3 pt-4">
+            {socials.map(({ href, icon: Icon, label }) => (
               <a
-                href="/resume.pdf"
-                download
-                className="flex items-center justify-center gap-2 px-6 py-3 rounded-full text-sm font-semibold border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:scale-[1.03] transition"
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="h-11 w-11 flex items-center justify-center rounded-xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:scale-105 hover:text-black dark:hover:text-white transition"
+                aria-label={label}
               >
-                Resume
-                <HiOutlineDownload className="h-4 w-4" />
+                <Icon className="w-5 h-5" />
               </a>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* RIGHT IMAGE */}
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="flex justify-center lg:justify-end"
+        >
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+
+            {/* Glow */}
+            <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-violet-400/20 blur-3xl" />
+
+            {/* Image frame */}
+            <div className="relative h-full w-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
+              <OptimizedImage
+                src="https://i.ibb.co/yn3q9rhd/mehedirobi.png"
+                alt="Mehedi Hasan"
+                className="h-full w-full object-cover"
+              />
             </div>
 
-            {/* SOCIALS - FIXED CENTER ALIGN */}
-            <div className="w-full flex justify-center lg:justify-start pt-4">
-              <div className="flex items-center justify-center gap-4">
-                {socials.map(({ href, icon: Icon, label, color, hover }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={label}
-                    className={`group flex h-12 w-12 items-center justify-center rounded-2xl border border-slate-200 bg-white shadow-md transition-all duration-300 hover:-translate-y-1 hover:shadow-lg dark:border-slate-800 dark:bg-slate-900 ${hover}`}
-                  >
-                    <Icon
-                      className={`h-6 w-6 ${color} transition-transform duration-300 group-hover:scale-110`}
-                    />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {/* RIGHT */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="flex justify-center lg:justify-end"
-          >
-            <div className="relative h-72 w-72 sm:h-80 sm:w-80">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-violet-400/20 blur-2xl" />
-
-              <div className="relative h-full w-full overflow-hidden rounded-full border-4 border-white shadow-xl dark:border-slate-800">
-                <OptimizedImage
-                  src="https://i.ibb.co/yn3q9rhd/mehedirobi.png"
-                  alt="Mehedi Hasan"
-                  className="h-full w-full object-cover"
-                />
-              </div>
-            </div>
-          </motion.div>
-
-        </div>
       </div>
     </section>
   );

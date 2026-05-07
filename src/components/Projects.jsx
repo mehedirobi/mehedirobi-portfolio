@@ -2,43 +2,62 @@ import React, { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import { FiExternalLink } from "react-icons/fi";
-import { Globe } from "lucide-react";
 import { projectData } from "../data/projectData";
-import { Section, Card, Button, OptimizedImage } from "./UI";
+import { Section, Card } from "./UI";
 
-const filters = [
+/**
+ * FILTERS
+ */
+const FILTERS = [
   { label: "All", value: "all" },
   { label: "React", value: "react" },
-  { label: "Vue", value: "vue" },
-  { label: "Next", value: "next" },
-  { label: "Full-stack", value: "fullstack" },
+  { label: "Next.js", value: "next" },
+  { label: "Full Stack", value: "fullstack" },
 ];
 
+/**
+ * FULLSTACK PROJECTS (STRICT BY NAME ONLY)
+ * match against project.name instead of id
+ */
+const FULLSTACK_PROJECTS = new Set([
+  "urban fix website",
+  "pawmart website",
+  "toyverse website",
+]);
+
+/**
+ * SAFE TECH CHECK
+ */
+const hasTech = (techArr = [], target) =>
+  techArr.some((t) => String(t).toLowerCase().includes(target));
+
+/**
+ * PROJECT CARD
+ */
 const ProjectCard = ({ project }) => {
-  const techStack = project.techStack.split(", ").map((t) => t.trim());
+  const techStack = useMemo(() => {
+    if (Array.isArray(project.tech)) return project.tech;
+    return String(project.techStack || "")
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean);
+  }, [project.tech, project.techStack]);
 
   return (
-    <Card className="group h-full flex flex-col overflow-hidden border border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-900 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      
-      {/* Image */}
+    <Card className="group h-full flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1">
+
+      {/* IMAGE */}
       <div className="relative aspect-video overflow-hidden">
-        <OptimizedImage
+        <img
           src={project.image}
           alt={project.name}
+          loading="lazy"
           className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
 
-      {/* Content */}
-      <div className="flex flex-col flex-1 p-6">
-        
-        {/* label */}
-        <div className="flex items-center gap-2 text-sky-500 mb-2">
-          <Globe className="h-4 w-4" />
-          <span className="text-xs uppercase tracking-wider font-medium text-slate-500 dark:text-slate-400">
-            Featured Project
-          </span>
-        </div>
+      {/* CONTENT */}
+      <div className="p-5 flex flex-col flex-1">
 
         <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
           {project.name}
@@ -48,7 +67,7 @@ const ProjectCard = ({ project }) => {
           {project.description}
         </p>
 
-        {/* Tech */}
+        {/* TECH */}
         <div className="mt-4 flex flex-wrap gap-2">
           {techStack.map((tech) => (
             <span
@@ -60,85 +79,90 @@ const ProjectCard = ({ project }) => {
           ))}
         </div>
 
-        {/* Actions */}
-        <div className="mt-6 flex gap-3">
-          
-          <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="flex-1">
-            <Button
-              className="w-full"
-              icon={<FiExternalLink className="h-4 w-4" />}
-            >
+        {/* ACTIONS */}
+        <div className="mt-5 flex gap-3">
+
+          <a href={project?.links?.live} target="_blank" rel="noreferrer" className="flex-1">
+            <button className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-900 text-white dark:bg-white dark:text-black hover:opacity-90">
+              <FiExternalLink className="w-4 h-4" />
               Live
-            </Button>
+            </button>
           </a>
 
-          <a href={project.links.github} target="_blank" rel="noopener noreferrer" className="flex-1">
-            <Button
-              variant="secondary"
-              className="w-full"
-              icon={<FaGithub className="h-4 w-4" />}
-            >
+          <a href={project?.links?.github} target="_blank" rel="noreferrer" className="flex-1">
+            <button className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+              <FaGithub className="w-4 h-4" />
               Code
-            </Button>
+            </button>
           </a>
 
         </div>
+
       </div>
     </Card>
   );
 };
 
+/**
+ * MAIN COMPONENT
+ */
 export default function Projects() {
   const [active, setActive] = useState("all");
 
   const filteredProjects = useMemo(() => {
-    if (active === "all") return projectData;
+    const projects = projectData || [];
 
-    return projectData.filter((p) => {
-      const tech = p.tech?.join?.(" ") || p.techStack?.toLowerCase() || "";
+    switch (active) {
 
-      if (active === "fullstack") {
-        return (
-          tech.includes("node") ||
-          tech.includes("express") ||
-          tech.includes("mongodb") ||
-          tech.includes("firebase")
+      case "react":
+        return projects.filter((p) =>
+          hasTech(p.tech, "react") && !hasTech(p.tech, "nextjs")
         );
-      }
 
-      return tech.includes(active);
-    });
+      case "next":
+        return projects.filter((p) =>
+          hasTech(p.tech, "nextjs")
+        );
+
+      case "fullstack":
+        return projects.filter((p) =>
+          FULLSTACK_PROJECTS.has(p.name.toLowerCase())
+        );
+
+      default:
+        return projects;
+    }
   }, [active]);
 
   return (
     <Section id="projects">
-      
-      {/* Header */}
+
+      {/* HEADER */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="text-center mb-14"
+        className="text-center mb-12"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
-          Projects
+          Selected Projects
         </h2>
 
         <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          Selected work demonstrating frontend engineering, UI design, and full-stack development.
+          Real-world applications built with modern frontend and backend technologies.
         </p>
       </motion.div>
 
-      {/* Filters */}
-      <div className="flex flex-wrap justify-center gap-2 mb-10">
-        {filters.map((f) => (
+      {/* FILTERS */}
+      <div className="flex justify-center flex-wrap gap-2 mb-10">
+        {FILTERS.map((f) => (
           <button
             key={f.value}
             onClick={() => setActive(f.value)}
-            className={`px-4 py-2 text-sm rounded-lg border transition-all ${
+            className={`px-4 py-2 text-sm rounded-full border transition ${
               active === f.value
-                ? "bg-sky-500 text-white border-sky-500"
-                : "border-slate-200 text-slate-600 hover:bg-slate-100 dark:border-slate-800 dark:text-slate-300 dark:hover:bg-slate-800"
+                ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-black"
+                : "border-slate-200 text-slate-600 dark:border-slate-800 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
             }`}
           >
             {f.label}
@@ -146,12 +170,19 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* Grid */}
-      <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {filteredProjects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-      </motion.div>
+      {/* EMPTY STATE */}
+      {active === "next" ? (
+        <div className="text-center text-slate-500 dark:text-slate-400 py-10">
+          Next.js projects will be added soon.
+        </div>
+      ) : (
+        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </motion.div>
+      )}
+
     </Section>
   );
 }

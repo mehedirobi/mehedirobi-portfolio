@@ -5,53 +5,58 @@ import { Section, Card, Badge } from "./UI";
 const certifications = [
   {
     title: "Complete Web Development Course",
-    institution: "Programming Hero",
+    issuer: "Programming Hero",
     year: "2026",
     status: "Completed",
     description:
-      "Full-stack web development training covering modern frontend and backend workflows with real project implementation.",
-    skills: ["React", "Node.js", "JavaScript", "Full-Stack"],
+      "Full-stack training covering modern frontend, backend, and real-world production workflows with hands-on projects.",
+    skills: ["JavaScript", "React", "Node.js", "Express js", "MongoDB", "Mern Stack"],
   },
 ];
 
 const CertificationCard = ({ item }) => {
   return (
-    <Card className="transition-all duration-300 hover:shadow-sm">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+    <Card className="p-8 hover:shadow-lg transition-all duration-300">
+
+      {/* HEADER */}
+      <div className="flex items-start justify-between gap-6">
+
         <div>
-          <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
+          <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
             {item.title}
           </h3>
+
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-            {item.institution}
+            {item.issuer}
           </p>
         </div>
 
         <Badge variant="secondary">{item.status}</Badge>
+
       </div>
 
-      {/* Meta */}
-      <p className="mt-3 text-sm text-slate-500 dark:text-slate-400">
+      {/* META */}
+      <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
         {item.year}
       </p>
 
-      {/* Description */}
-      <p className="mt-4 text-sm leading-6 text-slate-600 dark:text-slate-300">
+      {/* DESCRIPTION */}
+      <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-300">
         {item.description}
       </p>
 
-      {/* Skills */}
-      <div className="mt-4 flex flex-wrap gap-2">
+      {/* SKILLS */}
+      <div className="mt-6 flex flex-wrap gap-2">
         {item.skills.map((skill) => (
           <span
             key={skill}
-            className="text-xs px-2 py-1 rounded-md border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
+            className="text-xs px-3 py-1 rounded-md border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300"
           >
             {skill}
           </span>
         ))}
       </div>
+
     </Card>
   );
 };
@@ -59,37 +64,40 @@ const CertificationCard = ({ item }) => {
 export default function Certifications() {
   return (
     <Section id="certifications">
-      {/* Header */}
+
+      {/* HEADER */}
       <motion.div
-        initial={{ opacity: 0, y: 15 }}
+        initial={{ opacity: 0, y: 14 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-        className="text-center mb-14"
+        className="text-center mb-16"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
           Certifications
         </h2>
 
-        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          Professional training and certifications supporting full-stack development expertise.
+        <p className="mt-4 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
+          Professional training and structured learning achievements in modern web development.
         </p>
       </motion.div>
 
-      {/* Grid */}
-      <div className="max-w-6xl mx-auto space-y-6">
+      {/* LAYOUT (BIGGER + CLEAN SPACING) */}
+      <div className="max-w-4xl mx-auto space-y-8">
+
         {certifications.map((item, index) => (
           <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 10 }}
+            key={index}
+            initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
+            transition={{ duration: 0.4, delay: index * 0.05 }}
           >
             <CertificationCard item={item} />
           </motion.div>
         ))}
+
       </div>
+
     </Section>
   );
 }

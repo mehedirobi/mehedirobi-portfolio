@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback } from "react";
 
-const ThemeContext = createContext();
+const ThemeContext = createContext(null);
 
 export const useTheme = () => {
   const ctx = useContext(ThemeContext);
@@ -8,37 +8,53 @@ export const useTheme = () => {
   return ctx;
 };
 
+const THEME_KEY = "theme";
+
+/**
+ * Apply theme to DOM safely
+ */
+const applyTheme = (theme) => {
+  const root = document.documentElement;
+  root.classList.toggle("dark", theme === "dark");
+};
+
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState("light");
-  const [mounted, setMounted] = useState(false);
+  const [theme, setTheme] = useState(null);
 
-  // Init theme (safe + no flicker)
+  /**
+   * INIT (no flicker + SSR safe pattern ready)
+   */
   useEffect(() => {
-    const saved = localStorage.getItem("theme");
-    const system = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const saved = localStorage.getItem(THEME_KEY);
 
-    const initial = saved || (system ? "dark" : "light");
+    const systemPrefersDark =
+      window.matchMedia?.("(prefers-color-scheme: dark)")?.matches;
 
-    setTheme(initial);
-    document.documentElement.classList.toggle("dark", initial === "dark");
+    const initialTheme = saved || (systemPrefersDark ? "dark" : "light");
 
-    setMounted(true);
+    setTheme(initialTheme);
+    applyTheme(initialTheme);
   }, []);
 
-  // Sync updates
+  /**
+   * SYNC
+   */
   useEffect(() => {
-    if (!mounted) return;
+    if (!theme) return;
 
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    localStorage.setItem("theme", theme);
-  }, [theme, mounted]);
+    applyTheme(theme);
+    localStorage.setItem(THEME_KEY, theme);
+  }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme((p) => (p === "dark" ? "light" : "dark"));
-  };
+  /**
+   * TOGGLE (stable function)
+   */
+  const toggleTheme = useCallback(() => {
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  }, []);
 
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+    <ThemeContext.Provider value={{ theme: theme || "light", toggleTheme }}>
       {children}
     </ThemeContext.Provider>
   );

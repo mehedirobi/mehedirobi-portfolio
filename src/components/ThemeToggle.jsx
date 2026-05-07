@@ -9,8 +9,9 @@ export default function ThemeToggle() {
 
   return (
     <motion.button
+      type="button"
       onClick={toggleTheme}
-      whileTap={{ scale: 0.92 }}
+      whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.05 }}
       className="
         relative flex h-10 w-10 items-center justify-center
@@ -24,31 +25,28 @@ export default function ThemeToggle() {
       "
       aria-label="Toggle theme"
     >
-      {/* Sun */}
+      {/* SUN */}
       <Sun
-        className={`absolute h-5 w-5 transition-all duration-300 ${
-          isDark
-            ? "opacity-0 scale-50 rotate-90"
-            : "opacity-100 scale-100 rotate-0 text-amber-400 drop-shadow-sm"
-        }`}
+        className={`
+          absolute h-5 w-5 transition-all duration-300
+          ${isDark ? "opacity-0 scale-50 rotate-90" : "opacity-100 scale-100 text-amber-400"}
+        `}
       />
 
-      {/* Moon */}
+      {/* MOON */}
       <Moon
-        className={`absolute h-5 w-5 transition-all duration-300 ${
-          isDark
-            ? "opacity-100 scale-100 rotate-0 text-sky-300 drop-shadow-sm"
-            : "opacity-0 scale-50 -rotate-90"
-        }`}
+        className={`
+          absolute h-5 w-5 transition-all duration-300
+          ${isDark ? "opacity-100 scale-100 text-sky-300" : "opacity-0 scale-50 -rotate-90"}
+        `}
       />
 
-      {/* subtle glow effect */}
+      {/* subtle glow */}
       <div
-        className={`absolute inset-0 rounded-xl transition-opacity duration-300 ${
-          isDark
-            ? "opacity-20 bg-sky-500"
-            : "opacity-0"
-        }`}
+        className={`
+          absolute inset-0 rounded-xl transition-opacity duration-300
+          ${isDark ? "opacity-20 bg-sky-500" : "opacity-0"}
+        `}
       />
     </motion.button>
   );
