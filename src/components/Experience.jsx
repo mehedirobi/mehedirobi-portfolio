@@ -3,45 +3,45 @@ import { motion } from "framer-motion";
 import { Section, Card, Badge } from "./UI";
 
 /**
- * EXPERIENCE DATA (clean + scalable)
+ * EXPERIENCE (restructured for real-world portfolio framing)
  */
 const experienceData = [
   {
-    title: "Frontend Foundations",
-    company: "Core Learning Phase",
+    title: "Frontend Developer (Foundations)",
+    company: "Self-Driven Development",
     period: "2024",
     description:
-      "Built strong fundamentals in frontend development through structured practice.",
+      "Built strong fundamentals in modern frontend development with focus on real-world UI implementation.",
     points: [
-      "HTML, CSS, JavaScript fundamentals",
-      "Responsive UI and accessibility principles",
-      "Modern layout and performance awareness",
+      "Core web technologies: HTML, CSS, JavaScript (ES6+)",
+      "Responsive UI development with accessibility principles",
+      "Layout systems, design consistency and performance basics",
     ],
     status: "completed",
   },
   {
-    title: "React Development",
-    company: "Advanced Skill Phase",
+    title: "React Developer",
+    company: "Project-Based Learning",
     period: "2025",
     description:
-      "Focused on scalable component-based architecture using React.",
+      "Transitioned into component-based architecture using React for scalable frontend systems.",
     points: [
-      "Reusable component architecture",
-      "Tailwind CSS in production workflows",
-      "Clean code and maintainable structure",
+      "Reusable component architecture in React",
+      "State management and API integration",
+      "Tailwind CSS-based production UI workflows",
     ],
     status: "completed",
   },
   {
-    title: "Real-World Projects",
-    company: "Production Practice",
+    title: "Full-Stack Project Development",
+    company: "Production-Level Practice",
     period: "2025 - Present",
     description:
-      "Building production-level applications with modern engineering practices.",
+      "Building production-style full-stack applications with modern engineering practices.",
     points: [
-      "Full-stack & frontend applications",
-      "Performance optimization",
-      "UI/UX aligned with real product standards",
+      "Full-stack applications with authentication & CRUD systems",
+      "Backend API development with Node.js & Express",
+      "Database design and real-world project structuring",
     ],
     status: "current",
   },
@@ -66,7 +66,7 @@ const TimelineItem = ({ item }) => {
       </div>
 
       {/* CARD */}
-      <Card className="p-6 hover:shadow-md transition-shadow">
+      <Card className="p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
 
         {/* HEADER */}
         <div className="flex items-start justify-between gap-4">
@@ -95,12 +95,12 @@ const TimelineItem = ({ item }) => {
         {/* POINTS */}
         <ul className="mt-4 space-y-2">
           {item.points.map((point, idx) => (
-            <li key={idx} className="flex gap-2 text-sm text-slate-600 dark:text-slate-300">
-
+            <li
+              key={idx}
+              className="flex gap-2 text-sm text-slate-600 dark:text-slate-300"
+            >
               <span className="mt-2 h-1.5 w-1.5 rounded-full bg-sky-500 flex-shrink-0" />
-
               <span>{point}</span>
-
             </li>
           ))}
         </ul>
@@ -111,7 +111,7 @@ const TimelineItem = ({ item }) => {
 };
 
 /**
- * MAIN COMPONENT
+ * MAIN
  */
 export default function Experience() {
   return (
@@ -129,7 +129,7 @@ export default function Experience() {
         </h2>
 
         <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          Structured journey from fundamentals to production-level development.
+          A structured progression from frontend fundamentals to production-level full-stack development.
         </p>
       </motion.div>
 
@@ -142,11 +142,11 @@ export default function Experience() {
         <div className="space-y-10">
           {experienceData.map((item, index) => (
             <motion.div
-              key={index}
+              key={item.title}
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.4, delay: index * 0.05 }}
             >
               <TimelineItem item={item} />
             </motion.div>

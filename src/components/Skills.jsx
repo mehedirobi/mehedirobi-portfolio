@@ -5,22 +5,25 @@ import { HiOutlineServerStack } from "react-icons/hi2";
 import { FiTool } from "react-icons/fi";
 import { Section, Card } from "./UI";
 
-const categories = [
+const skillsData = [
   {
-    title: "Frontend",
-    description: "UI engineering with performance-focused architecture.",
+    title: "Frontend Engineering",
+    description:
+      "Building scalable, performant and maintainable UI systems with modern React architecture.",
     icon: TbLayoutDashboard,
-    skills: ["JavaScript", "React", "Tailwind CSS"],
+    skills: ["JavaScript (ES6+)", "React", "Tailwind CSS", "Responsive UI"],
   },
   {
-    title: "Backend",
-    description: "API development and server-side architecture.",
+    title: "Backend & APIs",
+    description:
+      "Developing REST APIs and handling server-side logic with database integration.",
     icon: HiOutlineServerStack,
-    skills: ["Node.js", "Express", "MongoDB", "Firebase"],
+    skills: ["Node.js", "Express.js", "MongoDB", "Firebase"],
   },
   {
-    title: "Tools",
-    description: "Development workflow and productivity stack.",
+    title: "Development Tools",
+    description:
+      "Tooling and workflows for efficient development and collaboration.",
     icon: FiTool,
     skills: ["Git", "GitHub", "VS Code", "Figma", "Vite"],
   },
@@ -28,12 +31,10 @@ const categories = [
 
 const SkillCard = ({ title, description, icon: Icon, skills }) => {
   return (
-    <Card className="h-full group hover:-translate-y-1 transition-all duration-300">
-
+    <Card className="h-full transition-all duration-300 hover:-translate-y-1">
       {/* Header */}
-      <div className="flex items-start gap-4">
-
-        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
+      <div className="flex gap-4 items-start">
+        <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
           <Icon className="h-5 w-5" />
         </div>
 
@@ -46,10 +47,9 @@ const SkillCard = ({ title, description, icon: Icon, skills }) => {
             {description}
           </p>
         </div>
-
       </div>
 
-      {/* Skills (clean chips system) */}
+      {/* Skills */}
       <div className="mt-5 flex flex-wrap gap-2">
         {skills.map((skill) => (
           <span
@@ -60,7 +60,6 @@ const SkillCard = ({ title, description, icon: Icon, skills }) => {
           </span>
         ))}
       </div>
-
     </Card>
   );
 };
@@ -68,7 +67,6 @@ const SkillCard = ({ title, description, icon: Icon, skills }) => {
 export default function Skills() {
   return (
     <Section id="skills">
-
       {/* Header */}
       <motion.div
         initial={{ opacity: 0, y: 14 }}
@@ -78,18 +76,17 @@ export default function Skills() {
         className="text-center mb-12"
       >
         <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
-          Skills & Stack
+          Skills & Technologies
         </h2>
 
-        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400 text-base sm:text-lg">
-          Practical technologies I use to build scalable and production-ready web applications.
+        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
+          Technologies and tools I use to build scalable, production-ready web applications.
         </p>
       </motion.div>
 
       {/* Grid */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-        {categories.map((item, index) => (
+        {skillsData.map((item, index) => (
           <motion.div
             key={item.title}
             initial={{ opacity: 0, y: 14 }}
@@ -100,9 +97,7 @@ export default function Skills() {
             <SkillCard {...item} />
           </motion.div>
         ))}
-
       </div>
-
     </Section>
   );
 }

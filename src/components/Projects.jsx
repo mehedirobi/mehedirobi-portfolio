@@ -6,30 +6,20 @@ import { projectData } from "../data/projectData";
 import { Section, Card } from "./UI";
 
 /**
- * FILTERS
+ * FILTERS (DRIVEN BY CATEGORY)
  */
 const FILTERS = [
   { label: "All", value: "all" },
-  { label: "React", value: "react" },
+  { label: "Frontend", value: "frontend" },
   { label: "Next.js", value: "next" },
   { label: "Full Stack", value: "fullstack" },
 ];
 
 /**
- * FULLSTACK PROJECTS (STRICT BY NAME ONLY)
- * match against project.name instead of id
+ * TECH BADGE CLEANER
  */
-const FULLSTACK_PROJECTS = new Set([
-  "urban fix website",
-  "pawmart website",
-  "toyverse website",
-]);
-
-/**
- * SAFE TECH CHECK
- */
-const hasTech = (techArr = [], target) =>
-  techArr.some((t) => String(t).toLowerCase().includes(target));
+const normalizeTech = (tech) =>
+  (tech || []).map((t) => String(t).toLowerCase()).filter(Boolean);
 
 /**
  * PROJECT CARD
@@ -37,11 +27,8 @@ const hasTech = (techArr = [], target) =>
 const ProjectCard = ({ project }) => {
   const techStack = useMemo(() => {
     if (Array.isArray(project.tech)) return project.tech;
-    return String(project.techStack || "")
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
-  }, [project.tech, project.techStack]);
+    return [];
+  }, [project.tech]);
 
   return (
     <Card className="group h-full flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-1">
@@ -81,7 +68,6 @@ const ProjectCard = ({ project }) => {
 
         {/* ACTIONS */}
         <div className="mt-5 flex gap-3">
-
           <a href={project?.links?.live} target="_blank" rel="noreferrer" className="flex-1">
             <button className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium bg-slate-900 text-white dark:bg-white dark:text-black hover:opacity-90">
               <FiExternalLink className="w-4 h-4" />
@@ -95,7 +81,6 @@ const ProjectCard = ({ project }) => {
               Code
             </button>
           </a>
-
         </div>
 
       </div>
@@ -112,26 +97,9 @@ export default function Projects() {
   const filteredProjects = useMemo(() => {
     const projects = projectData || [];
 
-    switch (active) {
+    if (active === "all") return projects;
 
-      case "react":
-        return projects.filter((p) =>
-          hasTech(p.tech, "react") && !hasTech(p.tech, "nextjs")
-        );
-
-      case "next":
-        return projects.filter((p) =>
-          hasTech(p.tech, "nextjs")
-        );
-
-      case "fullstack":
-        return projects.filter((p) =>
-          FULLSTACK_PROJECTS.has(p.name.toLowerCase())
-        );
-
-      default:
-        return projects;
-    }
+    return projects.filter((p) => p.category === active);
   }, [active]);
 
   return (
@@ -149,7 +117,7 @@ export default function Projects() {
         </h2>
 
         <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
-          Real-world applications built with modern frontend and backend technologies.
+          Real-world applications built with modern frontend and backend systems.
         </p>
       </motion.div>
 
@@ -170,18 +138,12 @@ export default function Projects() {
         ))}
       </div>
 
-      {/* EMPTY STATE */}
-      {active === "next" ? (
-        <div className="text-center text-slate-500 dark:text-slate-400 py-10">
-          Next.js projects will be added soon.
-        </div>
-      ) : (
-        <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredProjects.map((project) => (
-            <ProjectCard key={project.id} project={project} />
-          ))}
-        </motion.div>
-      )}
+      {/* GRID */}
+      <motion.div layout className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {filteredProjects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </motion.div>
 
     </Section>
   );

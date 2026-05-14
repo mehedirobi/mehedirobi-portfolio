@@ -2,6 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
+/**
+ * SOCIAL DATA
+ */
 const SOCIALS = [
   {
     icon: FaGithub,
@@ -20,6 +23,9 @@ const SOCIALS = [
   },
 ];
 
+/**
+ * SOCIAL ICON BUTTON
+ */
 const SocialIcon = ({ icon: Icon, href, label }) => {
   return (
     <a
@@ -33,7 +39,8 @@ const SocialIcon = ({ icon: Icon, href, label }) => {
         text-slate-600 dark:text-slate-300
         hover:bg-slate-900 hover:text-white
         dark:hover:bg-white dark:hover:text-slate-900
-        transition-colors duration-300
+        transition-all duration-300
+        hover:-translate-y-0.5
       "
     >
       <Icon className="h-5 w-5" />
@@ -41,6 +48,9 @@ const SocialIcon = ({ icon: Icon, href, label }) => {
   );
 };
 
+/**
+ * FOOTER
+ */
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -50,7 +60,7 @@ export default function Footer() {
       <div className="mx-auto max-w-6xl px-6 py-12">
 
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4 }}
@@ -58,13 +68,13 @@ export default function Footer() {
         >
 
           {/* BRAND */}
-          <div>
+          <div className="space-y-1">
             <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
               Mehedi Robi
             </h3>
 
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-              Frontend Developer • React • Next.js • Full Stack Learner
+            <p className="text-sm text-slate-500 dark:text-slate-400">
+              Frontend Developer • React • Next.js • Full Stack Developer
             </p>
           </div>
 
@@ -78,13 +88,16 @@ export default function Footer() {
           {/* DIVIDER */}
           <div className="h-px w-full bg-slate-200 dark:bg-slate-800" />
 
-          {/* META */}
+          {/* FOOTER META */}
           <div className="text-xs text-slate-500 dark:text-slate-400 space-y-1">
             <p>© {year} Mehedi Robi. All rights reserved.</p>
+            <p>Built with React, Tailwind CSS & Framer Motion</p>
           </div>
 
         </motion.div>
+
       </div>
+
     </footer>
   );
 }
