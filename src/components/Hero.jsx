@@ -24,8 +24,6 @@ const HERO = {
   description:
     "Focused on performance, UI engineering, and production-ready React systems.",
 
-  image: "https://i.ibb.co/yn3q9rhd/mehedirobi.png",
-
   resume: "/resume.pdf",
 
   socials: [
@@ -156,13 +154,13 @@ export default function Hero() {
             <div className="absolute inset-0 rounded-full bg-gradient-to-br from-sky-400/20 to-violet-400/20 blur-3xl" />
 
             {/* IMAGE */}
-            <div className="relative h-full w-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
-              <OptimizedImage
-                src={HERO.image}
-                alt={HERO.name}
-                className="h-full w-full object-cover"
-              />
-            </div>
+<div className="relative h-full w-full overflow-hidden rounded-full border-4 border-white shadow-xl dark:border-slate-800">
+  <OptimizedImage
+    src="/mehedirobi.png"
+    alt={HERO.name}
+    className="h-full w-full object-cover"
+  />
+</div>
 
           </div>
         </motion.div>
