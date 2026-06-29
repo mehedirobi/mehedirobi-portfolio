@@ -4,15 +4,16 @@ import { TbLayoutDashboard } from "react-icons/tb";
 import { HiOutlineServerStack } from "react-icons/hi2";
 import { FiTool } from "react-icons/fi";
 import {
-  SiJavascript, SiReact, SiTailwindcss, SiHtml5, SiCss3,
+  SiJavascript, SiReact, SiTailwindcss, SiHtml5 ,
   SiFramer, SiNextdotjs,
   SiNodedotjs, SiExpress, SiMongodb, SiFirebase, SiJsonwebtokens,
   SiGit, SiGithub, SiVite, SiFigma, SiVercel, SiPostman,
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import { Section } from "./UI";
+import { FaCss3Alt } from "react-icons/fa";
 
-// ─── Data ──────────────────────────────────────────────────────────────────
+// ─── Data
 const SKILLS = [
   {
     icon:        TbLayoutDashboard,
@@ -29,9 +30,9 @@ const SKILLS = [
       { label: "React.js",          icon: SiReact,        color: "text-cyan-500"   },
       { label: "Tailwind CSS",      icon: SiTailwindcss,  color: "text-sky-500"    },
       { label: "HTML5",             icon: SiHtml5,        color: "text-orange-500" },
-      { label: "CSS3",              icon: SiCss3,         color: "text-blue-500"   },
-      { label: "Framer Motion",     icon: SiFramer,       color: "text-pink-500"   },
-      { label: "Next.js",           icon: SiNextdotjs,    color: "text-slate-700 dark:text-slate-300" },
+      { label: "CSS3",              icon: FaCss3Alt,         color: "text-blue-500"   },
+      
+      
     ],
   },
   {
@@ -49,7 +50,7 @@ const SKILLS = [
       { label: "Express.js", icon: SiExpress,       color: "text-slate-600 dark:text-slate-300" },
       { label: "MongoDB",    icon: SiMongodb,       color: "text-emerald-500"},
       { label: "Firebase",   icon: SiFirebase,      color: "text-amber-500"  },
-      { label: "JWT Auth",   icon: SiJsonwebtokens, color: "text-rose-500"   },
+      { label: "Auth",   icon: SiJsonwebtokens, color: "text-rose-500"   },
       { label: "REST APIs",  icon: SiPostman,       color: "text-orange-500" },
     ],
   },
@@ -74,7 +75,7 @@ const SKILLS = [
   },
 ];
 
-// ─── Animations ────────────────────────────────────────────────────────────
+// ─── Animations
 const VIEWPORT = { once: true, amount: 0.15 };
 
 const container = {
@@ -87,7 +88,7 @@ const fadeUp = {
   show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.25, 0.1, 0.25, 1] } },
 };
 
-// ─── SkillTag with icon ────────────────────────────────────────────────────
+// ─── SkillTag with icon
 const SkillTag = ({ label, icon: Icon, color }) => (
   <motion.span
     whileHover={{ scale: 1.05, y: -1 }}
@@ -106,7 +107,7 @@ const SkillTag = ({ label, icon: Icon, color }) => (
   </motion.span>
 );
 
-// ─── SkillCard ─────────────────────────────────────────────────────────────
+// ─── SkillCard
 const SkillCard = ({
   icon: Icon, title, description, skills,
   gradientBar, iconBg, iconHover, borderHover, shadow,
@@ -172,7 +173,7 @@ const SkillCard = ({
   </motion.div>
 );
 
-// ─── Skills ────────────────────────────────────────────────────────────────
+// ─── Skills
 export default function Skills() {
   return (
     <Section id="skills" aria-label="Skills and technologies">
