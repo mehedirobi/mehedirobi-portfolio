@@ -4,14 +4,14 @@ import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiOutlineMail, HiOutlineArrowRight, HiOutlineDownload } from "react-icons/hi";
 import { OptimizedImage } from "./UI";
 
-// ─── Data ────────────────────────────────────────────────────────────────────
+// ─── Data 
 
 const HERO = {
   name:        "Mehedi",
-  role:        "Frontend Developer",
-  headline:    "I build fast, scalable and clean web applications with modern frontend architecture.",
-  description: "Focused on performance, UI engineering, and production-ready React systems.",
-  resume:      "/resume.pdf",
+  role:        "MERN Stack Developer",
+  headline:    "Building modern, responsive, and scalable full-stack web applications with the MERN Stack.",
+  description: "Passionate MERN Stack Developer focused on building responsive user interfaces, RESTful APIs, authentication systems, and performant full-stack applications with clean architecture and modern development practices.",
+  resume:      "/mehedirobi-resume.pdf",
   socials: [
     { href: "https://github.com/mehedirobi",                  icon: FaGithub,       label: "GitHub"   },
     { href: "https://www.linkedin.com/in/mehedirobii/",       icon: FaLinkedin,     label: "LinkedIn" },
@@ -19,7 +19,7 @@ const HERO = {
   ],
 };
 
-// ─── Animation ───────────────────────────────────────────────────────────────
+// ─── Animation 
 
 const container = {
   hidden: {},
@@ -36,8 +36,7 @@ const imageVariant = {
   show:   { opacity: 1, scale: 1,    transition: { duration: 0.65, ease: [0.25, 0.1, 0.25, 1] } },
 };
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
+// ─── Sub-components 
 const RoleBadge = ({ role }) => (
   <motion.div variants={fadeUp}>
     <span className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full
@@ -96,7 +95,7 @@ const ProfileImage = ({ name }) => (
                       border-4 border-white dark:border-slate-900
                       shadow-2xl shadow-slate-200/60 dark:shadow-slate-900/60">
         <OptimizedImage
-          src="/ProfessionalImg.png"
+          src="/mehedirobi.png"
           alt={`Portrait of ${name}`}
           className="w-full h-full object-cover"
         />
@@ -105,7 +104,6 @@ const ProfileImage = ({ name }) => (
   </motion.div>
 );
 
-// ─── Hero ─────────────────────────────────────────────────────────────────────
 
 export default function Hero() {
   const scrollToProjects = () =>
