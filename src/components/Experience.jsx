@@ -2,16 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Section, Card, Badge } from "./UI";
 
-/**
- * EXPERIENCE (restructured for real-world portfolio framing)
- */
-const experienceData = [
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
+const EXPERIENCE = [
   {
-    title: "Frontend Developer (Foundations)",
-    company: "Self-Driven Development",
-    period: "2024",
-    description:
-      "Built strong fundamentals in modern frontend development with focus on real-world UI implementation.",
+    title:       "Frontend Developer (Foundations)",
+    company:     "Self-Driven Development",
+    period:      "2024",
+    description: "Built strong fundamentals in modern frontend development with focus on real-world UI implementation.",
     points: [
       "Core web technologies: HTML, CSS, JavaScript (ES6+)",
       "Responsive UI development with accessibility principles",
@@ -20,11 +18,10 @@ const experienceData = [
     status: "completed",
   },
   {
-    title: "React Developer",
-    company: "Project-Based Learning",
-    period: "2025",
-    description:
-      "Transitioned into component-based architecture using React for scalable frontend systems.",
+    title:       "React Developer",
+    company:     "Project-Based Learning",
+    period:      "2025",
+    description: "Transitioned into component-based architecture using React for scalable frontend systems.",
     points: [
       "Reusable component architecture in React",
       "State management and API integration",
@@ -33,11 +30,10 @@ const experienceData = [
     status: "completed",
   },
   {
-    title: "Full-Stack Project Development",
-    company: "Production-Level Practice",
-    period: "2025 - Present",
-    description:
-      "Building production-style full-stack applications with modern engineering practices.",
+    title:       "Full-Stack Project Development",
+    company:     "Production-Level Practice",
+    period:      "2025 – Present",
+    description: "Building production-style full-stack applications with modern engineering practices.",
     points: [
       "Full-stack applications with authentication & CRUD systems",
       "Backend API development with Node.js & Express",
@@ -47,113 +43,150 @@ const experienceData = [
   },
 ];
 
-/**
- * TIMELINE ITEM
- */
-const TimelineItem = ({ item }) => {
+// ─── Animation ────────────────────────────────────────────────────────────────
+
+const VIEWPORT = { once: true, amount: 0.2 };
+
+const container = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.09 } },
+};
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } },
+};
+
+// ─── TimelineItem ─────────────────────────────────────────────────────────────
+
+const TimelineItem = ({ item, index }) => {
   const isCurrent = item.status === "current";
 
   return (
-    <div className="relative pl-10">
+    <motion.div variants={fadeUp} className="relative pl-10">
 
-      {/* DOT */}
-      <div className="absolute left-0 top-2">
-        <span
-          className={`block h-3 w-3 rounded-full ${
-            isCurrent ? "bg-sky-500" : "bg-slate-400 dark:bg-slate-600"
-          }`}
-        />
+      {/* Timeline dot */}
+      <div className="absolute left-0 top-[1.1rem] flex items-center justify-center" aria-hidden="true">
+        {isCurrent ? (
+          <span className="relative flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-60" />
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-sky-500" />
+          </span>
+        ) : (
+          <span className="h-3 w-3 rounded-full bg-slate-300 dark:bg-slate-700 ring-4 ring-white dark:ring-slate-950" />
+        )}
       </div>
 
-      {/* CARD */}
-      <Card className="p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
+      {/* Card */}
+      <motion.div whileHover={{ y: -3 }} transition={{ duration: 0.2 }}>
+        <Card className="group h-full">
 
-        {/* HEADER */}
-        <div className="flex items-start justify-between gap-4">
+          {/* Header */}
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="min-w-0">
+              <h3 className="text-base font-semibold text-slate-900 dark:text-white leading-snug">
+                {item.title}
+              </h3>
+              <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+                {item.company}
+              </p>
+            </div>
 
-          <div>
-            <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
-              {item.title}
-            </h3>
-
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
-              {item.company}
-            </p>
+            <Badge variant={isCurrent ? "primary" : "default"} className="shrink-0">
+              {isCurrent ? "Current" : item.period}
+            </Badge>
           </div>
 
-          <Badge variant={isCurrent ? "primary" : "default"}>
-            {isCurrent ? "Current" : item.period}
-          </Badge>
+          {/* Description */}
+          <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400 mb-4">
+            {item.description}
+          </p>
 
-        </div>
+          {/* Divider */}
+          <div className="border-t border-slate-100 dark:border-slate-800 mb-4" />
 
-        {/* DESCRIPTION */}
-        <p className="mt-4 text-sm text-slate-600 dark:text-slate-300 leading-6">
-          {item.description}
-        </p>
+          {/* Points */}
+          <ul className="space-y-2.5" aria-label="Key highlights">
+            {item.points.map((point, i) => (
+              <li key={i} className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-300">
+                <span
+                  className="mt-[0.4rem] h-1.5 w-1.5 shrink-0 rounded-full
+                             bg-sky-500 dark:bg-sky-400"
+                  aria-hidden="true"
+                />
+                {point}
+              </li>
+            ))}
+          </ul>
 
-        {/* POINTS */}
-        <ul className="mt-4 space-y-2">
-          {item.points.map((point, idx) => (
-            <li
-              key={idx}
-              className="flex gap-2 text-sm text-slate-600 dark:text-slate-300"
-            >
-              <span className="mt-2 h-1.5 w-1.5 rounded-full bg-sky-500 flex-shrink-0" />
-              <span>{point}</span>
-            </li>
-          ))}
-        </ul>
-
-      </Card>
-    </div>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 };
 
-/**
- * MAIN
- */
+// ─── Experience ───────────────────────────────────────────────────────────────
+
 export default function Experience() {
   return (
-    <Section id="experience">
+    <Section id="experience" aria-label="Work experience">
 
-      {/* HEADER */}
+      {/* Header */}
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={VIEWPORT}
         className="text-center mb-14"
       >
-        <h2 className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white">
-          Experience
-        </h2>
+        <motion.p
+          variants={fadeUp}
+          className="text-xs font-semibold uppercase tracking-widest
+                     text-slate-400 dark:text-slate-600 mb-3"
+        >
+          My journey
+        </motion.p>
 
-        <p className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400">
+        <motion.h2
+          variants={fadeUp}
+          className="text-3xl sm:text-4xl font-bold tracking-tight
+                     text-slate-950 dark:text-white"
+        >
+          Experience
+        </motion.h2>
+
+        <motion.p
+          variants={fadeUp}
+          className="mt-4 max-w-xl mx-auto text-base
+                     text-slate-500 dark:text-slate-400 leading-relaxed"
+        >
           A structured progression from frontend fundamentals to production-level full-stack development.
-        </p>
+        </motion.p>
       </motion.div>
 
-      {/* TIMELINE */}
-      <div className="relative max-w-5xl mx-auto">
+      {/* Timeline */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={VIEWPORT}
+        className="relative max-w-3xl mx-auto"
+      >
+        {/* Vertical line */}
+        <div
+          className="absolute left-[5px] top-5 bottom-5 w-px
+                     bg-gradient-to-b from-slate-200 via-slate-200 to-transparent
+                     dark:from-slate-800 dark:via-slate-800 dark:to-transparent"
+          aria-hidden="true"
+        />
 
-        {/* LINE */}
-        <div className="absolute left-1.5 top-0 bottom-0 w-px bg-slate-200 dark:bg-slate-800" />
-
-        <div className="space-y-10">
-          {experienceData.map((item, index) => (
-            <motion.div
-              key={item.title}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-            >
-              <TimelineItem item={item} />
-            </motion.div>
+        <div className="space-y-7">
+          {EXPERIENCE.map((item, index) => (
+            <TimelineItem key={item.title} item={item} index={index} />
           ))}
         </div>
+      </motion.div>
 
-      </div>
     </Section>
   );
 }

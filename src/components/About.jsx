@@ -1,129 +1,158 @@
 ﻿import React from "react";
 import { motion } from "framer-motion";
+import { RiLightbulbFlashLine } from "react-icons/ri";
+import { FiCode } from "react-icons/fi";
+import { HiOutlineColorSwatch } from "react-icons/hi";
 import { Section, Card } from "./UI";
 
-import {
-  RiLightbulbFlashLine,
-} from "react-icons/ri";
-import {
-  FiCode,
-} from "react-icons/fi";
-import {
-  HiOutlineColorSwatch,
-} from "react-icons/hi";
+// ─── Data ─────────────────────────────────────────────────────────────────────
 
-/**
- * DATA (kept inside same file as requested)
- */
 const ABOUT = {
-  title: "About Me",
-
-  summary:
-    "Frontend developer focused on scalable UI systems, performance-first architecture, and production-grade React applications.",
-
-  story:
-    "I build modern web interfaces using JavaScript, React, and Tailwind CSS. My focus is engineering clean, maintainable, and reusable frontend systems that perform well in real-world applications.",
-
+  title:   "About Me",
+  summary: "Frontend developer focused on scalable UI systems, performance-first architecture, and production-grade React applications.",
+  story:   "I build modern web interfaces using JavaScript, React, and Tailwind CSS. My focus is engineering clean, maintainable, and reusable frontend systems that perform well in real-world applications.",
   highlights: [
     {
-      icon: RiLightbulbFlashLine,
-      title: "Problem Solving",
-      description:
-        "Breaking complex UI problems into scalable, maintainable frontend solutions.",
+      icon:        RiLightbulbFlashLine,
+      title:       "Problem Solving",
+      description: "Breaking complex UI problems into scalable, maintainable frontend solutions.",
     },
     {
-      icon: FiCode,
-      title: "Engineering Focus",
-      description:
-        "Building modular React systems with clean architecture and predictable patterns.",
+      icon:        FiCode,
+      title:       "Engineering Focus",
+      description: "Building modular React systems with clean architecture and predictable patterns.",
     },
     {
-      icon: HiOutlineColorSwatch,
-      title: "UI Engineering",
-      description:
-        "Crafting consistent, accessible interfaces with strong UX principles.",
+      icon:        HiOutlineColorSwatch,
+      title:       "UI Engineering",
+      description: "Crafting consistent, accessible interfaces with strong UX principles.",
     },
   ],
 };
 
-/**
- * Animation presets (reusable, cleaner)
- */
-const fadeUp = {
-  hidden: { opacity: 0, y: 12 },
-  show: { opacity: 1, y: 0 },
+// ─── Animation ────────────────────────────────────────────────────────────────
+
+const VIEWPORT = { once: true, amount: 0.25 };
+
+const container = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.09 } },
 };
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 14 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.25, 0.1, 0.25, 1] } },
+};
+
+// ─── HighlightCard ────────────────────────────────────────────────────────────
+
+const HighlightCard = ({ icon: Icon, title, description, index }) => (
+  <motion.div
+    variants={fadeUp}
+    custom={index}
+    whileHover={{ y: -4 }}
+    transition={{ duration: 0.2 }}
+  >
+    <Card className="h-full group">
+      {/* Icon */}
+      <div className="mb-5 inline-flex items-center justify-center
+                      w-11 h-11 rounded-xl
+                      bg-slate-100 dark:bg-slate-800/80
+                      text-slate-600 dark:text-slate-300
+                      group-hover:bg-slate-900 group-hover:text-white
+                      dark:group-hover:bg-white dark:group-hover:text-slate-900
+                      transition-colors duration-300">
+        <Icon className="w-5 h-5" aria-hidden="true" />
+      </div>
+
+      <h3 className="text-base font-semibold text-slate-900 dark:text-white mb-2">
+        {title}
+      </h3>
+
+      <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400">
+        {description}
+      </p>
+    </Card>
+  </motion.div>
+);
+
+// ─── About ────────────────────────────────────────────────────────────────────
 
 export default function About() {
   return (
-    <Section id="about">
+    <Section id="about" aria-label="About me">
 
-      {/* HEADER */}
+      {/* Header */}
       <motion.div
+        variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        transition={{ staggerChildren: 0.08 }}
-        className="text-center mb-12"
+        viewport={VIEWPORT}
+        className="text-center mb-10"
       >
+        <motion.p
+          variants={fadeUp}
+          className="text-xs font-semibold uppercase tracking-widest
+                     text-slate-400 dark:text-slate-600 mb-3"
+        >
+          Who I am
+        </motion.p>
+
         <motion.h2
           variants={fadeUp}
-          className="text-3xl sm:text-4xl font-bold text-slate-950 dark:text-white"
+          className="text-3xl sm:text-4xl font-bold tracking-tight
+                     text-slate-950 dark:text-white"
         >
           {ABOUT.title}
         </motion.h2>
 
         <motion.p
           variants={fadeUp}
-          className="mt-3 max-w-2xl mx-auto text-slate-600 dark:text-slate-400 text-base sm:text-lg"
+          className="mt-4 max-w-xl mx-auto text-base sm:text-lg
+                     text-slate-500 dark:text-slate-400 leading-relaxed"
         >
           {ABOUT.summary}
         </motion.p>
       </motion.div>
 
-      {/* STORY */}
+      {/* Story */}
       <motion.div
-        initial={{ opacity: 0, y: 14 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
-        className="max-w-3xl mx-auto text-center mb-14"
+        initial="hidden"
+        whileInView="show"
+        variants={fadeUp}
+        viewport={VIEWPORT}
+        className="max-w-2xl mx-auto mb-14"
       >
-        <p className="text-slate-600 dark:text-slate-300 leading-7 text-base sm:text-lg">
-          {ABOUT.story}
-        </p>
+        <div className="relative px-6 py-5 rounded-2xl
+                        bg-slate-50 dark:bg-slate-900/60
+                        border border-slate-100 dark:border-slate-800/80">
+          {/* Decorative quote mark */}
+          <span
+            className="absolute -top-3 left-6 text-4xl leading-none
+                       text-slate-200 dark:text-slate-800 select-none font-serif"
+            aria-hidden="true"
+          >
+            "
+          </span>
+          <p className="text-center text-slate-600 dark:text-slate-300
+                        leading-7 text-base sm:text-[1.05rem]">
+            {ABOUT.story}
+          </p>
+        </div>
       </motion.div>
 
-      {/* HIGHLIGHTS */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Highlights */}
+      <motion.div
+        variants={container}
+        initial="hidden"
+        whileInView="show"
+        viewport={VIEWPORT}
+        className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      >
         {ABOUT.highlights.map((item, index) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.4, delay: index * 0.08 }}
-          >
-            <Card className="h-full hover:-translate-y-1 transition-all duration-300">
-
-              {/* ICON */}
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">
-                <item.icon className="h-6 w-6" />
-              </div>
-
-              {/* TITLE */}
-              <h3 className="text-lg font-semibold text-slate-950 dark:text-white">
-                {item.title}
-              </h3>
-
-              {/* DESCRIPTION */}
-              <p className="mt-2 text-sm leading-6 text-slate-600 dark:text-slate-400">
-                {item.description}
-              </p>
-
-            </Card>
-          </motion.div>
+          <HighlightCard key={item.title} {...item} index={index} />
         ))}
-      </div>
+      </motion.div>
 
     </Section>
   );

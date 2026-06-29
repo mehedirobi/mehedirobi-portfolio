@@ -2,102 +2,144 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
-/**
- * SOCIAL DATA
- */
+// ─── Data ─────────────────────────────────────────────────────────────────────
+
 const SOCIALS = [
-  {
-    icon: FaGithub,
-    href: "https://github.com/mehedirobi",
-    label: "GitHub",
-  },
-  {
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/mehedirobii/",
-    label: "LinkedIn",
-  },
-  {
-    icon: FaXTwitter,
-    href: "https://x.com/mehedirobii",
-    label: "X",
-  },
+  { icon: FaGithub,   href: "https://github.com/mehedirobi",             label: "GitHub"   },
+  { icon: FaLinkedin, href: "https://www.linkedin.com/in/mehedirobii/",  label: "LinkedIn" },
+  { icon: FaXTwitter, href: "https://x.com/mehedirobii",                 label: "X"        },
 ];
 
-/**
- * SOCIAL ICON BUTTON
- */
-const SocialIcon = ({ icon: Icon, href, label }) => {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className="
-        h-10 w-10 flex items-center justify-center
-        rounded-lg border border-slate-200 dark:border-slate-800
-        text-slate-600 dark:text-slate-300
-        hover:bg-slate-900 hover:text-white
-        dark:hover:bg-white dark:hover:text-slate-900
-        transition-all duration-300
-        hover:-translate-y-0.5
-      "
-    >
-      <Icon className="h-5 w-5" />
-    </a>
-  );
+const NAV_LINKS = [
+  { label: "About",       id: "about"          },
+  { label: "Projects",    id: "projects"       },
+  { label: "Experience",  id: "experience"     },
+  { label: "Contact",     id: "contact"        },
+];
+
+// ─── Animation ────────────────────────────────────────────────────────────────
+
+const container = {
+  hidden: {},
+  show:   { transition: { staggerChildren: 0.07 } },
 };
 
-/**
- * FOOTER
- */
+const fadeUp = {
+  hidden: { opacity: 0, y: 12 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.25, 0.1, 0.25, 1] } },
+};
+
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
 export default function Footer() {
   const year = new Date().getFullYear();
 
+  const scrollTo = (id) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
-    <footer className="border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
-
-      <div className="mx-auto max-w-6xl px-6 py-12">
-
+    <footer
+      role="contentinfo"
+      className="border-t border-slate-200 dark:border-slate-800
+                 bg-slate-50/80 dark:bg-slate-950"
+    >
+      <div className="max-w-5xl mx-auto px-5 sm:px-6 py-12">
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="text-center space-y-6"
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="flex flex-col items-center gap-8"
         >
 
-          {/* BRAND */}
-          <div className="space-y-1">
-            <h3 className="text-xl font-semibold text-slate-950 dark:text-white">
-              Mehedi Robi
-            </h3>
+          {/* Brand */}
+          <motion.div variants={fadeUp} className="text-center space-y-1.5">
+            <button
+              onClick={() => scrollTo("home")}
+              className="text-lg font-semibold tracking-tight
+                         text-slate-900 dark:text-white
+                         hover:opacity-70 transition-opacity
+                         focus-visible:outline-none focus-visible:ring-2
+                         focus-visible:ring-slate-900/40 dark:focus-visible:ring-white/40
+                         rounded-sm"
+              aria-label="Back to top"
+            >
+              Mehedi<span className="text-slate-400 dark:text-slate-600"> Robi</span>
+            </button>
 
-            <p className="text-sm text-slate-500 dark:text-slate-400">
-              Frontend Developer • React • Next.js • Full Stack Developer
+            <p className="text-xs text-slate-400 dark:text-slate-600 tracking-wide">
+              Frontend Developer · React · Next.js · Full Stack
             </p>
-          </div>
+          </motion.div>
 
-          {/* SOCIALS */}
-          <div className="flex justify-center gap-4">
-            {SOCIALS.map((item) => (
-              <SocialIcon key={item.label} {...item} />
+          {/* Nav links */}
+          <motion.nav
+            variants={fadeUp}
+            aria-label="Footer navigation"
+            className="flex flex-wrap justify-center gap-x-6 gap-y-2"
+          >
+            {NAV_LINKS.map(({ label, id }) => (
+              <button
+                key={id}
+                onClick={() => scrollTo(id)}
+                className="text-sm text-slate-500 dark:text-slate-500
+                           hover:text-slate-900 dark:hover:text-white
+                           transition-colors duration-150
+                           focus-visible:outline-none focus-visible:ring-2
+                           focus-visible:ring-slate-900/30 dark:focus-visible:ring-white/30
+                           rounded-sm"
+              >
+                {label}
+              </button>
             ))}
-          </div>
+          </motion.nav>
 
-          {/* DIVIDER */}
-          <div className="h-px w-full bg-slate-200 dark:bg-slate-800" />
+          {/* Socials */}
+          <motion.div variants={fadeUp} className="flex gap-2.5">
+            {SOCIALS.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={label}
+                className="h-9 w-9 flex items-center justify-center rounded-xl
+                           border border-slate-200 dark:border-slate-800
+                           text-slate-500 dark:text-slate-400
+                           hover:border-slate-400 dark:hover:border-slate-600
+                           hover:text-slate-900 dark:hover:text-white
+                           hover:-translate-y-0.5
+                           transition-all duration-200
+                           focus-visible:outline-none focus-visible:ring-2
+                           focus-visible:ring-slate-900/30 dark:focus-visible:ring-white/30"
+              >
+                <Icon className="w-[17px] h-[17px]" aria-hidden="true" />
+              </a>
+            ))}
+          </motion.div>
 
-          {/* FOOTER META */}
-          <div className="text-xs text-slate-500 dark:text-slate-400 space-y-1">
-            <p>© {year} Mehedi Robi. All rights reserved.</p>
-            <p>Built with React, Tailwind CSS & Framer Motion</p>
-          </div>
+          {/* Divider */}
+          <motion.div
+            variants={fadeUp}
+            className="w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent
+                       dark:via-slate-800"
+            aria-hidden="true"
+          />
+
+          {/* Meta */}
+          <motion.div
+            variants={fadeUp}
+            className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-4
+                       text-xs text-slate-400 dark:text-slate-600"
+          >
+            <span>© {year} Mehedi Robi. All rights reserved.</span>
+            <span className="hidden sm:inline text-slate-300 dark:text-slate-800" aria-hidden="true">·</span>
+            <span>Built with React, Tailwind CSS & Framer Motion</span>
+          </motion.div>
 
         </motion.div>
-
       </div>
-
     </footer>
   );
 }
