@@ -14,7 +14,7 @@ const ABOUT = {
   story:   "I'm a MERN stack developer who loves turning ideas into real, working products. I care deeply about clean code, great UX, and building things that actually work in production — not just on localhost.",
   stats: [
     { value: "35+",  label: "Projects built"    },
-    { value: "2+",   label: "Certifications"    },
+    { value: "1",   label: "Certifications"    },
     { value: "100%", label: "Open source first" },
   ],
   highlights: [
