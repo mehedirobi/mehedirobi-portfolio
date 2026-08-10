@@ -57,7 +57,7 @@ const ABOUT = {
   ],
 };
 
-// ─── Animations ────────────────────────────────────────────────────────────
+
 const VIEWPORT = { once: true, amount: 0.2 };
 
 const container = {
