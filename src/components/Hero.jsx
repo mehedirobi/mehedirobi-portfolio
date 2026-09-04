@@ -13,7 +13,7 @@ const HERO = {
   tagline:     "I build fast, scalable full-stack web apps — from pixel-perfect UIs to production-ready APIs.",
   description: "Focused on React, Node.js, REST APIs, and clean architecture. Currently open to junior & mid-level roles.",
   resume:      "/mehedirobi-resume.pdf",
-  image:       "/mehedirobi.png",
+  image:       "/Mehedi-Robi-Professional.png",
   socials: [
     { href: "https://github.com/mehedirobi",              icon: FaGithub,      label: "GitHub"   },
     { href: "https://www.linkedin.com/in/mehedirobii/",   icon: FaLinkedin,    label: "LinkedIn" },
@@ -75,17 +75,7 @@ const BackgroundOrbs = () => (
 // Status badge
 const StatusBadge = () => (
   <motion.div variants={fadeUp}>
-    <span className="inline-flex items-center gap-2 px-3.5 py-1.5 text-xs font-medium
-                     rounded-full border border-emerald-200/60 dark:border-emerald-800/50
-                     bg-emerald-50 dark:bg-emerald-950/40
-                     text-emerald-700 dark:text-emerald-400">
-      <span className="relative flex h-1.5 w-1.5">
-        <span className="animate-ping absolute inline-flex h-full w-full rounded-full
-                         bg-emerald-400 opacity-75" />
-        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-      </span>
-      Open to work · Available for hire
-    </span>
+   
   </motion.div>
 );
 
@@ -174,41 +164,6 @@ const ProfileImage = ({ name, shouldReduce }) => (
                      group-hover:scale-105"
         />
       </div>
-
-      {/* Floating MERN badge — bottom left */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: 10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ delay: 0.9, duration: 0.4, ease: "easeOut" }}
-        className="absolute -bottom-3 -left-4 lg:-left-8
-                   flex items-center gap-2 px-3 py-1.5 rounded-xl
-                   bg-white dark:bg-slate-900
-                   border border-slate-200 dark:border-slate-800
-                   shadow-lg shadow-slate-200/60 dark:shadow-slate-900/60"
-      >
-        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
-        <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-          MERN Stack
-        </span>
-      </motion.div>
-
-      {/* Floating exp badge — top right */}
-      <motion.div
-        initial={{ opacity: 0, scale: 0.8, y: -10 }}
-        animate={{ opacity: 1, scale: 1, y: 0 }}
-        transition={{ delay: 1.05, duration: 0.4, ease: "easeOut" }}
-        className="absolute -top-3 -right-4 lg:-right-6
-                   flex items-center gap-1.5 px-3 py-1.5 rounded-xl
-                   bg-white dark:bg-slate-900
-                   border border-slate-200 dark:border-slate-800
-                   shadow-lg shadow-slate-200/60 dark:shadow-slate-900/60"
-      >
-        <span className="text-base leading-none">🚀</span>
-        <span className="text-xs font-semibold text-slate-700 dark:text-slate-200 whitespace-nowrap">
-          Full-Stack Dev
-        </span>
-      </motion.div>
-
     </div>
   </motion.div>
 );
@@ -359,25 +314,6 @@ export default function Hero() {
         </motion.div>
 
       </div>
-
-      {/* Scroll cue */}
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.4, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-1.5"
-        aria-hidden="true"
-      >
-        <span className="text-[10px] tracking-widest uppercase text-slate-400 dark:text-slate-600 font-medium">
-          Scroll
-        </span>
-        <motion.div
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-          className="w-[1px] h-8 bg-gradient-to-b from-slate-300 to-transparent dark:from-slate-700"
-        />
-      </motion.div>
-
     </section>
   );
 }
