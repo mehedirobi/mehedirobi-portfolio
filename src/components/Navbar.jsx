@@ -365,6 +365,7 @@ export default function Navbar() {
 
   const headerRef = useRef(null);
   const previousOverflow = useRef("");
+  const scrollAnimationRef = useRef(null);
 
   const reduceMotion = useReducedMotion();
 
@@ -383,18 +384,28 @@ export default function Navbar() {
         return;
       }
 
+      // Cancel any previous scroll animation
+      if (scrollAnimationRef.current) {
+        cancelAnimationFrame(scrollAnimationRef.current);
+        scrollAnimationRef.current = null;
+      }
+
       const targetPosition =
         element.getBoundingClientRect().top +
         window.scrollY -
         HEADER_HEIGHT -
         16;
 
-      // Close mobile menu immediately
+      const startPosition = window.scrollY;
+      const distance = targetPosition - startPosition;
+      const absoluteDistance = Math.abs(distance);
+
+      // Close menu and update active state immediately
       setOpen(false);
       setActive(id);
 
-      // Respect reduced-motion preference
-      if (reduceMotion) {
+      // Respect reduced motion preference
+      if (reduceMotion || absoluteDistance < 4) {
         window.scrollTo({
           top: Math.max(0, targetPosition),
           behavior: "auto",
@@ -403,15 +414,84 @@ export default function Navbar() {
         return;
       }
 
-      // Native browser smooth scrolling.
-      // More performant and smoother than manual requestAnimationFrame.
-      window.scrollTo({
-        top: Math.max(0, targetPosition),
-        behavior: "smooth",
-      });
+      /*
+       * Professional adaptive duration:
+       *
+       * Short distance  → ~420ms
+       * Medium distance → ~600ms
+       * Long distance   → ~760ms max
+       *
+       * This avoids both the "instant jump" and
+       * the slow/laggy feeling.
+       */
+      const duration = Math.min(
+        760,
+        Math.max(
+          420,
+          420 + absoluteDistance * 0.18
+        )
+      );
+
+      const startTime = performance.now();
+
+      // Smooth ease-in-out cubic curve
+      const easeInOutCubic = (progress) => {
+        if (progress < 0.5) {
+          return 4 * progress * progress * progress;
+        }
+
+        return (
+          1 -
+          Math.pow(-2 * progress + 2, 3) / 2
+        );
+      };
+
+      const animateScroll = (currentTime) => {
+        const elapsed = currentTime - startTime;
+
+        const progress = Math.min(
+          elapsed / duration,
+          1
+        );
+
+        const easedProgress =
+          easeInOutCubic(progress);
+
+        const currentPosition =
+          startPosition +
+          distance * easedProgress;
+
+        window.scrollTo(0, currentPosition);
+
+        if (progress < 1) {
+          scrollAnimationRef.current =
+            requestAnimationFrame(
+              animateScroll
+            );
+        } else {
+          scrollAnimationRef.current = null;
+        }
+      };
+
+      scrollAnimationRef.current =
+        requestAnimationFrame(animateScroll);
     },
     [reduceMotion]
   );
+
+  // ----------------------------------------------------
+  // Cleanup scroll animation
+  // ----------------------------------------------------
+
+  useEffect(() => {
+    return () => {
+      if (scrollAnimationRef.current) {
+        cancelAnimationFrame(
+          scrollAnimationRef.current
+        );
+      }
+    };
+  }, []);
 
   // ----------------------------------------------------
   // Active section detection
@@ -435,7 +515,9 @@ export default function Navbar() {
           );
 
         if (visibleSections[0]) {
-          setActive(visibleSections[0].target.id);
+          setActive(
+            visibleSections[0].target.id
+          );
         }
       },
       {
@@ -445,7 +527,9 @@ export default function Navbar() {
       }
     );
 
-    sections.forEach((section) => observer.observe(section));
+    sections.forEach((section) =>
+      observer.observe(section)
+    );
 
     return () => observer.disconnect();
   }, []);
