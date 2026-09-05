@@ -1,63 +1,110 @@
-<<<<<<< HEAD
-#  Mehedi Robi Portfolio
+# Mehedi Robi — Developer Portfolio
 
-A modern, responsive, and production-style developer portfolio built with React and Tailwind CSS.
+A modern, responsive developer portfolio built with React, Tailwind CSS, and Framer Motion. The portfolio showcases my projects, technical skills, experience, education, certifications, and contact information.
 
-This project is a React conversion of the original HTML/CSS portfolio, optimized for scalability, maintainability, and clean UI structure.
+## Features
 
----
+* Responsive and mobile-first design
+* Light / dark theme
+* Smooth section navigation
+* Animated UI with Framer Motion
+* Project filtering and showcase
+* Responsive navigation
+* Accessible interactive components
+* Back-to-top navigation
+* Optimized reusable React components
+* Clean and maintainable project structure
 
-## ✨ Features
+## Tech Stack
 
-- ⚡ Fully responsive design (mobile-first approach)
-- 🎨 Modern UI with Tailwind CSS styling
-- 🧩 Component-based architecture (React)
-- 🚀 Fast development with Vite
-- 🔗 CDN integration for Font Awesome icons
-- 📱 Cross-device optimized layout
+* React.js
+* JavaScript (ES6+)
+* Tailwind CSS
+* Framer Motion
+* React Icons
+* Vite
 
----
+## Sections
 
-## 🛠 Tech Stack
+* Hero
+* About
+* Skills
+* Projects
+* Experience
+* Certifications
+* Education
+* Contact
 
-- React.js (Component-based architecture)
-- Tailwind CSS (Utility-first styling)
-- JavaScript (ES6+)
-- Vite (Development environment)
-- Font Awesome (Icons via CDN)
+## Live Demo
 
----
+[View Live Portfolio](https://mehedi-robi-portfolio.netlify.app/?utm_source=chatgpt.com)
 
-## 🔗 Live link
-https://mehedi-robi-portfolio.netlify.app/
----
+## Getting Started
 
-## ⚙️ Getting Started
-
-### 1. Install dependencies
+Clone the repository:
 
 ```bash
-npm install
+git clone https://github.com/mehedirobi/mehedi-robi-portfolio.git
+cd mehedi-robi-portfolio
+```
 
-npm run dev
-=======
-# Mehedi Portfolio (React)
-
-This repo is a React conversion of the original HTML/CSS developer portfolio.
-
-Quick start:
-
-1. Install dependencies:
+Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Start dev server:
+Start the development server:
 
 ```bash
 npm run dev
 ```
 
-The app uses the Tailwind CDN and Font Awesome CDN to preserve original styles.
->>>>>>> a8ffe3d (upgarted my portfolio)
+Create a production build:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```text
+src/
+├── components/
+│   ├── About.jsx
+│   ├── Contact.jsx
+│   ├── Education.jsx
+│   ├── Experience.jsx
+│   ├── Footer.jsx
+│   ├── Hero.jsx
+│   ├── Navbar.jsx
+│   ├── Projects.jsx
+│   ├── Skills.jsx
+│   ├── ThemeContext.jsx
+│   ├── ThemeToggle.jsx
+│   └── UI.jsx
+│
+├── data/
+│   └── projectData.js
+│
+├── hooks/
+│   └── useCopyToClipboard.js
+│
+├── App.jsx
+├── main.jsx
+└── index.css
+```
+
+## Author
+
+**Mehedi Robi**
+
+Frontend Developer | React.js & MERN Stack
+
+* GitHub: [@mehedirobi](https://github.com/mehedirobi?utm_source=chatgpt.com)
+* LinkedIn: [@mehedirobii](https://www.linkedin.com/in/mehedirobii/?utm_source=chatgpt.com)
+* X: [@mehedirobii](https://x.com/mehedirobii?utm_source=chatgpt.com)
+
+## License
+
+This project is open source and available for learning and portfolio purposes.

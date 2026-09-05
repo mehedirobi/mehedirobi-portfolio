@@ -1,121 +1,148 @@
 import React, {
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
-  useCallback,
 } from "react";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
-const THEME_KEY  = "theme";
+const STORAGE_KEY = "theme";
 const DARK_CLASS = "dark";
-const DARK_QUERY = "(prefers-color-scheme: dark)";
+const MEDIA_QUERY = "(prefers-color-scheme: dark)";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
-const getSystemTheme = () =>
-  window.matchMedia?.(DARK_QUERY).matches ? "dark" : "light";
+const getSystemTheme = () => {
+  if (typeof window === "undefined") return "light";
 
-const applyTheme = (theme) =>
-  document.documentElement.classList.toggle(DARK_CLASS, theme === "dark");
-
-const readStorage = () => {
-  try { return localStorage.getItem(THEME_KEY); } catch { return null; }
+  return window.matchMedia?.(MEDIA_QUERY).matches
+    ? "dark"
+    : "light";
 };
 
-const writeStorage = (value) => {
-  try { localStorage.setItem(THEME_KEY, value); } catch { /* silent */ }
+const isValidTheme = (value) =>
+  value === "light" || value === "dark";
+
+const getStoredTheme = () => {
+  if (typeof window === "undefined") return null;
+
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return isValidTheme(stored) ? stored : null;
+  } catch {
+    return null;
+  }
 };
 
-const clearStorage = () => {
-  try { localStorage.removeItem(THEME_KEY); } catch { /* silent */ }
+const getInitialTheme = () =>
+  getStoredTheme() ?? getSystemTheme();
+
+const applyTheme = (theme) => {
+  if (typeof document === "undefined") return;
+
+  const root = document.documentElement;
+  const isDark = theme === "dark";
+
+  root.classList.toggle(DARK_CLASS, isDark);
+  root.style.colorScheme = theme;
 };
 
-const getInitialTheme = () => {
-  const saved = readStorage();
-  return saved === "dark" || saved === "light" ? saved : getSystemTheme();
+const saveTheme = (theme) => {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.setItem(STORAGE_KEY, theme);
+  } catch {
+    // Ignore storage errors.
+  }
+};
+
+const removeStoredTheme = () => {
+  if (typeof window === "undefined") return;
+
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    // Ignore storage errors.
+  }
 };
 
 // ─── Context ──────────────────────────────────────────────────────────────────
 
 const ThemeContext = createContext(null);
 
-/**
- * useTheme — access theme state and controls.
- *
- * @returns {{
- *   theme:       "light" | "dark",
- *   isDark:      boolean,
- *   toggleTheme: () => void,
- *   setLight:    () => void,
- *   setDark:     () => void,
- *   resetToSystem: () => void,
- * }}
- */
 export const useTheme = () => {
-  const ctx = useContext(ThemeContext);
-  if (!ctx) throw new Error("useTheme must be used within <ThemeProvider>");
-  return ctx;
+  const context = useContext(ThemeContext);
+
+  if (!context) {
+    throw new Error("useTheme must be used within <ThemeProvider>");
+  }
+
+  return context;
 };
 
 // ─── Provider ─────────────────────────────────────────────────────────────────
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setThemeState] = useState(() => {
-    // Lazy init — apply immediately to avoid flash of wrong theme
-    const initial = getInitialTheme();
-    applyTheme(initial);
-    return initial;
-  });
+  const [theme, setTheme] = useState(getInitialTheme);
 
-  // Persist + apply whenever theme changes
+  // Apply + persist theme
   useEffect(() => {
     applyTheme(theme);
-    writeStorage(theme);
+    saveTheme(theme);
   }, [theme]);
 
-  // Sync with OS-level dark mode changes (only when no manual preference saved)
+  // Follow system theme when there is no saved preference
   useEffect(() => {
-    const media = window.matchMedia?.(DARK_QUERY);
+    if (typeof window === "undefined") return;
+
+    const media = window.matchMedia?.(MEDIA_QUERY);
+
     if (!media) return;
 
-    const handler = (e) => {
-      if (!readStorage()) {
-        setThemeState(e.matches ? "dark" : "light");
+    const handleChange = (event) => {
+      const hasManualPreference = getStoredTheme();
+
+      if (!hasManualPreference) {
+        setTheme(event.matches ? "dark" : "light");
       }
     };
 
-    media.addEventListener("change", handler);
-    return () => media.removeEventListener("change", handler);
+    media.addEventListener("change", handleChange);
+
+    return () => {
+      media.removeEventListener("change", handleChange);
+    };
   }, []);
 
-  // ── Controls ────────────────────────────────────────────────────────────────
+  // ─── Controls ──────────────────────────────────────────────────────────────
 
-  const toggleTheme = useCallback(
-    () => setThemeState((prev) => (prev === "dark" ? "light" : "dark")),
-    []
-  );
+  const toggleTheme = useCallback(() => {
+    setTheme((current) =>
+      current === "dark" ? "light" : "dark"
+    );
+  }, []);
 
-  const setLight = useCallback(() => setThemeState("light"), []);
-  const setDark  = useCallback(() => setThemeState("dark"),  []);
-
-  // Clear saved preference → follow system from now on
   const resetToSystem = useCallback(() => {
-    clearStorage();
-    setThemeState(getSystemTheme());
+    removeStoredTheme();
+    setTheme(getSystemTheme());
   }, []);
 
-  // ── Value ───────────────────────────────────────────────────────────────────
+  // ─── Context value ─────────────────────────────────────────────────────────
 
-  const value = {
-    theme,
-    isDark: theme === "dark",
-    toggleTheme,
-    setLight,
-    setDark,
-    resetToSystem,
-  };
+  const value = useMemo(
+    () => ({
+      theme,
+      isDark: theme === "dark",
+      setTheme,
+      toggleTheme,
+      resetToSystem,
+    }),
+    [theme, toggleTheme, resetToSystem]
+  );
 
   return (
     <ThemeContext.Provider value={value}>

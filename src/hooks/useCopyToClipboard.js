@@ -1,19 +1,55 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from "react";
+
+const TOAST_DURATION = 2000;
 
 export const useCopyToClipboard = () => {
-  const [toast, setToast] = useState('');
+  const [toast, setToast] = useState("");
+  const timeoutRef = useRef(null);
 
-  const copyToClipboard = async (text, label = 'Text') => {
+  const copyToClipboard = useCallback(async (text, label = "Text") => {
+    if (!text) return false;
+
     try {
       await navigator.clipboard.writeText(text);
-      setToast(`${label} copied!`);
-      setTimeout(() => setToast(''), 2000);
-    } catch (err) {
-      console.error('Failed to copy: ', err);
-      setToast('Failed to copy');
-      setTimeout(() => setToast(''), 2000);
-    }
-  };
 
-  return { copyToClipboard, toast };
+      setToast(`${label} copied!`);
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        setToast("");
+      }, TOAST_DURATION);
+
+      return true;
+    } catch (error) {
+      console.error("Failed to copy:", error);
+
+      setToast("Failed to copy");
+
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
+      timeoutRef.current = setTimeout(() => {
+        setToast("");
+      }, TOAST_DURATION);
+
+      return false;
+    }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  return {
+    copyToClipboard,
+    toast,
+  };
 };

@@ -1,11 +1,7 @@
 ﻿import React from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { FiCode, FiLayers } from "react-icons/fi";
 import { RiLightbulbFlashLine } from "react-icons/ri";
-import { FiCode, FiLayers, FiCheckCircle } from "react-icons/fi";
-import {
-  HiOutlineColorSwatch,
-  HiOutlineDatabase,
-} from "react-icons/hi";
 import {
   SiReact,
   SiNodedotjs,
@@ -23,55 +19,36 @@ const ABOUT = {
   title: "About Me",
 
   summary:
-    "I'm a MERN Stack Developer focused on building responsive, maintainable, and user-focused web applications with modern JavaScript technologies.",
+    "A developer focused on building modern, responsive, and maintainable web applications with React, Node.js, Express.js, and MongoDB.",
 
   story: [
-    "I enjoy turning ideas and real-world requirements into clean, functional web products. My primary focus is building modern interfaces with React and connecting them with reliable REST APIs and MongoDB-backed services.",
+    "I'm Mehedi Robi, a web developer focused on building modern and user-friendly web applications. I enjoy turning ideas and real-world requirements into practical digital products that are clean, responsive, and easy to use.",
 
-    "I care about more than making an application look good. I focus on reusable components, responsive design, clear code structure, accessibility, performance, and a consistent user experience across devices.",
+    "My primary focus is frontend development with React, where I build reusable components, responsive interfaces, and interactive user experiences. I also work with Node.js, Express.js, REST APIs, and MongoDB to connect applications with reliable backend services.",
 
-    "I'm continuously strengthening my full-stack engineering skills through hands-on projects and practical problem solving, with the goal of building software that is reliable, maintainable, and ready for real users.",
+    "I care about more than just making an application work. I focus on clean code, reusable architecture, responsive design, accessibility, performance, and maintainability. I continuously improve my skills by building real-world projects and solving practical development problems.",
+
+    "My goal is to grow into a professional software engineer who can design, build, and maintain reliable full-stack applications while following modern engineering practices.",
   ],
 
   focusAreas: [
     {
       icon: FiCode,
-      title: "Frontend Engineering",
+      title: "Frontend Development",
       description:
-        "Building responsive React interfaces with reusable components, clean state management, and thoughtful user interactions.",
+        "Building responsive React interfaces with reusable components, clean UI structure, and thoughtful user interactions.",
     },
     {
       icon: FiLayers,
       title: "Full-Stack Development",
       description:
-        "Connecting frontend applications with REST APIs, Node.js, Express.js, and MongoDB to build complete web experiences.",
+        "Developing complete web applications using React, Node.js, Express.js, REST APIs, and MongoDB.",
     },
     {
       icon: RiLightbulbFlashLine,
       title: "Problem Solving",
       description:
-        "Breaking requirements into practical solutions with an emphasis on clean architecture, maintainability, and scalability.",
-    },
-  ],
-
-  principles: [
-    {
-      icon: FiCheckCircle,
-      title: "Clean & Maintainable",
-      description:
-        "I prefer reusable patterns and straightforward code that remains easy to understand and extend.",
-    },
-    {
-      icon: HiOutlineColorSwatch,
-      title: "User-Centered UI",
-      description:
-        "I focus on responsive layouts, visual consistency, accessibility, and intuitive interactions.",
-    },
-    {
-      icon: HiOutlineDatabase,
-      title: "Practical Engineering",
-      description:
-        "I learn by building real projects and applying engineering practices to solve practical problems.",
+        "Turning requirements into practical solutions while keeping code clean, maintainable, and scalable.",
     },
   ],
 
@@ -132,9 +109,7 @@ const fadeUpVariants = {
 // Section Header
 // ======================================================
 
-const SectionHeader = ({
-  reduceMotion,
-}) => {
+const SectionHeader = () => {
   return (
     <motion.div
       variants={containerVariants}
@@ -144,23 +119,13 @@ const SectionHeader = ({
         once: true,
         amount: 0.2,
       }}
-      className="
-        mx-auto
-        mb-12
-        max-w-2xl
-        text-center
-      "
+      className="mx-auto mb-12 max-w-2xl text-center"
     >
       <motion.p
         variants={fadeUpVariants}
         className="
-          mb-3
-          text-[11px]
-          font-semibold
-          uppercase
-          tracking-[0.16em]
-          text-violet-600
-
+          mb-3 text-[11px] font-semibold uppercase
+          tracking-[0.16em] text-violet-600
           dark:text-violet-400
         "
       >
@@ -168,15 +133,11 @@ const SectionHeader = ({
       </motion.p>
 
       <motion.h2
+        id="about-heading"
         variants={fadeUpVariants}
         className="
-          text-3xl
-          font-bold
-          tracking-[-0.025em]
-          text-slate-950
-
-          sm:text-4xl
-
+          text-3xl font-bold tracking-[-0.025em]
+          text-slate-950 sm:text-4xl
           dark:text-white
         "
       >
@@ -186,15 +147,8 @@ const SectionHeader = ({
       <motion.p
         variants={fadeUpVariants}
         className="
-          mx-auto
-          mt-4
-          max-w-xl
-          text-sm
-          leading-7
-          text-slate-500
-
-          sm:text-base
-
+          mx-auto mt-4 max-w-xl text-sm leading-7
+          text-slate-500 sm:text-base
           dark:text-slate-400
         "
       >
@@ -210,39 +164,24 @@ const SectionHeader = ({
 
 const TechnologyRow = () => {
   return (
-    <div
-      className="
-        flex
-        flex-wrap
-        items-center
-        gap-x-5
-        gap-y-3
-      "
-    >
-      {ABOUT.techRow.map(
-        ({ icon: Icon, label, color }) => (
-          <span
-            key={label}
-            className="
-              inline-flex
-              items-center
-              gap-1.5
-              text-xs
-              font-medium
-              text-slate-500
+    <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+      {ABOUT.techRow.map(({ icon: Icon, label, color }) => (
+        <span
+          key={label}
+          className="
+            inline-flex items-center gap-1.5
+            text-xs font-medium text-slate-500
+            dark:text-slate-400
+          "
+        >
+          <Icon
+            className={`h-4 w-4 ${color}`}
+            aria-hidden="true"
+          />
 
-              dark:text-slate-400
-            "
-          >
-            <Icon
-              className={`h-4 w-4 ${color}`}
-              aria-hidden="true"
-            />
-
-            {label}
-          </span>
-        )
-      )}
+          {label}
+        </span>
+      ))}
     </div>
   );
 };
@@ -267,77 +206,43 @@ const FocusCard = ({
               y: -3,
             }
       }
-      transition={{
-        duration: 0.2,
-      }}
       className="
-        group
-        relative
-        h-full
-        overflow-hidden
-        rounded-2xl
-        border
-        border-slate-200/80
-        bg-white
-        p-6
-
-        shadow-sm
-        shadow-slate-900/[0.02]
-
-        transition-[border-color,box-shadow]
-        duration-300
-
+        group relative h-full overflow-hidden
+        rounded-2xl border border-slate-200/80
+        bg-white p-6
+        shadow-sm shadow-slate-900/[0.02]
+        transition-[border-color,box-shadow] duration-300
         hover:border-slate-300
-        hover:shadow-lg
-        hover:shadow-slate-900/[0.05]
-
+        hover:shadow-lg hover:shadow-slate-900/[0.05]
         dark:border-slate-800/80
         dark:bg-slate-900/40
         dark:hover:border-slate-700
         dark:hover:shadow-black/20
       "
     >
-      {/* Subtle top accent */}
+      {/* Top accent */}
+
       <div
         aria-hidden="true"
         className="
-          absolute
-          left-6
-          right-6
-          top-0
-          h-px
-          bg-gradient-to-r
-          from-violet-500
-          via-blue-500
-          to-cyan-400
-          opacity-0
-          transition-opacity
-          duration-300
-
+          absolute left-6 right-6 top-0 h-px
+          bg-gradient-to-r from-violet-500
+          via-blue-500 to-cyan-400
+          opacity-0 transition-opacity duration-300
           group-hover:opacity-100
         "
       />
 
       {/* Icon */}
+
       <div
         className="
-          mb-5
-          flex
-          h-11
-          w-11
-          items-center
-          justify-center
-          rounded-xl
-          border
-          border-violet-100
-          bg-violet-50
-          text-violet-600
-
-          transition-colors
-          duration-200
-
+          mb-5 flex h-11 w-11 items-center
+          justify-center rounded-xl
+          border border-violet-100
+          bg-violet-50 text-violet-600
+          transition-colors duration-200
           group-hover:bg-violet-100
-
           dark:border-violet-900/40
           dark:bg-violet-950/40
           dark:text-violet-400
@@ -350,14 +255,12 @@ const FocusCard = ({
         />
       </div>
 
+      {/* Content */}
+
       <h3
         className="
-          mb-2
-          text-base
-          font-semibold
-          tracking-tight
-          text-slate-900
-
+          mb-2 text-base font-semibold
+          tracking-tight text-slate-900
           dark:text-white
         "
       >
@@ -366,80 +269,13 @@ const FocusCard = ({
 
       <p
         className="
-          text-sm
-          leading-6
-          text-slate-500
-
+          text-sm leading-6 text-slate-500
           dark:text-slate-400
         "
       >
         {description}
       </p>
     </motion.article>
-  );
-};
-
-// ======================================================
-// Principle Item
-// ======================================================
-
-const PrincipleItem = ({
-  icon: Icon,
-  title,
-  description,
-}) => {
-  return (
-    <div className="flex gap-3">
-      <div
-        className="
-          mt-0.5
-          flex
-          h-8
-          w-8
-          shrink-0
-          items-center
-          justify-center
-          rounded-lg
-          bg-slate-100
-          text-slate-600
-
-          dark:bg-slate-800
-          dark:text-slate-300
-        "
-      >
-        <Icon
-          className="h-4 w-4"
-          aria-hidden="true"
-        />
-      </div>
-
-      <div>
-        <h3
-          className="
-            text-sm
-            font-semibold
-            text-slate-900
-
-            dark:text-white
-          "
-        >
-          {title}
-        </h3>
-
-        <p
-          className="
-            mt-1
-            text-xs
-            leading-5
-            text-slate-500
-
-            dark:text-slate-400
-          "
-        >
-          {description}
-        </p>
-      </div>
-    </div>
   );
 };
 
@@ -455,22 +291,14 @@ export default function About() {
       id="about"
       aria-labelledby="about-heading"
     >
-      {/* ==================================================
-          Header
-      ================================================== */}
+      {/* Section Header */}
 
-      <div id="about-heading">
-        <SectionHeader
-          reduceMotion={reduceMotion}
-        />
-      </div>
+      <SectionHeader />
 
-      {/* ==================================================
-          Main About Content
-      ================================================== */}
+      {/* About Content */}
 
-      <motion.div
-        variants={containerVariants}
+      <motion.article
+        variants={fadeUpVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{
@@ -478,189 +306,78 @@ export default function About() {
           amount: 0.15,
         }}
         className="
-          mx-auto
-          mb-12
-          grid
-          max-w-5xl
-          gap-5
-
-          lg:grid-cols-[1.5fr_1fr]
+          mx-auto max-w-5xl rounded-2xl
+          border border-slate-200/80
+          bg-slate-50/80 p-6
+          sm:p-8 lg:p-9
+          dark:border-slate-800/80
+          dark:bg-slate-900/40
         "
       >
-        {/* ------------------------------------------------
-            Story
-        ------------------------------------------------ */}
+        {/* Label */}
 
-        <motion.article
-          variants={fadeUpVariants}
-          className="
-            rounded-2xl
-            border
-            border-slate-200/80
-            bg-slate-50/80
-            p-6
-
-            sm:p-7
-
-            dark:border-slate-800/80
-            dark:bg-slate-900/40
-          "
-        >
-          {/* Label */}
-
-          <div
+        <div className="mb-6 flex items-center gap-2">
+          <span
+            aria-hidden="true"
             className="
-              mb-5
-              flex
-              items-center
-              gap-2
+              h-1.5 w-1.5 rounded-full
+              bg-violet-500
+              dark:bg-violet-400
+            "
+          />
+
+          <span
+            className="
+              text-[11px] font-semibold uppercase
+              tracking-[0.14em] text-slate-500
+              dark:text-slate-500
             "
           >
-            <span
-              className="
-                h-1.5
-                w-1.5
-                rounded-full
-                bg-violet-500
-                dark:bg-violet-400
-              "
-            />
+            A little about me
+          </span>
+        </div>
 
-            <span
-              className="
-                text-[11px]
-                font-semibold
-                uppercase
-                tracking-[0.14em]
-                text-slate-500
+        {/* Story */}
 
-                dark:text-slate-500
-              "
-            >
-              A little about me
-            </span>
-          </div>
-
-          {/* Story */}
-
-          <div className="space-y-4">
-            {ABOUT.story.map(
-              (paragraph, index) => (
-                <p
-                  key={index}
-                  className="
-                    text-sm
-                    leading-7
-                    text-slate-600
-
-                    sm:text-[15px]
-
-                    dark:text-slate-300
-                  "
-                >
-                  {paragraph}
-                </p>
-              )
-            )}
-          </div>
-
-          {/* Technology */}
-
-          <div
-            className="
-              mt-7
-              border-t
-              border-slate-200
-              pt-5
-
-              dark:border-slate-800
-            "
-          >
+        <div className="max-w-4xl space-y-4">
+          {ABOUT.story.map((paragraph, index) => (
             <p
+              key={index}
               className="
-                mb-3
-                text-[10px]
-                font-semibold
-                uppercase
-                tracking-[0.14em]
-                text-slate-400
-
-                dark:text-slate-600
+                text-sm leading-7 text-slate-600
+                sm:text-[15px]
+                dark:text-slate-300
               "
             >
-              Core technologies
+              {paragraph}
             </p>
+          ))}
+        </div>
 
-            <TechnologyRow />
-          </div>
-        </motion.article>
+        {/* Technologies */}
 
-        {/* ------------------------------------------------
-            Engineering Principles
-        ------------------------------------------------ */}
-
-        <motion.aside
-          variants={fadeUpVariants}
+        <div
           className="
-            rounded-2xl
-            border
-            border-slate-200/80
-            bg-white
-            p-6
-
-            shadow-sm
-            shadow-slate-900/[0.02]
-
-            dark:border-slate-800/80
-            dark:bg-slate-900/40
+            mt-8 border-t border-slate-200
+            pt-6 dark:border-slate-800
           "
         >
-          <div className="mb-6">
-            <p
-              className="
-                text-xs
-                font-semibold
-                uppercase
-                tracking-[0.14em]
-                text-violet-600
+          <p
+            className="
+              mb-4 text-[10px] font-semibold
+              uppercase tracking-[0.14em]
+              text-slate-400
+              dark:text-slate-500
+            "
+          >
+            Core technologies
+          </p>
 
-                dark:text-violet-400
-              "
-            >
-              How I work
-            </p>
+          <TechnologyRow />
+        </div>
+      </motion.article>
 
-            <h3
-              className="
-                mt-2
-                text-xl
-                font-bold
-                tracking-tight
-                text-slate-900
-
-                dark:text-white
-              "
-            >
-              Engineering with purpose
-            </h3>
-          </div>
-
-          <div className="space-y-6">
-            {ABOUT.principles.map(
-              (principle) => (
-                <PrincipleItem
-                  key={principle.title}
-                  {...principle}
-                />
-              )
-            )}
-          </div>
-        </motion.aside>
-      </motion.div>
-
-      {/* ==================================================
-          Focus Areas
-      ================================================== */}
+      {/* Focus Areas */}
 
       <motion.div
         variants={containerVariants}
@@ -670,53 +387,36 @@ export default function About() {
           once: true,
           amount: 0.15,
         }}
+        className="mt-14"
       >
         <motion.div
           variants={fadeUpVariants}
-          className="
-            mb-5
-            flex
-            items-end
-            justify-between
-            gap-4
-          "
+          className="mb-5"
         >
-          <div>
-            <p
-              className="
-                text-xs
-                font-semibold
-                uppercase
-                tracking-[0.14em]
-                text-slate-400
+          <p
+            className="
+              text-xs font-semibold uppercase
+              tracking-[0.14em] text-slate-400
+              dark:text-slate-500
+            "
+          >
+            What I focus on
+          </p>
 
-                dark:text-slate-600
-              "
-            >
-              What I focus on
-            </p>
-
-            <h3
-              className="
-                mt-1.5
-                text-xl
-                font-bold
-                tracking-tight
-                text-slate-900
-
-                dark:text-white
-              "
-            >
-              Building useful software
-            </h3>
-          </div>
+          <h3
+            className="
+              mt-1.5 text-xl font-bold
+              tracking-tight text-slate-900
+              dark:text-white
+            "
+          >
+            Building useful software
+          </h3>
         </motion.div>
 
         <div
           className="
-            grid
-            gap-4
-
+            grid gap-4
             md:grid-cols-2
             lg:grid-cols-3
           "
