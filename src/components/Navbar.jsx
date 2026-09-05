@@ -372,30 +372,71 @@ export default function Navbar() {
   // Smooth section navigation
   // ----------------------------------------------------
 
-  const scrollTo = useCallback((event, id) => {
-    event?.preventDefault();
+  const scrollTo = useCallback(
+    (event, id) => {
+      event?.preventDefault();
 
-    const element = document.getElementById(id);
+      const element = document.getElementById(id);
 
-    if (!element) {
+      if (!element) {
+        setOpen(false);
+        return;
+      }
+
+      const targetPosition =
+        element.getBoundingClientRect().top +
+        window.scrollY -
+        HEADER_HEIGHT -
+        16;
+
+      // Close mobile menu immediately
       setOpen(false);
-      return;
-    }
+      setActive(id);
 
-    const targetPosition =
-      element.getBoundingClientRect().top +
-      window.scrollY -
-      HEADER_HEIGHT -
-      16;
+      // Respect reduced-motion preference
+      if (reduceMotion) {
+        window.scrollTo({
+          top: Math.max(0, targetPosition),
+          behavior: "auto",
+        });
 
-    window.scrollTo({
-      top: Math.max(0, targetPosition),
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
+        return;
+      }
 
-    setActive(id);
-    setOpen(false);
-  }, [reduceMotion]);
+      const startPosition = window.scrollY;
+      const distance = targetPosition - startPosition;
+      const duration = 850;
+
+      let startTime = null;
+
+      const easeInOutCubic = (progress) =>
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      const animateScroll = (currentTime) => {
+        if (startTime === null) {
+          startTime = currentTime;
+        }
+
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const easedProgress = easeInOutCubic(progress);
+
+        window.scrollTo(
+          0,
+          startPosition + distance * easedProgress
+        );
+
+        if (progress < 1) {
+          window.requestAnimationFrame(animateScroll);
+        }
+      };
+
+      window.requestAnimationFrame(animateScroll);
+    },
+    [reduceMotion]
+  );
 
   // ----------------------------------------------------
   // Active section detection

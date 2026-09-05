@@ -61,7 +61,7 @@ const CONTACTS = [
   {
     icon: FiPhone,
     label: "Phone",
-    value: "+880 1336458100",
+    value: "+8801336458100",
     href: "tel:+8801336458100",
     color: {
       icon:
