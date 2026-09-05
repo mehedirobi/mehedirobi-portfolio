@@ -1,118 +1,175 @@
 import React, { useRef } from "react";
 import { motion, useInView } from "framer-motion";
-import { HiOutlineBadgeCheck } from "react-icons/hi";
+import {
+  HiOutlineBadgeCheck,
+  HiOutlineExternalLink,
+} from "react-icons/hi";
 import { TbCertificate } from "react-icons/tb";
 import { Section } from "./UI";
 
-// ─── Data
+/* -------------------------------------------------------------------------- */
+/* Data                                                                       */
+/* -------------------------------------------------------------------------- */
 
 const CERTIFICATIONS = [
   {
-    id:          "ph-fullstack",
-    title:       "Complete Web Development Course",
-    issuer:      "Programming Hero",
-    year:        "2026",
-    status:      "Completed",
+    id: "ph-web-development",
+    title: "Complete Web Development Course",
+    issuer: "Programming Hero",
+    year: "2026",
+    status: "Completed",
+
     description:
-      "Full-stack training covering modern frontend, backend, and real-world production workflows with hands-on projects.",
+      "Comprehensive hands-on training in modern web development, covering frontend development, backend fundamentals, REST APIs, databases, authentication, and full-stack application development.",
+
     skills: [
-      { label: "JavaScript", color: "amber"   },
-      { label: "React",      color: "sky"     },
-      { label: "Node.js",    color: "emerald" },
+      { label: "JavaScript", color: "amber" },
+      { label: "React", color: "sky" },
+      { label: "Tailwind CSS", color: "sky" },
+      { label: "Node.js", color: "emerald" },
       { label: "Express.js", color: "emerald" },
-      { label: "MongoDB",    color: "emerald" },
-      { label: "MERN",       color: "violet"  },
+      { label: "MongoDB", color: "emerald" },
     ],
+
     highlights: [
-      "60+ hours of structured curriculum",
-      "10+ real-world projects built and deployed",
-      "Authentication, CRUD, REST APIs covered",
+      "Built multiple hands-on web development projects",
+      "Worked with REST APIs, CRUD operations, and authentication",
+      "Applied modern frontend and full-stack development practices",
     ],
+
+    // Add your certificate URL here when available.
+    certificateUrl: "",
   },
 ];
 
-// ─── Color map 
+/* -------------------------------------------------------------------------- */
+/* Skill Colors                                                               */
+/* -------------------------------------------------------------------------- */
 
 const SKILL_COLORS = {
-  amber:   "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/25 dark:text-amber-400 dark:border-amber-800/60",
-  sky:     "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-900/25 dark:text-sky-400 dark:border-sky-800/60",
-  emerald: "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/25 dark:text-emerald-400 dark:border-emerald-800/60",
-  violet:  "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-900/25 dark:text-violet-400 dark:border-violet-800/60",
-  default: "bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800/60 dark:text-slate-400 dark:border-slate-700",
+  amber:
+    "bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-950/30 dark:text-amber-400 dark:border-amber-800/60",
+
+  sky:
+    "bg-sky-50 text-sky-700 border-sky-200 dark:bg-sky-950/30 dark:text-sky-400 dark:border-sky-800/60",
+
+  emerald:
+    "bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-950/30 dark:text-emerald-400 dark:border-emerald-800/60",
+
+  violet:
+    "bg-violet-50 text-violet-700 border-violet-200 dark:bg-violet-950/30 dark:text-violet-400 dark:border-violet-800/60",
+
+  default:
+    "bg-slate-50 text-slate-600 border-slate-200 dark:bg-slate-800/60 dark:text-slate-400 dark:border-slate-700",
 };
 
-// ─── Animations 
+/* -------------------------------------------------------------------------- */
+/* Animation                                                                  */
+/* -------------------------------------------------------------------------- */
 
-const VIEWPORT = { once: true, amount: 0.2 };
+const VIEWPORT = {
+  once: true,
+  amount: 0.2,
+};
 
 const containerVariants = {
   hidden: {},
-  show:   { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
+  show: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05,
+    },
+  },
 };
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show:   { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+  hidden: {
+    opacity: 0,
+    y: 18,
+  },
+
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.8 },
-  show:   { opacity: 1, scale: 1,   transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  hidden: {
+    opacity: 0,
+    scale: 0.92,
+  },
+
+  show: {
+    opacity: 1,
+    scale: 1,
+    transition: {
+      duration: 0.45,
+      ease: [0.22, 1, 0.36, 1],
+    },
+  },
 };
 
-const checkVariant = {
-  hidden: { pathLength: 0, opacity: 0 },
-  show:   { pathLength: 1, opacity: 1, transition: { duration: 0.6, delay: 0.3, ease: "easeOut" } },
-};
+/* -------------------------------------------------------------------------- */
+/* Status Badge                                                               */
+/* -------------------------------------------------------------------------- */
 
-// ─── VerifiedBadge 
+const StatusBadge = ({ status }) => (
+  <span
+    className="
+      inline-flex
+      items-center
+      gap-1.5
+      shrink-0
+      rounded-full
+      border
+      border-emerald-200
+      bg-emerald-50
+      px-2.5
+      py-1
+      text-[10px]
+      sm:text-[11px]
+      font-semibold
+      text-emerald-700
+      dark:border-emerald-800/60
+      dark:bg-emerald-950/30
+      dark:text-emerald-400
+    "
+  >
+    <HiOutlineBadgeCheck
+      className="h-3.5 w-3.5"
+      aria-hidden="true"
+    />
 
-const VerifiedBadge = () => {
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.8 });
+    {status}
+  </span>
+);
 
-  return (
-    <motion.div
-      ref={ref}
-      variants={scaleIn}
-      className="
-        relative flex items-center gap-2
-        px-3 py-1.5 rounded-full
-        bg-emerald-50 dark:bg-emerald-900/30
-        border border-emerald-200 dark:border-emerald-800/60
-        text-emerald-700 dark:text-emerald-400
-        text-xs font-semibold select-none
-      "
-    >
-      {/* Animated checkmark SVG */}
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
-        <circle cx="7" cy="7" r="6.5" className="stroke-emerald-400 dark:stroke-emerald-500" strokeWidth="1" />
-        <motion.path
-          d="M4 7l2 2 4-4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          fill="none"
-          variants={checkVariant}
-          initial="hidden"
-          animate={inView ? "show" : "hidden"}
-        />
-      </svg>
-      Completed
-    </motion.div>
-  );
-};
-
-// ─── SkillTag 
+/* -------------------------------------------------------------------------- */
+/* Skill Tag                                                                  */
+/* -------------------------------------------------------------------------- */
 
 const SkillTag = ({ skill }) => {
-  const colorClass = SKILL_COLORS[skill.color] ?? SKILL_COLORS.default;
+  const colorClass =
+    SKILL_COLORS[skill.color] ?? SKILL_COLORS.default;
+
   return (
     <span
       className={`
-        px-2.5 py-1 text-[11px] font-medium rounded-md
-        border cursor-default leading-none
+        inline-flex
+        items-center
+        rounded-md
+        border
+        px-2.5
+        py-1
+        text-[11px]
+        font-medium
+        leading-none
+        select-none
         ${colorClass}
       `}
     >
@@ -121,119 +178,267 @@ const SkillTag = ({ skill }) => {
   );
 };
 
-// ─── HighlightItem 
+/* -------------------------------------------------------------------------- */
+/* Highlight                                                                  */
+/* -------------------------------------------------------------------------- */
 
 const HighlightItem = ({ text }) => (
-  <li className="flex items-start gap-2.5 text-sm text-slate-600 dark:text-slate-300">
-    <HiOutlineBadgeCheck
-      className="mt-0.5 w-4 h-4 shrink-0 text-emerald-500 dark:text-emerald-400"
+  <li
+    className="
+      flex
+      items-start
+      gap-2.5
+      text-sm
+      leading-5
+      text-slate-600
+      dark:text-slate-300
+    "
+  >
+    <span
+      className="
+        mt-[7px]
+        h-1.5
+        w-1.5
+        shrink-0
+        rounded-full
+        bg-emerald-500
+        dark:bg-emerald-400
+      "
       aria-hidden="true"
     />
-    {text}
+
+    <span>{text}</span>
   </li>
 );
 
-// ─── CertCard 
+/* -------------------------------------------------------------------------- */
+/* Certificate Card                                                           */
+/* -------------------------------------------------------------------------- */
 
-const CertCard = ({ item }) => (
-  <motion.div
+const CertificateCard = ({ item }) => (
+  <motion.article
     variants={fadeUp}
-    whileHover={{ y: -4, transition: { duration: 0.22 } }}
+    whileHover={{
+      y: -4,
+      transition: { duration: 0.2 },
+    }}
     className="
-      group relative overflow-hidden rounded-2xl
-      bg-white dark:bg-slate-900
-      border border-slate-200 dark:border-slate-800
-      transition-shadow duration-300
-      hover:shadow-xl hover:shadow-slate-200/60 dark:hover:shadow-black/30
+      group
+      relative
+      overflow-hidden
+      rounded-2xl
+      border
+      border-slate-200
+      bg-white
+      shadow-sm
+      transition-shadow
+      duration-300
+      hover:shadow-xl
+      hover:shadow-slate-200/60
+      dark:border-slate-800
+      dark:bg-slate-900
+      dark:hover:shadow-black/30
     "
   >
-    {/* Top accent bar */}
-    <div className="h-1 w-full bg-gradient-to-r from-emerald-400 via-sky-400 to-violet-400" />
+    {/* Accent */}
+    <div
+      className="
+        h-1
+        w-full
+        bg-gradient-to-r
+        from-emerald-400
+        via-sky-400
+        to-violet-400
+      "
+      aria-hidden="true"
+    />
 
-    <div className="p-6 sm:p-8">
+    <div className="p-6 sm:p-7">
 
-      {/* ── Top row ── */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
+      {/* Header */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+        
+        <div className="flex min-w-0 items-start gap-4">
 
-        {/* Icon + title */}
-        <div className="flex items-start gap-4">
+          {/* Certificate Icon */}
           <motion.div
             variants={scaleIn}
             className="
-              shrink-0 flex items-center justify-center
-              w-12 h-12 rounded-xl
-              bg-slate-100 dark:bg-slate-800
-              text-slate-500 dark:text-slate-400
-              group-hover:bg-slate-900 group-hover:text-white
-              dark:group-hover:bg-white dark:group-hover:text-slate-900
-              transition-colors duration-300
+              flex
+              h-12
+              w-12
+              shrink-0
+              items-center
+              justify-center
+              rounded-xl
+              bg-slate-100
+              text-slate-500
+              transition-all
+              duration-300
+              group-hover:bg-slate-900
+              group-hover:text-white
+              dark:bg-slate-800
+              dark:text-slate-400
+              dark:group-hover:bg-white
+              dark:group-hover:text-slate-900
             "
           >
-            <TbCertificate className="w-6 h-6" aria-hidden="true" />
+            <TbCertificate
+              className="h-6 w-6"
+              aria-hidden="true"
+            />
           </motion.div>
 
+          {/* Title */}
           <div className="min-w-0">
-            <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white leading-snug">
+
+            <h3
+              className="
+                text-base
+                font-semibold
+                leading-snug
+                text-slate-900
+                sm:text-lg
+                dark:text-white
+              "
+            >
               {item.title}
             </h3>
-            <div className="mt-1 flex items-center gap-2 flex-wrap">
-              <p className="text-sm text-slate-500 dark:text-slate-400">
+
+            <div className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+              <span className="text-sm text-slate-500 dark:text-slate-400">
                 {item.issuer}
-              </p>
-              <span className="text-slate-300 dark:text-slate-700 text-xs">·</span>
-              <p className="text-sm font-medium text-slate-400 dark:text-slate-500">
+              </span>
+
+              <span
+                className="text-slate-300 dark:text-slate-700"
+                aria-hidden="true"
+              >
+                ·
+              </span>
+
+              <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
                 {item.year}
-              </p>
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Verified badge */}
-        <VerifiedBadge />
+        {/* Status */}
+        <StatusBadge status={item.status} />
       </div>
 
-      {/* ── Divider ── */}
-      <div className="border-t border-slate-100 dark:border-slate-800 mb-6" />
+      {/* Divider */}
+      <div className="my-6 border-t border-slate-100 dark:border-slate-800" />
 
-      {/* ── Body: 2-col on md ── */}
-      <div className="grid md:grid-cols-2 gap-6">
+      {/* Content */}
+      <div className="grid gap-7 md:grid-cols-[1.3fr_1fr]">
 
-        {/* Left: description + highlights */}
+        {/* Description + Highlights */}
         <div>
-          <p className="text-sm leading-relaxed text-slate-500 dark:text-slate-400 mb-4">
+
+          <p
+            className="
+              text-sm
+              leading-6
+              text-slate-500
+              dark:text-slate-400
+            "
+          >
             {item.description}
           </p>
+
           {item.highlights?.length > 0 && (
-            <ul className="space-y-2.5">
-              {item.highlights.map((h) => (
-                <HighlightItem key={h} text={h} />
+            <ul className="mt-5 space-y-2.5">
+              {item.highlights.map((highlight) => (
+                <HighlightItem
+                  key={highlight}
+                  text={highlight}
+                />
               ))}
             </ul>
           )}
+
         </div>
 
-        {/* Right: skills */}
+        {/* Skills */}
         <div>
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-600 mb-3">
-            Skills covered
+
+          <p
+            className="
+              mb-3
+              text-[10px]
+              font-semibold
+              uppercase
+              tracking-[0.16em]
+              text-slate-400
+              dark:text-slate-500
+            "
+          >
+            Technologies & Skills
           </p>
+
           <div className="flex flex-wrap gap-1.5">
             {item.skills.map((skill) => (
-              <SkillTag key={skill.label} skill={skill} />
+              <SkillTag
+                key={skill.label}
+                skill={skill}
+              />
             ))}
           </div>
-        </div>
 
+          {/* Certificate CTA */}
+          {item.certificateUrl && (
+            <a
+              href={item.certificateUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="
+                mt-6
+                inline-flex
+                items-center
+                gap-1.5
+                text-xs
+                font-semibold
+                text-slate-700
+                transition-colors
+                hover:text-violet-600
+                dark:text-slate-300
+                dark:hover:text-violet-400
+                focus-visible:outline-none
+                focus-visible:ring-2
+                focus-visible:ring-violet-500/40
+                focus-visible:ring-offset-2
+                dark:focus-visible:ring-offset-slate-900
+              "
+              aria-label={`View ${item.title} certificate`}
+            >
+              View Certificate
+
+              <HiOutlineExternalLink
+                className="h-3.5 w-3.5"
+                aria-hidden="true"
+              />
+            </a>
+          )}
+
+        </div>
       </div>
     </div>
-  </motion.div>
+  </motion.article>
 );
 
-// ─── SectionHeader 
+/* -------------------------------------------------------------------------- */
+/* Section Header                                                             */
+/* -------------------------------------------------------------------------- */
 
 const SectionHeader = () => {
-  const ref    = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const ref = useRef(null);
+
+  const inView = useInView(ref, {
+    once: true,
+    amount: 0.4,
+  });
 
   return (
     <motion.div
@@ -241,44 +446,80 @@ const SectionHeader = () => {
       variants={containerVariants}
       initial="hidden"
       animate={inView ? "show" : "hidden"}
-      className="text-center mb-12"
+      className="mb-12 text-center"
     >
       <motion.p
         variants={fadeUp}
         className="
-          inline-flex items-center gap-2
-          text-[11px] font-semibold uppercase tracking-widest
-          text-slate-400 dark:text-slate-500 mb-3
+          mb-3
+          inline-flex
+          items-center
+          gap-2
+          text-[11px]
+          font-semibold
+          uppercase
+          tracking-[0.18em]
+          text-slate-400
+          dark:text-slate-500
         "
       >
-        <span className="w-4 h-px bg-current opacity-60" />
+        <span
+          className="h-px w-5 bg-current opacity-60"
+          aria-hidden="true"
+        />
+
         Credentials
-        <span className="w-4 h-px bg-current opacity-60" />
+
+        <span
+          className="h-px w-5 bg-current opacity-60"
+          aria-hidden="true"
+        />
       </motion.p>
 
       <motion.h2
         variants={fadeUp}
-        className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-950 dark:text-white"
+        className="
+          text-3xl
+          font-bold
+          tracking-tight
+          text-slate-950
+          sm:text-4xl
+          dark:text-white
+        "
       >
         Certifications
       </motion.h2>
 
       <motion.p
         variants={fadeUp}
-        className="mt-4 max-w-lg mx-auto text-base text-slate-500 dark:text-slate-400 leading-relaxed"
+        className="
+          mx-auto
+          mt-4
+          max-w-2xl
+          text-sm
+          leading-7
+          text-slate-500
+          sm:text-base
+          dark:text-slate-400
+        "
       >
-        Professional training and verified achievements in modern web development.
+        Formal training and hands-on learning in modern
+        web development and full-stack application development.
       </motion.p>
     </motion.div>
   );
 };
 
-// ─── Certifications (main export) 
+/* -------------------------------------------------------------------------- */
+/* Certifications                                                             */
+/* -------------------------------------------------------------------------- */
 
 export default function Certifications() {
   return (
-    <Section id="certifications" aria-label="Certifications">
-
+    <Section
+      id="certifications"
+      aria-label="Certifications and professional training"
+    >
       <SectionHeader />
 
       <motion.div
@@ -286,13 +527,15 @@ export default function Certifications() {
         initial="hidden"
         whileInView="show"
         viewport={VIEWPORT}
-        className="max-w-3xl mx-auto space-y-5"
+        className="mx-auto max-w-4xl"
       >
         {CERTIFICATIONS.map((item) => (
-          <CertCard key={item.id} item={item} />
+          <CertificateCard
+            key={item.id}
+            item={item}
+          />
         ))}
       </motion.div>
-
     </Section>
   );
 }
