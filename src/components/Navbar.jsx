@@ -403,37 +403,12 @@ export default function Navbar() {
         return;
       }
 
-      const startPosition = window.scrollY;
-      const distance = targetPosition - startPosition;
-      const duration = 850;
-
-      let startTime = null;
-
-      const easeInOutCubic = (progress) =>
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      const animateScroll = (currentTime) => {
-        if (startTime === null) {
-          startTime = currentTime;
-        }
-
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const easedProgress = easeInOutCubic(progress);
-
-        window.scrollTo(
-          0,
-          startPosition + distance * easedProgress
-        );
-
-        if (progress < 1) {
-          window.requestAnimationFrame(animateScroll);
-        }
-      };
-
-      window.requestAnimationFrame(animateScroll);
+      // Native browser smooth scrolling.
+      // More performant and smoother than manual requestAnimationFrame.
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: "smooth",
+      });
     },
     [reduceMotion]
   );
