@@ -9,10 +9,6 @@
    ========================================================= */
 
 :root {
-  color-scheme: light;
-}
-
-.dark {
   color-scheme: dark;
 }
 
@@ -36,20 +32,13 @@ body {
   line-height: 1.6;
   font-weight: 400;
 
-  background-color: #ffffff;
-  color: #0f172a;
+  background-color: #020617;
+  color: #f8fafc;
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  transition:
-    background-color 200ms ease,
-    color 200ms ease;
-}
-
-.dark body {
-  background-color: #020617;
-  color: #f8fafc;
+  transition: background-color 200ms ease, color 200ms ease;
 }
 
 /* =========================================================

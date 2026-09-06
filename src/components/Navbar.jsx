@@ -12,7 +12,6 @@ import {
   useSpring,
 } from "framer-motion";
 import { FiSend } from "react-icons/fi";
-import ThemeToggle from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
@@ -683,8 +682,6 @@ export default function Navbar() {
               gap-3
             "
           >
-            <ThemeToggle />
-
             <HireMeButton
               onClick={(event) =>
                 scrollTo(event, "contact")
@@ -705,8 +702,6 @@ export default function Navbar() {
               xl:hidden
             "
           >
-            <ThemeToggle />
-
             <button
               type="button"
               onClick={() =>

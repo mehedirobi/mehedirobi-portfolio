@@ -13,7 +13,7 @@ import Footer from "./components/Footer";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-white">
+    <div className="min-h-screen bg-slate-950 text-white antialiased">
       <Navbar />
 
       <main className="pt-16">
