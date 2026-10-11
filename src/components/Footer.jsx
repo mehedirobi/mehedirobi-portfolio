@@ -1,485 +1,302 @@
 import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaLinkedin, FaXTwitter, FaReact } from "react-icons/fa6";
+import {
+  AnimatePresence,
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  FaGithub,
+  FaLinkedin,
+  FaReact,
+  FaXTwitter,
+} from "react-icons/fa6";
 import { SiTailwindcss, SiFramer } from "react-icons/si";
 import { FiArrowUp } from "react-icons/fi";
 
-/* -------------------------------------------------------------------------- */
-/* Data                                                                       */
-/* -------------------------------------------------------------------------- */
-
 const SOCIALS = [
   {
-    icon: FaGithub,
-    href: "https://github.com/mehedirobi",
     label: "GitHub",
+    href: "https://github.com/mehedirobi",
+    icon: FaGithub,
   },
   {
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/mehedirobii/",
     label: "LinkedIn",
+    href: "https://www.linkedin.com/in/mehedirobii/",
+    icon: FaLinkedin,
   },
   {
-    icon: FaXTwitter,
-    href: "https://x.com/mehedirobii",
     label: "X",
+    href: "https://x.com/mehedirobii",
+    icon: FaXTwitter,
   },
 ];
 
 const NAV_LINKS = [
   { label: "About", id: "about" },
+  { label: "Skills", id: "skills" },
   { label: "Projects", id: "projects" },
-  { label: "Experience", id: "experience" },
+  { label: "Certifications", id: "certifications" },
   { label: "Education", id: "education" },
   { label: "Contact", id: "contact" },
 ];
 
 const STACK = [
+  { label: "React", icon: FaReact, color: "text-sky-500" },
   {
-    icon: FaReact,
-    label: "React",
-    className: "text-sky-500 dark:text-sky-400",
-  },
-  {
-    icon: SiTailwindcss,
     label: "Tailwind CSS",
-    className: "text-teal-500 dark:text-teal-400",
+    icon: SiTailwindcss,
+    color: "text-teal-500",
   },
   {
-    icon: SiFramer,
     label: "Framer Motion",
-    className: "text-violet-500 dark:text-violet-400",
+    icon: SiFramer,
+    color: "text-violet-500",
   },
 ];
 
-/* -------------------------------------------------------------------------- */
-/* Animation                                                                  */
-/* -------------------------------------------------------------------------- */
-
-const FOOTER_VIEWPORT = {
-  once: true,
-  amount: 0.2,
-};
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.07,
-    },
-  },
-};
+const EASE = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 12,
-  },
-
+  hidden: { opacity: 0, y: 12 },
   show: {
     opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.45,
-      ease: [0.22, 1, 0.36, 1],
-    },
+    transition: { duration: 0.4, ease: EASE },
   },
 };
 
-/* -------------------------------------------------------------------------- */
-/* Back To Top                                                                */
-/* -------------------------------------------------------------------------- */
+const stagger = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.06 },
+  },
+};
 
-const BackToTop = () => {
+function scrollToSection(id, reduceMotion) {
+  const target = document.getElementById(id);
+
+  if (!target) return;
+
+  target.scrollIntoView({
+    behavior: reduceMotion ? "auto" : "smooth",
+    block: "start",
+  });
+}
+
+function BackToTop({ reduceMotion }) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setVisible(window.scrollY > 500);
+    let ticking = false;
+
+    const updateVisibility = () => {
+      if (ticking) return;
+
+      ticking = true;
+
+      window.requestAnimationFrame(() => {
+        setVisible(window.scrollY > 500);
+        ticking = false;
+      });
     };
 
-    handleScroll();
+    updateVisibility();
 
-    window.addEventListener("scroll", handleScroll, {
+    window.addEventListener("scroll", updateVisibility, {
       passive: true,
     });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", updateVisibility);
     };
   }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
 
   return (
     <AnimatePresence>
       {visible && (
         <motion.button
           type="button"
-          initial={{
-            opacity: 0,
-            y: 10,
-            scale: 0.9,
-          }}
-          animate={{
-            opacity: 1,
-            y: 0,
-            scale: 1,
-          }}
-          exit={{
-            opacity: 0,
-            y: 10,
-            scale: 0.9,
-          }}
-          transition={{
-            duration: 0.2,
-          }}
-          onClick={scrollToTop}
+          initial={
+            reduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 8, scale: 0.95 }
+          }
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={
+            reduceMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: 8, scale: 0.95 }
+          }
+          transition={{ duration: 0.18 }}
+          onClick={() => scrollToSection("home", reduceMotion)}
           aria-label="Back to top"
           title="Back to top"
           className="
-            fixed
-            bottom-6
-            right-6
-            z-50
-            flex
-            h-10
-            w-10
-            items-center
-            justify-center
-            rounded-xl
-            border
-            border-slate-200
-            bg-white
-            text-slate-700
-            shadow-lg
-            shadow-slate-900/10
-            transition-all
-            duration-200
-            hover:-translate-y-0.5
-            hover:border-slate-300
-            hover:text-slate-950
-            active:scale-95
-            dark:border-slate-800
-            dark:bg-slate-900
-            dark:text-slate-300
-            dark:shadow-black/30
-            dark:hover:border-slate-700
-            dark:hover:text-white
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-slate-900/30
-            dark:focus-visible:ring-white/30
+            fixed bottom-5 right-5 z-50
+            flex h-11 w-11 items-center justify-center
+            rounded-xl border border-slate-200
+            bg-white text-slate-700 shadow-lg shadow-slate-900/10
+            transition-colors hover:border-violet-300
+            hover:bg-violet-50 hover:text-violet-700
+            focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-violet-500 focus-visible:ring-offset-2
+            sm:bottom-6 sm:right-6
           "
         >
-          <FiArrowUp
-            className="h-4 w-4"
-            aria-hidden="true"
-          />
+          <FiArrowUp className="h-[18px] w-[18px]" aria-hidden="true" />
         </motion.button>
       )}
     </AnimatePresence>
   );
-};
+}
 
-/* -------------------------------------------------------------------------- */
-/* Footer Social Link                                                         */
-/* -------------------------------------------------------------------------- */
-
-const SocialLink = ({ icon: Icon, href, label }) => {
+function SocialLink({ label, href, icon: Icon }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={label}
+      aria-label={`Visit my ${label} profile`}
       title={label}
       className="
-        flex
-        h-9
-        w-9
-        items-center
-        justify-center
-        rounded-xl
-        border
-        border-slate-200
-        text-slate-500
-        transition-all
-        duration-200
-        hover:-translate-y-0.5
-        hover:border-slate-400
-        hover:text-slate-900
-        dark:border-slate-800
-        dark:text-slate-400
-        dark:hover:border-slate-600
-        dark:hover:text-white
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-slate-900/30
-        dark:focus-visible:ring-white/30
+        flex h-10 w-10 items-center justify-center
+        rounded-xl border border-slate-200 bg-white
+        text-slate-500 transition-colors duration-200
+        hover:border-violet-200 hover:bg-violet-50
+        hover:text-violet-700
+        focus-visible:outline-none focus-visible:ring-2
+        focus-visible:ring-violet-500
       "
     >
-      <Icon
-        className="h-[17px] w-[17px]"
-        aria-hidden="true"
-      />
+      <Icon className="h-[17px] w-[17px]" aria-hidden="true" />
     </a>
   );
-};
+}
 
-/* -------------------------------------------------------------------------- */
-/* Footer                                                                     */
-/* -------------------------------------------------------------------------- */
+function FooterNavigation({ reduceMotion }) {
+  return (
+    <nav
+      aria-label="Footer navigation"
+      className="flex flex-wrap justify-center gap-x-5 gap-y-3 sm:gap-x-7"
+    >
+      {NAV_LINKS.map(({ label, id }) => (
+        <button
+          key={id}
+          type="button"
+          onClick={() => scrollToSection(id, reduceMotion)}
+          className="
+            rounded-sm text-sm text-slate-500
+            transition-colors hover:text-violet-700
+            focus-visible:outline-none focus-visible:ring-2
+            focus-visible:ring-violet-500
+          "
+        >
+          {label}
+        </button>
+      ))}
+    </nav>
+  );
+}
+
+function BuiltWith() {
+  return (
+    <div className="flex items-center gap-2">
+      <span className="text-xs text-slate-400">Built with</span>
+
+      <div className="flex items-center gap-2">
+        {STACK.map(({ label, icon: Icon, color }) => (
+          <span
+            key={label}
+            title={label}
+            className={`${color} transition-opacity hover:opacity-70`}
+          >
+            <Icon className="h-4 w-4" aria-hidden="true" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
 
 export default function Footer() {
+  const reduceMotion = useReducedMotion();
   const currentYear = new Date().getFullYear();
-
-  const scrollToSection = (id) => {
-    document
-      .getElementById(id)
-      ?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-  };
 
   return (
     <>
-      <BackToTop />
+      <BackToTop reduceMotion={reduceMotion} />
 
-      <footer
-        role="contentinfo"
-        className="
-          border-t
-          border-slate-200
-          bg-white
-          dark:border-slate-800
-          dark:bg-slate-950
-        "
-      >
-        {/* Accent */}
+      <footer className="border-t border-slate-200 bg-white">
         <div
-          className="
-            h-px
-            w-full
-            bg-gradient-to-r
-            from-transparent
-            via-slate-300
-            to-transparent
-            dark:via-slate-700
-          "
+          className="h-px w-full bg-gradient-to-r from-transparent via-violet-300 to-transparent"
           aria-hidden="true"
         />
 
-        <div
-          className="
-            mx-auto
-            max-w-5xl
-            px-5
-            py-12
-            sm:px-6
-            sm:py-14
-          "
-        >
+        <div className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-12">
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
+            variants={stagger}
+            initial={reduceMotion ? false : "hidden"}
             whileInView="show"
-            viewport={FOOTER_VIEWPORT}
+            viewport={{ once: true, amount: 0.15 }}
             className="flex flex-col items-center"
           >
-            {/* ---------------------------------------------------------------- */}
-            {/* Brand                                                             */}
-            {/* ---------------------------------------------------------------- */}
-
-            <motion.div
-              variants={fadeUp}
-              className="text-center"
-            >
+            {/* Brand */}
+            <motion.div variants={fadeUp} className="text-center">
               <button
                 type="button"
-                onClick={() => scrollToSection("home")}
-                aria-label="Go to homepage"
+                onClick={() => scrollToSection("home", reduceMotion)}
+                aria-label="Back to homepage"
                 className="
-                  rounded-sm
-                  text-lg
-                  font-semibold
-                  tracking-tight
-                  text-slate-900
-                  transition-opacity
-                  duration-200
-                  hover:opacity-70
-                  focus-visible:outline-none
-                  focus-visible:ring-2
-                  focus-visible:ring-slate-900/30
-                  dark:text-white
-                  dark:focus-visible:ring-white/30
+                  rounded-sm text-lg font-bold tracking-tight
+                  text-slate-950 transition-colors
+                  hover:text-violet-700
+                  focus-visible:outline-none focus-visible:ring-2
+                  focus-visible:ring-violet-500
                 "
               >
-                Mehedi
-                <span className="text-slate-400 dark:text-slate-600">
-                  {" "}Robi
-                </span>
+                Mehedi <span className="text-violet-600">Robi</span>
               </button>
 
-              <p
-                className="
-                  mt-2
-                  text-xs
-                  tracking-wide
-                  text-slate-400
-                  dark:text-slate-600
-                "
-              >
-                Frontend Developer · React · MERN Stack
+              <p className="mt-2 text-xs tracking-wide text-slate-500">
+                MERN Stack Developer
               </p>
             </motion.div>
 
-            {/* ---------------------------------------------------------------- */}
-            {/* Navigation                                                        */}
-            {/* ---------------------------------------------------------------- */}
+            {/* Navigation */}
+            <motion.div variants={fadeUp} className="mt-7 w-full">
+              <FooterNavigation reduceMotion={reduceMotion} />
+            </motion.div>
 
-            <motion.nav
-              variants={fadeUp}
-              aria-label="Footer navigation"
-              className="
-                mt-8
-                flex
-                flex-wrap
-                justify-center
-                gap-x-6
-                gap-y-3
-              "
-            >
-              {NAV_LINKS.map(({ label, id }) => (
-                <button
-                  key={id}
-                  type="button"
-                  onClick={() => scrollToSection(id)}
-                  className="
-                    rounded-sm
-                    text-sm
-                    text-slate-500
-                    transition-colors
-                    duration-150
-                    hover:text-slate-950
-                    dark:text-slate-500
-                    dark:hover:text-white
-                    focus-visible:outline-none
-                    focus-visible:ring-2
-                    focus-visible:ring-slate-900/30
-                    dark:focus-visible:ring-white/30
-                  "
-                >
-                  {label}
-                </button>
-              ))}
-            </motion.nav>
-
-            {/* ---------------------------------------------------------------- */}
-            {/* Socials                                                           */}
-            {/* ---------------------------------------------------------------- */}
-
+            {/* Social links */}
             <motion.div
               variants={fadeUp}
-              className="mt-7 flex items-center gap-2.5"
+              className="mt-6 flex items-center gap-2.5"
             >
               {SOCIALS.map((social) => (
-                <SocialLink
-                  key={social.label}
-                  {...social}
-                />
+                <SocialLink key={social.label} {...social} />
               ))}
             </motion.div>
 
-            {/* ---------------------------------------------------------------- */}
-            {/* Divider                                                           */}
-            {/* ---------------------------------------------------------------- */}
-
+            {/* Divider */}
             <motion.div
               variants={fadeUp}
-              className="
-                my-8
-                h-px
-                w-full
-                bg-gradient-to-r
-                from-transparent
-                via-slate-200
-                to-transparent
-                dark:via-slate-800
-              "
+              className="my-7 h-px w-full bg-slate-100"
               aria-hidden="true"
             />
 
-            {/* ---------------------------------------------------------------- */}
-            {/* Bottom                                                            */}
-            {/* ---------------------------------------------------------------- */}
-
+            {/* Footer bottom */}
             <motion.div
               variants={fadeUp}
               className="
-                flex
-                w-full
-                flex-col
-                items-center
-                justify-between
-                gap-4
-                sm:flex-row
+                flex w-full flex-col items-center gap-4
+                text-center sm:flex-row sm:justify-between
               "
             >
-              {/* Copyright */}
-              <p
-                className="
-                  text-xs
-                  text-slate-400
-                  dark:text-slate-600
-                "
-              >
+              <p className="text-xs leading-5 text-slate-400">
                 © {currentYear} Mehedi Robi. All rights reserved.
               </p>
 
-              {/* Tech Stack */}
-              <div className="flex items-center gap-2">
-                <span
-                  className="
-                    text-xs
-                    text-slate-400
-                    dark:text-slate-600
-                  "
-                >
-                  Built with
-                </span>
-
-                <div
-                  className="flex items-center gap-1.5"
-                  aria-label="Built with React, Tailwind CSS and Framer Motion"
-                >
-                  {STACK.map(
-                    ({ icon: Icon, label, className }) => (
-                      <span
-                        key={label}
-                        title={label}
-                        className={`
-                          ${className}
-                          transition-opacity
-                          duration-200
-                          hover:opacity-70
-                        `}
-                      >
-                        <Icon
-                          className="h-3.5 w-3.5"
-                          aria-hidden="true"
-                        />
-                      </span>
-                    )
-                  )}
-                </div>
-              </div>
+              <BuiltWith />
             </motion.div>
           </motion.div>
         </div>

@@ -1,326 +1,76 @@
-import React, { useMemo, useState } from "react";
-import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-} from "framer-motion";
+import React, { useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
-import { FiExternalLink, FiCode, FiCodepen } from "react-icons/fi";
+import {
+  FiArrowDown,
+  FiArrowUp,
+  FiCode,
+  FiExternalLink,
+} from "react-icons/fi";
+import { FiCodepen } from "react-icons/fi";
 
 import { projectData } from "../data/projectData";
 import { Section, Card, OptimizedImage } from "./UI";
 
-/* -------------------------------------------------------------------------- */
-/* Constants                                                                  */
-/* -------------------------------------------------------------------------- */
+const INITIAL_PROJECTS = 3;
 
-const FILTERS = [
-  { label: "All", value: "all" },
-  { label: "Frontend", value: "frontend" },
-  { label: "Full Stack", value: "fullstack" },
-];
-
-const CATEGORY_CONFIG = {
-  frontend: {
-    label: "Frontend",
-    dot: "bg-sky-400",
-    badge:
-      "text-sky-600 bg-sky-50 border-sky-200 dark:text-sky-400 dark:bg-sky-950/40 dark:border-sky-800/60",
-  },
-
-  fullstack: {
-    label: "Full Stack",
-    dot: "bg-emerald-400",
-    badge:
-      "text-emerald-600 bg-emerald-50 border-emerald-200 dark:text-emerald-400 dark:bg-emerald-950/40 dark:border-emerald-800/60",
-  },
-
-  next: {
-    label: "Next.js",
-    dot: "bg-violet-400",
-    badge:
-      "text-violet-600 bg-violet-50 border-violet-200 dark:text-violet-400 dark:bg-violet-950/40 dark:border-violet-800/60",
-  },
-
-  default: {
-    label: "Project",
-    dot: "bg-slate-400",
-    badge:
-      "text-slate-600 bg-slate-50 border-slate-200 dark:text-slate-400 dark:bg-slate-900 dark:border-slate-800",
-  },
-};
-
-/* -------------------------------------------------------------------------- */
-/* Animation                                                                  */
-/* -------------------------------------------------------------------------- */
-
-const VIEWPORT = {
-  once: true,
-  amount: 0.15,
-};
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.07,
-      delayChildren: 0.04,
-    },
-  },
-};
+const EASE = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 18,
-  },
-
-  show: {
+  hidden: { opacity: 0, y: 14 },
+  visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.4,
+      ease: EASE,
     },
   },
 };
 
-const cardVariants = {
-  hidden: {
-    opacity: 0,
-    y: 20,
-  },
-
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.45,
-      ease: [0.22, 1, 0.36, 1],
-    },
-  },
-
-  exit: {
-    opacity: 0,
-    y: 10,
-    transition: {
-      duration: 0.2,
-      ease: "easeIn",
-    },
-  },
-};
-
-/* -------------------------------------------------------------------------- */
-/* Section Header                                                             */
-/* -------------------------------------------------------------------------- */
-
-const SectionHeader = () => (
-  <motion.div
-    variants={containerVariants}
-    initial="hidden"
-    whileInView="show"
-    viewport={VIEWPORT}
-    className="text-center mb-10 sm:mb-12"
-  >
-    <motion.p
-      variants={fadeUp}
-      className="
-        inline-flex items-center gap-2
-        text-[11px] font-semibold uppercase tracking-[0.18em]
-        text-violet-500 dark:text-violet-400
-        mb-3
-      "
-    >
-      <span
-        className="w-5 h-px bg-current opacity-60"
-        aria-hidden="true"
-      />
-
-      Portfolio
-
-      <span
-        className="w-5 h-px bg-current opacity-60"
-        aria-hidden="true"
-      />
-    </motion.p>
-
-    <motion.h2
-      variants={fadeUp}
-      className="
-        text-3xl sm:text-4xl
-        font-bold tracking-tight
-        text-slate-950 dark:text-white
-      "
-    >
-      Selected Projects
-    </motion.h2>
-
-    <motion.p
-      variants={fadeUp}
-      className="
-        mt-4 mx-auto max-w-2xl
-        text-sm sm:text-base
-        leading-7
-        text-slate-500 dark:text-slate-400
-      "
-    >
-      A selection of full-stack and frontend applications built to solve
-      practical problems with modern web technologies.
-    </motion.p>
-  </motion.div>
-);
-
-/* -------------------------------------------------------------------------- */
-/* Filter Bar                                                                 */
-/* -------------------------------------------------------------------------- */
-
-const FilterBar = ({ active, onChange, counts }) => (
-  <div
-    className="flex justify-center flex-wrap gap-2 mb-10"
-    role="group"
-    aria-label="Filter projects by category"
-  >
-    {FILTERS.map((filter) => {
-      const isActive = active === filter.value;
-      const count = counts[filter.value] ?? 0;
-
-      return (
-        <motion.button
-          key={filter.value}
-          type="button"
-          onClick={() => onChange(filter.value)}
-          aria-pressed={isActive}
-          whileHover={{ y: -1 }}
-          whileTap={{ scale: 0.97 }}
-          className={`
-            inline-flex items-center gap-2
-            px-4 py-2
-            rounded-full
-            text-xs sm:text-sm font-medium
-            border
-            transition-all duration-200
-            focus-visible:outline-none
-            focus-visible:ring-2
-            focus-visible:ring-violet-500/40
-            ${
-              isActive
-                ? `
-                  bg-slate-900
-                  text-white
-                  border-slate-900
-                  dark:bg-white
-                  dark:text-slate-900
-                  dark:border-white
-                `
-                : `
-                  bg-white
-                  text-slate-500
-                  border-slate-200
-                  hover:text-slate-900
-                  hover:border-slate-300
-                  dark:bg-slate-900/50
-                  dark:text-slate-400
-                  dark:border-slate-800
-                  dark:hover:text-white
-                  dark:hover:border-slate-700
-                `
-            }
-          `}
-        >
-          {filter.label}
-
-          {count > 0 && (
-            <span
-              className={`
-                min-w-[18px] h-[18px]
-                px-1
-                inline-flex items-center justify-center
-                rounded-full
-                text-[10px] font-semibold
-                ${
-                  isActive
-                    ? "bg-white/15 text-white dark:bg-slate-900/10 dark:text-slate-900"
-                    : "bg-slate-100 text-slate-500 dark:bg-slate-800 dark:text-slate-400"
-                }
-              `}
-            >
-              {count}
-            </span>
-          )}
-        </motion.button>
-      );
-    })}
-  </div>
-);
-
-/* -------------------------------------------------------------------------- */
-/* Tech Tag                                                                   */
-/* -------------------------------------------------------------------------- */
-
-const TechTag = ({ label }) => (
-  <span
-    className="
-      inline-flex
-      px-2.5 py-1
-      rounded-md
-      border border-slate-200/80
-      dark:border-slate-800
-      bg-slate-50/80
-      dark:bg-slate-900/70
-      text-[11px]
-      font-medium
-      leading-none
-      text-slate-500
-      dark:text-slate-400
-      whitespace-nowrap
-    "
-  >
-    {label}
-  </span>
-);
-
-/* -------------------------------------------------------------------------- */
-/* Category Badge                                                             */
-/* -------------------------------------------------------------------------- */
-
-const CategoryBadge = ({ category }) => {
-  const config =
-    CATEGORY_CONFIG[category] ?? CATEGORY_CONFIG.default;
-
+function SectionHeader({ reduceMotion }) {
   return (
-    <span
-      className={`
-        inline-flex items-center gap-1.5
-        shrink-0
-        px-2.5 py-1
-        rounded-full
-        border
-        text-[10px]
-        font-semibold
-        ${config.badge}
-      `}
+    <motion.header
+      initial={reduceMotion ? false : "hidden"}
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.2 }}
+      className="mb-8 text-center sm:mb-10"
     >
-      <span
-        className={`w-1.5 h-1.5 rounded-full ${config.dot}`}
-        aria-hidden="true"
-      />
+      <motion.p
+        variants={fadeUp}
+        className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-600"
+      >
+        Portfolio
+      </motion.p>
 
-      {config.label}
+      <motion.h2
+        id="projects-heading"
+        variants={fadeUp}
+        className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
+      >
+        Featured Projects
+      </motion.h2>
+
+      <motion.p
+        variants={fadeUp}
+        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base"
+      >
+        A selection of projects showcasing my full-stack development
+        skills, modern UI design, and practical problem-solving.
+      </motion.p>
+    </motion.header>
+  );
+}
+
+function TechTag({ children }) {
+  return (
+    <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+      {children}
     </span>
   );
-};
+}
 
-/* -------------------------------------------------------------------------- */
-/* Action Button                                                              */
-/* -------------------------------------------------------------------------- */
-
-const ProjectAction = ({
-  href,
-  icon: Icon,
-  children,
-  primary = false,
-  label,
-}) => {
+function ProjectAction({ href, icon: Icon, children, primary, label }) {
   if (!href) return null;
 
   return (
@@ -329,240 +79,85 @@ const ProjectAction = ({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`
-        inline-flex flex-1
-        items-center justify-center gap-1.5
-        px-3 py-2
-        rounded-lg
-        text-xs font-semibold
-        transition-all duration-200
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-violet-500/40
-        ${
-          primary
-            ? `
-              bg-slate-900
-              text-white
-              hover:bg-slate-800
-              dark:bg-white
-              dark:text-slate-900
-              dark:hover:bg-slate-100
-            `
-            : `
-              border border-slate-200
-              text-slate-600
-              hover:bg-slate-50
-              hover:border-slate-300
-              dark:border-slate-800
-              dark:text-slate-300
-              dark:hover:bg-slate-800/70
-              dark:hover:border-slate-700
-            `
-        }
-      `}
+      className={`inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
+        primary
+          ? "bg-slate-900 text-white hover:bg-slate-800"
+          : "border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
+      }`}
     >
-      <Icon
-        className="w-3.5 h-3.5"
-        aria-hidden="true"
-      />
-
-      {children}
+      <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+      <span>{children}</span>
     </a>
   );
-};
+}
 
-/* -------------------------------------------------------------------------- */
-/* Project Card                                                               */
-/* -------------------------------------------------------------------------- */
-
-const ProjectCard = ({ project, shouldReduce }) => {
-  const techStack = Array.isArray(project.tech)
-    ? project.tech
-    : [];
-
-  const liveUrl = project?.links?.live;
-  const githubUrl = project?.links?.github;
-  const isFeatured = project?.featured === true;
+function ProjectCard({ project, reduceMotion }) {
+  const tech = Array.isArray(project.tech) ? project.tech : [];
+  const liveUrl = project.links?.live;
+  const githubUrl = project.links?.github;
+  const serverUrl = project.links?.server;
 
   return (
     <motion.article
-      variants={cardVariants}
-      layout
-      className="h-full"
+      layout={!reduceMotion}
+      initial={reduceMotion ? false : "hidden"}
+      animate="visible"
+      variants={fadeUp}
+      className="h-full min-w-0"
     >
-      <Card
-        className={`
-          group
-          relative
-          h-full
-          flex flex-col
-          overflow-hidden
-          p-0
-          bg-white
-          dark:bg-slate-900/60
-          border
-          border-slate-200/80
-          dark:border-slate-800/80
-          transition-all
-          duration-300
-          hover:-translate-y-1
-          hover:shadow-xl
-          hover:shadow-slate-200/60
-          dark:hover:shadow-black/30
-          ${
-            isFeatured
-              ? "ring-1 ring-violet-500/20 dark:ring-violet-400/20"
-              : ""
-          }
-        `}
-      >
-        {/* Image */}
-        <div className="
-          relative
-          aspect-video
-          overflow-hidden
-          bg-slate-100
-          dark:bg-slate-800
-        ">
-          <OptimizedImage
-            src={project.image}
-            alt={`${project.name} project preview`}
-            loading="lazy"
-            decoding="async"
-            className={`
-              w-full h-full
-              object-cover
-              transition-transform
-              duration-700
-              ease-out
-              ${
-                shouldReduce
+      <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-slate-300 hover:shadow-lg">
+        <div className="relative aspect-video overflow-hidden bg-slate-100">
+          {project.image ? (
+            <OptimizedImage
+              src={project.image}
+              alt={`${project.name} project preview`}
+              width="1000"
+              height="440"
+              className={`h-full w-full object-cover ${
+                reduceMotion
                   ? ""
-                  : "group-hover:scale-[1.035]"
-              }
-            `}
-          />
-
-          {/* Image overlay */}
-          <div
-            className="
-              pointer-events-none
-              absolute inset-0
-              bg-gradient-to-t
-              from-slate-950/20
-              via-transparent
-              to-transparent
-              opacity-0
-              group-hover:opacity-100
-              transition-opacity duration-300
-            "
-            aria-hidden="true"
-          />
-
-          {/* Featured */}
-          {isFeatured && (
-            <div className="absolute top-3 left-3">
-              <span
-                className="
-                  inline-flex items-center gap-1.5
-                  px-2.5 py-1
-                  rounded-full
-                  bg-slate-950/85
-                  text-white
-                  text-[10px]
-                  font-semibold
-                  backdrop-blur-sm
-                "
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full bg-violet-400"
-                  aria-hidden="true"
-                />
-
-                Featured
+                  : "transition-transform duration-500 group-hover:scale-[1.03]"
+              }`}
+            />
+          ) : (
+            <div
+              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-50 to-slate-100 text-slate-600"
+              aria-hidden="true"
+            >
+              <FiCodepen className="h-8 w-8 text-violet-500" />
+              <span className="px-4 text-center text-lg font-semibold">
+                {project.name}
               </span>
             </div>
           )}
         </div>
 
-        {/* Content */}
-        <div className="flex flex-col flex-1 p-5 sm:p-6">
+        <div className="flex flex-1 flex-col p-5">
+          <h3 className="text-base font-semibold tracking-tight text-slate-900">
+            {project.name}
+          </h3>
 
-          {/* Title */}
-          <div className="flex items-start justify-between gap-3">
-            <h3
-              className="
-                min-w-0
-                text-base
-                font-semibold
-                leading-snug
-                text-slate-900
-                dark:text-white
-              "
-            >
-              {project.name}
-            </h3>
-
-            {project.category && (
-              <CategoryBadge category={project.category} />
-            )}
-          </div>
-
-          {/* Description */}
-          <p
-            className="
-              mt-3
-              text-sm
-              leading-6
-              text-slate-500
-              dark:text-slate-400
-              line-clamp-3
-            "
-          >
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">
             {project.description}
           </p>
 
-          {/* Tech */}
-          {techStack.length > 0 && (
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {techStack.slice(0, 6).map((tech) => (
-                <TechTag
-                  key={tech}
-                  label={tech}
-                />
+          {tech.length > 0 && (
+            <div className="mt-4 flex flex-wrap gap-1.5">
+              {tech.slice(0, 6).map((item, index) => (
+                <TechTag key={`${item}-${index}`}>{item}</TechTag>
               ))}
 
-              {techStack.length > 6 && (
-                <span
-                  className="
-                    inline-flex
-                    items-center
-                    px-2
-                    text-[11px]
-                    font-medium
-                    text-slate-400
-                    dark:text-slate-500
-                  "
-                >
-                  +{techStack.length - 6}
+              {tech.length > 6 && (
+                <span className="self-center px-1 text-[11px] text-slate-500">
+                  +{tech.length - 6} more
                 </span>
               )}
             </div>
           )}
 
-          {/* Divider */}
-          <div
-            className="
-              mt-5 mb-4
-              border-t
-              border-slate-100
-              dark:border-slate-800
-            "
-          />
+          <div className="my-4 mt-auto border-t border-slate-100" />
 
-          {/* Actions */}
-          <div className="flex gap-2 mt-auto">
+          <div className="flex gap-2">
             <ProjectAction
               href={liveUrl}
               icon={FiExternalLink}
@@ -575,194 +170,98 @@ const ProjectCard = ({ project, shouldReduce }) => {
             <ProjectAction
               href={githubUrl}
               icon={FaGithub}
-              label={`View ${project.name} source code on GitHub`}
+              label={`View ${project.name} source code`}
             >
-              Source
+              {serverUrl ? "Client" : "GitHub"}
             </ProjectAction>
 
-            {!liveUrl && !githubUrl && (
-              <div
-                className="
-                  flex-1
-                  inline-flex
-                  items-center
-                  justify-center
-                  gap-1.5
-                  px-3 py-2
-                  rounded-lg
-                  border border-dashed
-                  border-slate-200
-                  dark:border-slate-800
-                  text-xs font-medium
-                  text-slate-400
-                  dark:text-slate-500
-                "
+            {serverUrl && (
+              <ProjectAction
+                href={serverUrl}
+                icon={FaGithub}
+                label={`View ${project.name} server source code`}
               >
-                <FiCode
-                  className="w-3.5 h-3.5"
-                  aria-hidden="true"
-                />
+                Server
+              </ProjectAction>
+            )}
 
-                Coming soon
-              </div>
+            {!liveUrl && !githubUrl && !serverUrl && (
+              <span className="flex-1 rounded-lg border border-dashed border-slate-200 px-2 py-2 text-center text-xs text-slate-400">
+                Links coming soon
+              </span>
             )}
           </div>
         </div>
       </Card>
     </motion.article>
   );
-};
-
-/* -------------------------------------------------------------------------- */
-/* Empty State                                                                */
-/* -------------------------------------------------------------------------- */
-
-const EmptyState = () => (
-  <motion.div
-    variants={fadeUp}
-    className="
-      col-span-full
-      flex flex-col
-      items-center justify-center
-      py-20
-      text-center
-    "
-  >
-    <div
-      className="
-        w-14 h-14
-        flex items-center justify-center
-        rounded-2xl
-        bg-slate-100
-        dark:bg-slate-900
-        border border-slate-200
-        dark:border-slate-800
-        text-slate-400
-        dark:text-slate-600
-      "
-    >
-      <FiCodepen
-        className="w-6 h-6"
-        aria-hidden="true"
-      />
-    </div>
-
-    <h3
-      className="
-        mt-4
-        text-sm font-semibold
-        text-slate-700
-        dark:text-slate-300
-      "
-    >
-      No projects found
-    </h3>
-
-    <p
-      className="
-        mt-1.5
-        max-w-sm
-        text-xs
-        leading-5
-        text-slate-400
-        dark:text-slate-600
-      "
-    >
-      There are no projects available in this category yet.
-    </p>
-  </motion.div>
-);
-
-/* -------------------------------------------------------------------------- */
-/* Projects                                                                   */
-/* -------------------------------------------------------------------------- */
+}
 
 export default function Projects() {
-  const [active, setActive] = useState("all");
-  const shouldReduce = useReducedMotion();
+  const [showAll, setShowAll] = useState(false);
+  const reduceMotion = useReducedMotion();
 
-  const projects = useMemo(
-    () => (Array.isArray(projectData) ? projectData : []),
-    []
-  );
+  // Keep the full source array; never truncate the source data.
+  const projects = Array.isArray(projectData) ? projectData : [];
 
-  const counts = useMemo(() => {
-    const result = {
-      all: projects.length,
-    };
+  // Show the first three initially, or the complete array after clicking.
+  const visibleProjects = showAll
+    ? projects
+    : projects.slice(0, INITIAL_PROJECTS);
 
-    FILTERS.forEach((filter) => {
-      if (filter.value === "all") return;
-
-      result[filter.value] = projects.filter(
-        (project) =>
-          project.category === filter.value
-      ).length;
-    });
-
-    return result;
-  }, [projects]);
-
-  const filteredProjects = useMemo(() => {
-    if (active === "all") {
-      return projects;
-    }
-
-    return projects.filter(
-      (project) =>
-        project.category === active
-    );
-  }, [active, projects]);
+  const hasMore = projects.length > INITIAL_PROJECTS;
 
   return (
     <Section
       id="projects"
-      aria-label="Selected projects"
+      aria-labelledby="projects-heading"
+      background="bg-slate-50"
     >
-      <SectionHeader />
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader reduceMotion={reduceMotion} />
 
-      <FilterBar
-        active={active}
-        onChange={setActive}
-        counts={counts}
-      />
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {visibleProjects.map((project, index) => (
+            <ProjectCard
+              key={project.id ?? project.name ?? index}
+              project={project}
+              reduceMotion={reduceMotion}
+            />
+          ))}
+        </div>
 
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={active}
-          variants={containerVariants}
-          initial="hidden"
-          animate="show"
-          exit={
-            shouldReduce
-              ? { opacity: 0 }
-              : {
-                  opacity: 0,
-                  transition: {
-                    duration: 0.15,
-                  },
-                }
-          }
-          className="
-            grid
-            gap-5
-            sm:grid-cols-2
-            lg:grid-cols-3
-          "
-        >
-          {filteredProjects.length > 0 ? (
-            filteredProjects.map((project) => (
-              <ProjectCard
-                key={project.id ?? project.name}
-                project={project}
-                shouldReduce={shouldReduce}
-              />
-            ))
-          ) : (
-            <EmptyState />
-          )}
-        </motion.div>
-      </AnimatePresence>
+        {projects.length === 0 && (
+          <p className="py-12 text-center text-sm text-slate-500">
+            No projects found. Please check your project data.
+          </p>
+        )}
+
+        {hasMore && (
+          <div className="mt-8 flex justify-center sm:mt-10">
+            <motion.button
+              type="button"
+              onClick={() => setShowAll((current) => !current)}
+              whileHover={reduceMotion ? undefined : { y: -2 }}
+              whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+              aria-expanded={showAll}
+              aria-controls="projects-grid"
+              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:border-slate-300 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
+            >
+              {showAll ? "Show Less" : "View More Projects"}
+
+              {showAll ? (
+                <FiArrowUp className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <FiArrowDown className="h-4 w-4" aria-hidden="true" />
+              )}
+            </motion.button>
+          </div>
+        )}
+
+        <div id="projects-grid" className="sr-only" aria-live="polite">
+          Showing {visibleProjects.length} of {projects.length} projects.
+        </div>
+      </div>
     </Section>
   );
 }

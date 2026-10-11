@@ -1,8 +1,10 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import {
   motion,
-  AnimatePresence,
-  useInView,
   useReducedMotion,
 } from "framer-motion";
 import {
@@ -11,66 +13,60 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 import {
+  FiCheck,
+  FiCopy,
+  FiExternalLink,
   FiMail,
   FiPhone,
-  FiCopy,
-  FiCheck,
   FiSend,
 } from "react-icons/fi";
+
 import { Section, Card } from "./UI";
 
 /* -------------------------------------------------------------------------- */
-/* Data                                                                       */
+/* Configuration                                                              */
 /* -------------------------------------------------------------------------- */
 
-const SOCIALS = [
-  {
-    icon: FaGithub,
-    href: "https://github.com/mehedirobi",
-    label: "GitHub",
-    hover:
-      "hover:border-slate-500 hover:text-slate-900 dark:hover:text-white",
-  },
-  {
-    icon: FaLinkedin,
-    href: "https://www.linkedin.com/in/mehedirobii/",
-    label: "LinkedIn",
-    hover:
-      "hover:border-sky-400 hover:text-sky-600 dark:hover:text-sky-400",
-  },
-  {
-    icon: FaXTwitter,
-    href: "https://x.com/mehedirobii",
-    label: "X",
-    hover:
-      "hover:border-slate-500 hover:text-slate-900 dark:hover:text-white",
-  },
-];
+const EMAIL = "mehedirobidev@gmail.com";
+const MESSAGE_LIMIT = 500;
 
 const CONTACTS = [
   {
-    icon: FiMail,
     label: "Email",
-    value: "mehedirobidev@gmail.com",
-    href: "mailto:mehedirobidev@gmail.com",
-    color: {
-      icon:
-        "group-hover:bg-sky-600 group-hover:text-white dark:group-hover:bg-sky-500",
-    },
+    value: EMAIL,
+    href: `mailto:${EMAIL}`,
+    icon: FiMail,
+    accent: "group-hover:bg-violet-600",
   },
   {
-    icon: FiPhone,
     label: "Phone",
     value: "+8801336458100",
     href: "tel:+8801336458100",
-    color: {
-      icon:
-        "group-hover:bg-emerald-600 group-hover:text-white dark:group-hover:bg-emerald-500",
-    },
+    icon: FiPhone,
+    accent: "group-hover:bg-emerald-600",
   },
 ];
 
-const MESSAGE_LIMIT = 500;
+const SOCIALS = [
+  {
+    label: "GitHub",
+    href: "https://github.com/mehedirobi",
+    icon: FaGithub,
+    hover: "hover:border-slate-400 hover:text-slate-950",
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/mehedirobii/",
+    icon: FaLinkedin,
+    hover: "hover:border-sky-400 hover:text-sky-600",
+  },
+  {
+    label: "X",
+    href: "https://x.com/mehedirobii",
+    icon: FaXTwitter,
+    hover: "hover:border-slate-400 hover:text-slate-950",
+  },
+];
 
 const INITIAL_FORM = {
   name: "",
@@ -78,160 +74,111 @@ const INITIAL_FORM = {
   message: "",
 };
 
-/* -------------------------------------------------------------------------- */
-/* Animation                                                                  */
-/* -------------------------------------------------------------------------- */
+const EASE = [0.22, 1, 0.36, 1];
 
 const VIEWPORT = {
   once: true,
-  amount: 0.2,
-};
-
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.08,
-      delayChildren: 0.05,
-    },
-  },
+  amount: 0.15,
 };
 
 const fadeUp = {
   hidden: {
     opacity: 0,
-    y: 18,
+    y: 16,
   },
   show: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: [0.22, 1, 0.36, 1],
+      duration: 0.4,
+      ease: EASE,
+    },
+  },
+};
+
+const stagger = {
+  hidden: {},
+  show: {
+    transition: {
+      staggerChildren: 0.07,
     },
   },
 };
 
 /* -------------------------------------------------------------------------- */
+/* Shared Styles                                                              */
+/* -------------------------------------------------------------------------- */
+
+const FIELD_CLASS =
+  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 " +
+  "text-sm text-slate-900 placeholder:text-slate-400 " +
+  "outline-none transition-colors duration-200 " +
+  "focus:border-violet-400 focus:ring-2 focus:ring-violet-500/10";
+
+/* -------------------------------------------------------------------------- */
 /* Section Header                                                             */
 /* -------------------------------------------------------------------------- */
 
-const SectionHeader = () => {
-  const ref = useRef(null);
-  const inView = useInView(ref, {
-    once: true,
-    amount: 0.4,
-  });
-
+function SectionHeader({ reduceMotion }) {
   return (
-    <motion.div
-      ref={ref}
-      variants={containerVariants}
-      initial="hidden"
-      animate={inView ? "show" : "hidden"}
-      className="mb-12 text-center sm:mb-14"
+    <motion.header
+      variants={stagger}
+      initial={reduceMotion ? false : "hidden"}
+      whileInView="show"
+      viewport={VIEWPORT}
+      className="mb-10 text-center sm:mb-12"
     >
       <motion.p
         variants={fadeUp}
-        className="
-          mb-3 inline-flex items-center gap-2
-          text-[11px] font-semibold uppercase tracking-[0.18em]
-          text-slate-400 dark:text-slate-500
-        "
+        className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-600"
       >
-        <span
-          className="h-px w-5 bg-current opacity-60"
-          aria-hidden="true"
-        />
-
         Get in touch
-
-        <span
-          className="h-px w-5 bg-current opacity-60"
-          aria-hidden="true"
-        />
       </motion.p>
 
       <motion.h2
+        id="contact-heading"
         variants={fadeUp}
-        className="
-          text-3xl font-bold tracking-tight
-          text-slate-950 dark:text-white
-          sm:text-4xl
-        "
+        className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
       >
-        Contact
+        Let's Connect
       </motion.h2>
 
       <motion.p
         variants={fadeUp}
-        className="
-          mx-auto mt-4 max-w-xl
-          text-sm leading-7
-          text-slate-500 dark:text-slate-400
-          sm:text-base
-        "
+        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base"
       >
-        Have a project, opportunity, or collaboration in mind?
-        Feel free to get in touch.
+        Have a project, an opportunity, or an idea to discuss?
+        I'd be glad to hear from you.
       </motion.p>
-    </motion.div>
+    </motion.header>
   );
-};
+}
 
 /* -------------------------------------------------------------------------- */
-/* Contact Item                                                               */
+/* Contact Information                                                        */
 /* -------------------------------------------------------------------------- */
 
-const ContactItem = ({ item, copied, onCopy }) => {
+function ContactItem({ item, copied, onCopy }) {
+  const Icon = item.icon;
   const isCopied = copied === item.label;
 
   return (
-    <Card
-      className="
-        group flex items-center justify-between gap-4
-        transition-shadow duration-300
-        hover:shadow-md
-        hover:shadow-slate-100
-        dark:hover:shadow-black/20
-      "
-    >
+    <Card className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-all duration-200 hover:border-violet-200 hover:shadow-md">
       <div className="flex min-w-0 items-center gap-3">
-        <div
-          className={`
-            flex h-10 w-10 shrink-0 items-center justify-center
-            rounded-xl
-            bg-slate-100 text-slate-500
-            transition-colors duration-300
-            dark:bg-slate-800 dark:text-slate-400
-            ${item.color.icon}
-          `}
+        <span
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors duration-200 group-hover:text-white ${item.accent}`}
         >
-          <item.icon
-            className="h-4 w-4"
-            aria-hidden="true"
-          />
-        </div>
+          <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+        </span>
 
         <div className="min-w-0">
-          <p
-            className="
-              mb-0.5 text-[10px] font-semibold uppercase
-              tracking-[0.16em]
-              text-slate-400 dark:text-slate-600
-            "
-          >
+          <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400">
             {item.label}
           </p>
 
           <a
             href={item.href}
-            className="
-              block truncate text-sm font-medium
-              text-slate-900 transition-colors
-              hover:text-slate-600
-              dark:text-white dark:hover:text-slate-300
-            "
+            className="block truncate text-sm font-medium text-slate-800 transition-colors hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
             {item.value}
           </a>
@@ -242,403 +189,208 @@ const ContactItem = ({ item, copied, onCopy }) => {
         type="button"
         onClick={() => onCopy(item.value, item.label)}
         aria-label={
-          isCopied
-            ? `${item.label} copied`
-            : `Copy ${item.label}`
+          isCopied ? `${item.label} copied` : `Copy ${item.label}`
         }
-        className="
-          shrink-0 rounded-lg p-2
-          border border-slate-200
-          text-slate-400
-          transition-all duration-150
-          hover:border-slate-400 hover:text-slate-700
-          active:scale-95
-          focus-visible:outline-none
-          focus-visible:ring-2
-          focus-visible:ring-slate-900/30
-          dark:border-slate-800
-          dark:text-slate-600
-          dark:hover:border-slate-600
-          dark:hover:text-slate-300
-          dark:focus-visible:ring-white/30
-        "
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
       >
-        <AnimatePresence mode="wait" initial={false}>
-          {isCopied ? (
-            <motion.span
-              key="check"
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
-              transition={{ duration: 0.15 }}
-            >
-              <FiCheck
-                className="h-3.5 w-3.5 text-emerald-500"
-                aria-hidden="true"
-              />
-            </motion.span>
-          ) : (
-            <motion.span
-              key="copy"
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.7 }}
-              transition={{ duration: 0.15 }}
-            >
-              <FiCopy
-                className="h-3.5 w-3.5"
-                aria-hidden="true"
-              />
-            </motion.span>
-          )}
-        </AnimatePresence>
+        {isCopied ? (
+          <FiCheck
+            className="h-4 w-4 text-emerald-600"
+            aria-hidden="true"
+          />
+        ) : (
+          <FiCopy className="h-4 w-4" aria-hidden="true" />
+        )}
       </button>
     </Card>
   );
-};
+}
 
 /* -------------------------------------------------------------------------- */
-/* Social Link                                                                */
+/* Social Links                                                               */
 /* -------------------------------------------------------------------------- */
 
-const SocialLink = ({
-  icon: Icon,
-  href,
-  label,
-  hover,
-  shouldReduce,
-}) => {
+function SocialLinks({ reduceMotion }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={`Visit my ${label} profile`}
-      className={`
-        flex h-10 w-10 items-center justify-center
-        rounded-xl
-        border border-slate-200
-        text-slate-500
-        transition-all duration-200
-        dark:border-slate-800
-        dark:text-slate-400
-        ${shouldReduce ? "" : "hover:-translate-y-0.5"}
-        ${hover}
-        focus-visible:outline-none
-        focus-visible:ring-2
-        focus-visible:ring-slate-900/30
-        dark:focus-visible:ring-white/30
-      `}
-    >
-      <Icon
-        className="h-[18px] w-[18px]"
-        aria-hidden="true"
-      />
-    </a>
+    <div>
+      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-slate-400">
+        Find me on
+      </p>
+
+      <div className="flex flex-wrap gap-2.5">
+        {SOCIALS.map(({ label, href, icon: Icon, hover }) => (
+          <a
+            key={label}
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`Visit my ${label} profile`}
+            className={`flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors duration-200 ${hover} ${
+              reduceMotion ? "" : "hover:-translate-y-0.5"
+            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500`}
+          >
+            <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+          </a>
+        ))}
+      </div>
+    </div>
   );
-};
+}
 
 /* -------------------------------------------------------------------------- */
 /* Form Field                                                                 */
 /* -------------------------------------------------------------------------- */
 
-const FIELD_CLASS = `
-  w-full rounded-xl
-  border border-slate-200
-  bg-white px-4 py-2.5
-  text-sm text-slate-900
-  placeholder:text-slate-400
-  transition-all duration-200
-  focus:border-slate-400
-  focus:outline-none
-  focus:ring-2
-  focus:ring-slate-900/10
-  dark:border-slate-800
-  dark:bg-slate-900/60
-  dark:text-white
-  dark:placeholder:text-slate-600
-  dark:focus:border-slate-600
-  dark:focus:ring-white/10
-`;
+function FormField({
+  id,
+  label,
+  error,
+  as = "input",
+  className = "",
+  ...props
+}) {
+  const Component = as;
+
+  return (
+    <div>
+      <label
+        htmlFor={id}
+        className="mb-1.5 block text-xs font-semibold text-slate-700"
+      >
+        {label}
+      </label>
+
+      <Component
+        id={id}
+        aria-invalid={Boolean(error)}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={`${FIELD_CLASS} ${
+          error
+            ? "border-red-400 focus:border-red-500 focus:ring-red-500/10"
+            : ""
+        } ${className}`}
+        {...props}
+      />
+
+      {error && (
+        <p
+          id={`${id}-error`}
+          className="mt-1.5 text-xs text-red-600"
+          role="alert"
+        >
+          {error}
+        </p>
+      )}
+    </div>
+  );
+}
 
 /* -------------------------------------------------------------------------- */
 /* Contact Form                                                               */
 /* -------------------------------------------------------------------------- */
 
-const ContactForm = ({
+function ContactForm({
   form,
   errors,
-  loading,
-  submitted,
-  messageLength,
   onChange,
   onSubmit,
-}) => {
-  const shouldReduce = useReducedMotion();
+  reduceMotion,
+}) {
+  const messageLength = form.message.length;
 
   return (
-    <motion.form
+    <motion.div
       variants={fadeUp}
-      onSubmit={onSubmit}
-      noValidate
-      aria-label="Contact form"
-      className="space-y-4"
+      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
     >
-      <AnimatePresence>
-        {submitted && (
-          <motion.div
-            initial={
-              shouldReduce
-                ? { opacity: 0 }
-                : { opacity: 0, y: -8 }
-            }
-            animate={
-              shouldReduce
-                ? { opacity: 1 }
-                : { opacity: 1, y: 0 }
-            }
-            exit={
-              shouldReduce
-                ? { opacity: 0 }
-                : { opacity: 0, y: -8 }
-            }
-            role="status"
-            aria-live="polite"
-            className="
-              flex items-center gap-2.5
-              rounded-xl border
-              border-emerald-200
-              bg-emerald-50 px-4 py-3
-              text-sm font-medium
-              text-emerald-700
-              dark:border-emerald-800/60
-              dark:bg-emerald-950/40
-              dark:text-emerald-400
-            "
-          >
-            <FiCheck
-              className="h-4 w-4 shrink-0"
-              aria-hidden="true"
-            />
+      <div className="mb-6">
+        <p className="text-lg font-bold tracking-tight text-slate-950">
+          Send a message
+        </p>
 
-            Message sent successfully.
-          </motion.div>
-        )}
-      </AnimatePresence>
+        <p className="mt-1 text-sm leading-6 text-slate-500">
+          Fill in the details below to start a conversation.
+        </p>
+      </div>
 
-      {/* Name */}
-      <div>
-        <label
-          htmlFor="contact-name"
-          className="
-            mb-1.5 block text-xs font-medium
-            text-slate-600 dark:text-slate-400
-          "
-        >
-          Name
-        </label>
-
-        <input
+      <form
+        onSubmit={onSubmit}
+        noValidate
+        aria-label="Contact form"
+        className="space-y-4"
+      >
+        <FormField
           id="contact-name"
           name="name"
+          label="Your name"
           type="text"
+          autoComplete="name"
+          placeholder="Enter your name"
           value={form.name}
           onChange={onChange}
-          placeholder="Your name"
-          autoComplete="name"
+          error={errors.name}
           required
-          aria-invalid={Boolean(errors.name)}
-          aria-describedby={
-            errors.name ? "name-error" : undefined
-          }
-          className={`
-            ${FIELD_CLASS}
-            ${
-              errors.name
-                ? "border-red-400 focus:ring-red-400/20 dark:border-red-600"
-                : ""
-            }
-          `}
         />
 
-        {errors.name && (
-          <p
-            id="name-error"
-            className="mt-1.5 pl-1 text-xs text-red-500 dark:text-red-400"
-          >
-            {errors.name}
-          </p>
-        )}
-      </div>
-
-      {/* Email */}
-      <div>
-        <label
-          htmlFor="contact-email"
-          className="
-            mb-1.5 block text-xs font-medium
-            text-slate-600 dark:text-slate-400
-          "
-        >
-          Email
-        </label>
-
-        <input
+        <FormField
           id="contact-email"
           name="email"
+          label="Email address"
           type="email"
+          autoComplete="email"
+          placeholder="you@example.com"
           value={form.email}
           onChange={onChange}
-          placeholder="your@email.com"
-          autoComplete="email"
+          error={errors.email}
           required
-          aria-invalid={Boolean(errors.email)}
-          aria-describedby={
-            errors.email ? "email-error" : undefined
-          }
-          className={`
-            ${FIELD_CLASS}
-            ${
-              errors.email
-                ? "border-red-400 focus:ring-red-400/20 dark:border-red-600"
-                : ""
-            }
-          `}
         />
 
-        {errors.email && (
-          <p
-            id="email-error"
-            className="mt-1.5 pl-1 text-xs text-red-500 dark:text-red-400"
-          >
-            {errors.email}
-          </p>
-        )}
-      </div>
-
-      {/* Message */}
-      <div>
-        <label
-          htmlFor="contact-message"
-          className="
-            mb-1.5 block text-xs font-medium
-            text-slate-600 dark:text-slate-400
-          "
-        >
-          Message
-        </label>
-
-        <textarea
-          id="contact-message"
-          name="message"
-          value={form.message}
-          onChange={onChange}
-          placeholder="Tell me about your project or opportunity..."
-          rows={5}
-          maxLength={MESSAGE_LIMIT}
-          required
-          aria-invalid={Boolean(errors.message)}
-          aria-describedby="message-meta"
-          className={`
-            ${FIELD_CLASS}
-            resize-none
-            ${
-              errors.message
-                ? "border-red-400 focus:ring-red-400/20 dark:border-red-600"
-                : ""
-            }
-          `}
-        />
-
-        <div
-          id="message-meta"
-          className="mt-1.5 flex items-center justify-between px-1"
-        >
-          {errors.message ? (
-            <p className="text-xs text-red-500 dark:text-red-400">
-              {errors.message}
-            </p>
-          ) : (
-            <span />
-          )}
+        <div>
+          <FormField
+            id="contact-message"
+            name="message"
+            label="Message"
+            as="textarea"
+            rows={5}
+            maxLength={MESSAGE_LIMIT}
+            placeholder="Tell me about your project or opportunity..."
+            value={form.message}
+            onChange={onChange}
+            error={errors.message}
+            className="resize-y"
+            required
+          />
 
           <p
-            className={`
-              ml-auto text-xs tabular-nums
-              ${
-                messageLength > MESSAGE_LIMIT * 0.9
-                  ? "text-amber-500 dark:text-amber-400"
-                  : "text-slate-400 dark:text-slate-600"
-              }
-            `}
+            className={`mt-1.5 text-right text-xs tabular-nums ${
+              messageLength >= MESSAGE_LIMIT * 0.9
+                ? "text-amber-600"
+                : "text-slate-400"
+            }`}
+            aria-live="polite"
           >
             {messageLength}/{MESSAGE_LIMIT}
           </p>
         </div>
-      </div>
 
-      {/* Submit */}
-      <button
-        type="submit"
-        disabled={loading}
-        className="
-          inline-flex w-full items-center justify-center gap-2
-          rounded-xl
-          bg-slate-900 px-6 py-3
-          text-sm font-semibold text-white
-          transition-all duration-150
-          hover:opacity-85
-          active:scale-[0.98]
-          disabled:cursor-not-allowed
-          disabled:opacity-50
-          dark:bg-white
-          dark:text-slate-900
-          focus-visible:outline-none
-          focus-visible:ring-2
-          focus-visible:ring-slate-900/40
-          dark:focus-visible:ring-white/40
-        "
-      >
-        {loading ? (
-          <>
-            <svg
-              className="h-4 w-4 animate-spin"
-              viewBox="0 0 24 24"
-              fill="none"
-              aria-hidden="true"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
+        <button
+          type="submit"
+          className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-slate-950 px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 ${
+            reduceMotion ? "" : "active:scale-[0.99]"
+          }`}
+        >
+          Open Email Draft
+          <FiSend className="h-4 w-4" aria-hidden="true" />
+        </button>
 
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-              />
-            </svg>
-
-            Sending...
-          </>
-        ) : (
-          <>
-            <FiSend
-              className="h-3.5 w-3.5"
-              aria-hidden="true"
-            />
-
-            Send Message
-          </>
-        )}
-      </button>
-    </motion.form>
+        <p className="text-center text-xs leading-5 text-slate-500">
+          Opens your email app with your message prefilled.
+          You can review and send it there.
+        </p>
+      </form>
+    </motion.div>
   );
-};
+}
 
 /* -------------------------------------------------------------------------- */
 /* Contact Section                                                            */
@@ -646,12 +398,22 @@ const ContactForm = ({
 
 export default function Contact() {
   const [form, setForm] = useState(INITIAL_FORM);
-  const [copied, setCopied] = useState(null);
-  const [submitted, setSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [copied, setCopied] = useState(null);
+  const [copyError, setCopyError] = useState("");
 
-  const shouldReduce = useReducedMotion();
+  const reduceMotion = useReducedMotion();
+
+  // Clear the copy confirmation automatically and clean up the timer.
+  useEffect(() => {
+    if (!copied) return undefined;
+
+    const timeoutId = window.setTimeout(() => {
+      setCopied(null);
+    }, 1800);
+
+    return () => window.clearTimeout(timeoutId);
+  }, [copied]);
 
   const handleChange = useCallback((event) => {
     const { name, value } = event.target;
@@ -661,223 +423,157 @@ export default function Contact() {
       [name]: value,
     }));
 
-    setErrors((previous) => ({
-      ...previous,
-      [name]: "",
-    }));
+    setErrors((previous) => {
+      if (!previous[name]) return previous;
+
+      return {
+        ...previous,
+        [name]: "",
+      };
+    });
   }, []);
 
-  const handleCopy = useCallback(async (text, label) => {
+  const handleCopy = useCallback(async (value, label) => {
+    setCopyError("");
+
     try {
-      await navigator.clipboard.writeText(text);
-
-      setCopied(label);
-
-      window.setTimeout(() => {
-        setCopied(null);
-      }, 1500);
-    } catch {
-      // Clipboard access can fail in unsupported/insecure contexts.
-    }
-  }, []);
-
-  const validateForm = useCallback(() => {
-    const nextErrors = {};
-
-    const name = form.name.trim();
-    const email = form.email.trim();
-    const message = form.message.trim();
-
-    if (!name) {
-      nextErrors.name = "Name is required.";
-    }
-
-    if (!email) {
-      nextErrors.email = "Email is required.";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      nextErrors.email = "Enter a valid email address.";
-    }
-
-    if (!message) {
-      nextErrors.message = "Message is required.";
-    }
-
-    return nextErrors;
-  }, [form]);
-
-  const handleSubmit = useCallback(
-    async (event) => {
-      event.preventDefault();
-
-      const nextErrors = validateForm();
-
-      if (Object.keys(nextErrors).length > 0) {
-        setErrors(nextErrors);
-        return;
+      if (!navigator.clipboard?.writeText) {
+        throw new Error("Clipboard API unavailable");
       }
 
-      /*
-       * TODO:
-       * Connect this section to your backend/API.
-       *
-       * Example:
-       *
-       * await fetch("/api/contact", {
-       *   method: "POST",
-       *   headers: {
-       *     "Content-Type": "application/json",
-       *   },
-       *   body: JSON.stringify(form),
-       * });
-       */
+      await navigator.clipboard.writeText(value);
+      setCopied(label);
+    } catch {
+      setCopyError(
+        `Could not copy ${label.toLowerCase()}. Select and copy the contact detail directly.`
+      );
+    }
+  }, []);
 
-      setLoading(true);
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
 
-      // Temporary UI simulation until backend is connected.
-      await new Promise((resolve) => {
-        window.setTimeout(resolve, 800);
-      });
+      const name = form.name.trim();
+      const email = form.email.trim();
+      const message = form.message.trim();
 
-      setLoading(false);
-      setSubmitted(true);
-      setForm(INITIAL_FORM);
-      setErrors({});
+      const nextErrors = {};
 
-      window.setTimeout(() => {
-        setSubmitted(false);
-      }, 4000);
+      if (!name) {
+        nextErrors.name = "Please enter your name.";
+      } else if (name.length > 100) {
+        nextErrors.name = "Name must be 100 characters or fewer.";
+      }
+
+      if (!email) {
+        nextErrors.email = "Please enter your email address.";
+      } else if (
+        email.length > 254 ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      ) {
+        nextErrors.email = "Please enter a valid email address.";
+      }
+
+      if (!message) {
+        nextErrors.message = "Please enter a message.";
+      } else if (message.length > MESSAGE_LIMIT) {
+        nextErrors.message = `Message must be ${MESSAGE_LIMIT} characters or fewer.`;
+      }
+
+      setErrors(nextErrors);
+
+      if (Object.keys(nextErrors).length > 0) return;
+
+      const subject = `Portfolio enquiry from ${name}`;
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        "",
+        message,
+      ].join("\n");
+
+      const mailtoUrl =
+        `mailto:${EMAIL}` +
+        `?subject=${encodeURIComponent(subject)}` +
+        `&body=${encodeURIComponent(body)}`;
+
+      window.location.href = mailtoUrl;
     },
-    [form, validateForm]
+    [form]
   );
 
   return (
     <Section
       id="contact"
-      aria-label="Contact"
+      aria-labelledby="contact-heading"
+      background="bg-slate-50"
     >
-      <SectionHeader />
-
-      <div
-        className="
-          mx-auto grid max-w-5xl
-          grid-cols-1
-          gap-10
-          lg:grid-cols-[0.85fr_1.15fr]
-          lg:gap-16
-        "
-      >
-        {/* ---------------------------------------------------------------- */}
-        {/* Contact Information                                              */}
-        {/* ---------------------------------------------------------------- */}
+      <div className="mx-auto max-w-6xl">
+        <SectionHeader reduceMotion={reduceMotion} />
 
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
+          variants={stagger}
+          initial={reduceMotion ? false : "hidden"}
           whileInView="show"
           viewport={VIEWPORT}
-          className="min-w-0 space-y-8"
+          className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12"
         >
-          {/* Contact methods */}
-          <div className="space-y-3">
-            {CONTACTS.map((item) => (
-              <motion.div
-                key={item.label}
-                variants={fadeUp}
-              >
+          {/* Contact information */}
+          <motion.div
+            variants={fadeUp}
+            className="min-w-0 space-y-7 lg:pt-2"
+          >
+            <div>
+              <h3 className="text-lg font-bold tracking-tight text-slate-950">
+                Let's talk
+              </h3>
+
+              <p className="mt-2 max-w-md text-sm leading-7 text-slate-600">
+                I'm open to discussing development projects,
+                collaboration, and opportunities to grow as a
+                software developer.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              {CONTACTS.map((item) => (
                 <ContactItem
+                  key={item.label}
                   item={item}
                   copied={copied}
                   onCopy={handleCopy}
                 />
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Socials */}
-          <motion.div variants={fadeUp}>
-            <p
-              className="
-                mb-3 text-[11px] font-semibold uppercase
-                tracking-[0.16em]
-                text-slate-400 dark:text-slate-600
-              "
-            >
-              Find me on
-            </p>
-
-            <div className="flex gap-2.5">
-              {SOCIALS.map((social) => (
-                <SocialLink
-                  key={social.label}
-                  {...social}
-                  shouldReduce={shouldReduce}
-                />
               ))}
             </div>
-          </motion.div>
 
-          {/* Response note */}
-          <motion.div variants={fadeUp}>
-            <div
-              className="
-                flex items-start gap-3
-                rounded-xl border
-                border-slate-200
-                bg-slate-50 p-4
-                dark:border-slate-800
-                dark:bg-slate-800/40
-              "
-            >
-              <span
-                className="mt-0.5 text-base"
-                aria-hidden="true"
-              >
-                ⚡
-              </span>
-
-              <div>
-                <p
-                  className="
-                    text-sm font-medium
-                    text-slate-700 dark:text-slate-300
-                  "
-                >
-                  Quick response
+            <div aria-live="polite" role="status">
+              {copied && (
+                <p className="text-xs font-medium text-emerald-700">
+                  {copied} copied to clipboard.
                 </p>
+              )}
 
-                <p
-                  className="
-                    mt-0.5 text-xs leading-5
-                    text-slate-500 dark:text-slate-500
-                  "
-                >
-                  I typically respond within 24 hours.
+              {copyError && (
+                <p className="text-xs text-red-600">
+                  {copyError}
                 </p>
-              </div>
+              )}
             </div>
+
+            <SocialLinks reduceMotion={reduceMotion} />
           </motion.div>
-        </motion.div>
 
-        {/* ---------------------------------------------------------------- */}
-        {/* Contact Form                                                      */}
-        {/* ---------------------------------------------------------------- */}
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="min-w-0"
-        >
-          <ContactForm
-            form={form}
-            errors={errors}
-            loading={loading}
-            submitted={submitted}
-            messageLength={form.message.length}
-            onChange={handleChange}
-            onSubmit={handleSubmit}
-          />
+          {/* Contact form */}
+          <motion.div variants={fadeUp} className="min-w-0">
+            <ContactForm
+              form={form}
+              errors={errors}
+              onChange={handleChange}
+              onSubmit={handleSubmit}
+              reduceMotion={reduceMotion}
+            />
+          </motion.div>
         </motion.div>
       </div>
     </Section>

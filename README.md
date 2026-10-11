@@ -1,110 +1,36 @@
-# Mehedi Robi — Developer Portfolio
+# Mehedi Robi — MERN Stack Developer
 
-A modern, responsive developer portfolio built with React, Tailwind CSS, and Framer Motion. The portfolio showcases my projects, technical skills, experience, education, certifications, and contact information.
+A responsive portfolio showcasing my full-stack projects, skills, education, and contact information.
 
-## Features
+## Portfolio
 
-* Responsive and mobile-first design
-* Consistent light theme
-* Smooth section navigation
-* Animated UI with Framer Motion
-* Project filtering and showcase
-* Responsive navigation
-* Accessible interactive components
-* Back-to-top navigation
-* Optimized reusable React components
-* Clean and maintainable project structure
+[View the live portfolio](https://mehedirobi-portfolio.netlify.app/)
 
-## Tech Stack
+## Featured projects
 
-* React.js
-* JavaScript (ES6+)
-* Tailwind CSS
-* Framer Motion
-* React Icons
-* Vite
+- **Khelaro** — Sports turf booking platform ([client](https://github.com/mehedirobi/khelaro-client), [server](https://github.com/mehedirobi/khelaro-server), [live demo](https://khelaro.netlify.app/))
+- **UrbanFix** — Civic issue reporting platform ([client](https://github.com/mehedirobi/urban-fix), [server](https://github.com/mehedirobi/urban-fix-server), [live demo](https://urban-fix-project-01.netlify.app/))
+- **PawMart** — Pet adoption and supply portal ([client](https://github.com/mehedirobi/pawmart-project), [server](https://github.com/mehedirobi/pawmart-project-server), [live demo](https://pawmart-project-01.netlify.app/))
 
-## Sections
+## Built with
 
-* Hero
-* About
-* Skills
-* Projects
-* Experience
-* Certifications
-* Education
-* Contact
+React, JavaScript, Tailwind CSS, Framer Motion, React Icons, and Vite.
 
-## Live Demo
-
-[View Live Portfolio](https://mehedi-robi-portfolio.netlify.app/?utm_source=chatgpt.com)
-
-## Getting Started
-
-Clone the repository:
-
-```bash
-git clone https://github.com/mehedirobi/mehedi-robi-portfolio.git
-cd mehedi-robi-portfolio
-```
-
-Install dependencies:
+## Run locally
 
 ```bash
 npm install
-```
-
-Start the development server:
-
-```bash
 npm run dev
 ```
 
-Create a production build:
+Create a production build with:
 
 ```bash
 npm run build
 ```
 
-## Project Structure
+## Contact
 
-```text
-src/
-├── components/
-│   ├── About.jsx
-│   ├── Contact.jsx
-│   ├── Education.jsx
-│   ├── Experience.jsx
-│   ├── Footer.jsx
-│   ├── Hero.jsx
-│   ├── Navbar.jsx
-│   ├── Projects.jsx
-│   ├── Skills.jsx
-│   ├── ThemeContext.jsx
-│   ├── ThemeToggle.jsx
-│   └── UI.jsx
-│
-├── data/
-│   └── projectData.js
-│
-├── hooks/
-│   └── useCopyToClipboard.js
-│
-├── App.jsx
-├── main.jsx
-└── index.css
-```
-
-## Author
-
-**Mehedi Robi**
-
-Frontend Developer | React.js & MERN Stack
-
-* GitHub: [@mehedirobi](https://github.com/mehedirobi?utm_source=chatgpt.com)
-* LinkedIn: [@mehedirobii](https://www.linkedin.com/in/mehedirobii/?utm_source=chatgpt.com)
-* X: [@mehedirobii](https://x.com/mehedirobii?utm_source=chatgpt.com)
-
-## License
-
-This project is open source and available for learning and portfolio purposes.
+- GitHub: [@mehedirobi](https://github.com/mehedirobi)
+- LinkedIn: [mehedirobii](https://www.linkedin.com/in/mehedirobii/)
+- Email: [mehedirobidev@gmail.com](mailto:mehedirobidev@gmail.com)
