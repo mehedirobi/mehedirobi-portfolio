@@ -22,7 +22,7 @@ export const Section = ({
   children,
   className = "",
   background = "bg-white dark:bg-slate-950",
-  padding = "py-20 sm:py-24",
+  padding = "py-16 sm:py-20",
   maxWidth = "max-w-6xl",
   ...props
 }) => {

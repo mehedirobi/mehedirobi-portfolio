@@ -5,7 +5,7 @@ A modern, responsive developer portfolio built with React, Tailwind CSS, and Fra
 ## Features
 
 * Responsive and mobile-first design
-* Light / dark theme
+* Consistent light theme
 * Smooth section navigation
 * Animated UI with Framer Motion
 * Project filtering and showcase

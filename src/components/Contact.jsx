@@ -760,6 +760,7 @@ export default function Contact() {
       <div
         className="
           mx-auto grid max-w-5xl
+          grid-cols-1
           gap-10
           lg:grid-cols-[0.85fr_1.15fr]
           lg:gap-16
@@ -774,7 +775,7 @@ export default function Contact() {
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
-          className="space-y-8"
+          className="min-w-0 space-y-8"
         >
           {/* Contact methods */}
           <div className="space-y-3">
@@ -866,6 +867,7 @@ export default function Contact() {
           initial="hidden"
           whileInView="show"
           viewport={VIEWPORT}
+          className="min-w-0"
         >
           <ContactForm
             form={form}

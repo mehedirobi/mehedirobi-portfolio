@@ -22,21 +22,22 @@ npm run preview
 ```
 src/
 ├── components/
-│   ├── Button.jsx              # Reusable button with variants
-│   ├── Card.jsx                # Reusable card container
-│   ├── Badge.jsx               # Tag/badge component
-│   ├── SectionHeader.jsx       # Section title component
 │   ├── Navbar.jsx              # Navigation bar
 │   ├── Hero.jsx                # Landing/hero section
 │   ├── About.jsx               # About me section
 │   ├── Skills.jsx              # Skills & proficiency
-│   ├── Education.jsx           # Education timeline
 │   ├── Experience.jsx          # Experience timeline
+│   ├── Certifications.jsx      # Certifications and training
+│   ├── Education.jsx           # Education timeline
 │   ├── Projects.jsx            # Projects showcase
 │   ├── Contact.jsx             # Contact form
-│   └── Footer.jsx              # Footer
-├── styles/
-│   └── global.css              # Global styles & animations
+│   ├── Footer.jsx              # Footer
+│   └── UI.jsx                  # Shared UI primitives
+├── data/
+│   └── projectData.js          # Project descriptions and links
+├── hooks/
+│   └── useCopyToClipboard.js   # Clipboard helper
+├── index.css                   # Tailwind and global styles
 ├── App.jsx                     # Main app component
 └── main.jsx                    # Entry point
 ```
@@ -45,24 +46,23 @@ src/
 
 ### Primary Colors
 ```
-Blue:    #3b82f6 (bg-blue-600)
-Purple:  #8b5cf6 (bg-purple-600)
-Green:   #10b981 (bg-green-600)
-Gray:    #6b7280 (bg-gray-600)
+Accent:  #4f46e5 (indigo)
+Ink:     #0f172a (slate)
+Muted:   #64748b (slate)
+Border:  #e2e8f0 (slate)
 ```
 
 ### Backgrounds
 ```
-Dark:    #111827 (bg-gray-900)
-Mid:     #1f2937 (bg-gray-800)
-Light:   #374151 (bg-gray-700)
+Canvas:  #ffffff (white)
+Subtle:  #f8fafc (slate)
 ```
 
 ## 🧩 Using Components
 
 ### Button Component
 ```jsx
-import Button from './components/Button';
+import { Button } from './components/UI';
 
 // Primary button
 <Button>Click me</Button>
@@ -73,53 +73,32 @@ import Button from './components/Button';
 // With size
 <Button size="lg">Click me</Button>
 
-// With icon
-<Button>
-  <i className="fas fa-download"></i>
-  Download
-</Button>
-
-// As link
-<Button asChild>
-  <a href="https://example.com">Link</a>
-</Button>
-
-// Variants: primary, secondary, success, outline
+// Variants: primary, secondary, ghost
 // Sizes: sm, md, lg
 ```
 
 ### Card Component
 ```jsx
-import Card from './components/Card';
+import { Card } from './components/UI';
 
-<Card hover={true} className="p-6">
+<Card padding="p-6">
   Content here
 </Card>
 
 // Props:
-// - hover: boolean (default: true)
+// - as: element type (default: div)
+// - padding: Tailwind spacing classes (default: p-5)
 // - className: string for additional styles
 ```
 
 ### Badge Component
 ```jsx
-import Badge from './components/Badge';
+import { Badge } from './components/UI';
 
-<Badge variant="blue" size="md">React</Badge>
+<Badge variant="primary" size="md">React</Badge>
 
-// Variants: blue, green, purple, red, gray, outline
-// Sizes: sm, md, lg
-```
-
-### SectionHeader Component
-```jsx
-import SectionHeader from './components/SectionHeader';
-
-<SectionHeader 
-  title="My" 
-  highlight="Skills"
-  subtitle="Technical expertise"
-/>
+// Variants: default, primary, secondary, success, warning
+// Sizes: sm, md
 ```
 
 ## 🎯 Section IDs
@@ -184,34 +163,9 @@ Your Profession
 
 ## 🎬 Animations
 
-### Available Animation Classes
-```css
-.animate-fade-in       /* Fade in from bottom */
-.animate-slide-in-left /* Slide from left */
-.animate-slide-in-right /* Slide from right */
-.animate-bounce-soft   /* Soft bounce */
-.animate-pulse-slow    /* Pulse effect */
-```
-
-### Usage
-```jsx
-<div className="animate-fade-in" style={{animationDelay: '0.2s'}}>
-  Content
-</div>
-```
-
-### Add Custom Animations
-**File**: `src/styles/global.css`
-```css
-@keyframes my-animation {
-  from { ... }
-  to { ... }
-}
-
-.animate-my-animation {
-  animation: my-animation 0.6s ease-out forwards;
-}
-```
+Section reveals and interactive transitions use Framer Motion. Reduced-motion
+preferences are respected, and the global stylesheet disables smooth scrolling
+and nonessential transitions when requested.
 
 ## 📱 Responsive Breakpoints
 
@@ -260,12 +214,12 @@ All interactive elements support keyboard navigation:
 
 **Issue**: Styles not applying
 ```
-Solution: Check if Tailwind CSS CDN is loaded in index.html
+Solution: Check the Tailwind directives in src/index.css and the content paths in tailwind.config.js
 ```
 
 **Issue**: Animations not working
 ```
-Solution: Check if global.css is imported in main.jsx
+Solution: Check the Framer Motion component and browser console
 ```
 
 **Issue**: Components not rendering

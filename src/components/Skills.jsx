@@ -443,6 +443,7 @@ export default function Skills() {
     <Section
       id="skills"
       aria-labelledby="skills-heading"
+      background="bg-slate-50"
     >
       {/* ==================================================
           Header

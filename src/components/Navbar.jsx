@@ -8,8 +8,6 @@ import {
   AnimatePresence,
   motion,
   useReducedMotion,
-  useScroll,
-  useSpring,
 } from "framer-motion";
 import { FiSend } from "react-icons/fi";
 
@@ -25,45 +23,6 @@ const NAV_ITEMS = [
 ];
 
 const HEADER_HEIGHT = 64;
-
-// ------------------------------------------------------
-// Scroll Progress
-// ------------------------------------------------------
-
-const ScrollProgress = () => {
-  const { scrollYProgress } = useScroll();
-
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 180,
-    damping: 28,
-    restDelta: 0.001,
-  });
-
-  return (
-    <motion.div
-      aria-hidden="true"
-      style={{
-        scaleX,
-        transformOrigin: "left",
-      }}
-      className="
-        absolute
-        bottom-0
-        left-0
-        right-0
-        z-10
-        h-px
-        bg-gradient-to-r
-        from-violet-500
-        via-blue-500
-        to-cyan-400
-        dark:from-violet-400
-        dark:via-blue-400
-        dark:to-cyan-300
-      "
-    />
-  );
-};
 
 // ------------------------------------------------------
 // Desktop Navigation Item
@@ -584,9 +543,6 @@ export default function Navbar() {
           }
         `}
       >
-        {/* Scroll Progress */}
-        <ScrollProgress />
-
         <div
           className="
             mx-auto

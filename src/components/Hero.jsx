@@ -126,90 +126,20 @@ const imageVariants = {
 // Background
 // ======================================================
 
-const BackgroundEffects = ({ reduceMotion }) => {
+const BackgroundEffects = () => {
   return (
     <div
       className="pointer-events-none absolute inset-0 overflow-hidden"
       aria-hidden="true"
     >
-      {/* Violet ambient glow */}
-      <motion.div
-        animate={
-          reduceMotion
-            ? undefined
-            : {
-                x: [0, 12, 0],
-                y: [0, -14, 0],
-              }
-        }
-        transition={
-          reduceMotion
-            ? undefined
-            : {
-                duration: 10,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }
-        }
-        className="
-          absolute
-          -left-40
-          -top-40
-          h-[420px]
-          w-[420px]
-          rounded-full
-          bg-violet-400/[0.08]
-          blur-[90px]
-          dark:bg-violet-500/[0.07]
-        "
-      />
-
-      {/* Cyan ambient glow */}
-      <motion.div
-        animate={
-          reduceMotion
-            ? undefined
-            : {
-                x: [0, -10, 0],
-                y: [0, 16, 0],
-              }
-        }
-        transition={
-          reduceMotion
-            ? undefined
-            : {
-                duration: 12,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }
-        }
-        className="
-          absolute
-          -bottom-44
-          -right-32
-          h-[380px]
-          w-[380px]
-          rounded-full
-          bg-cyan-400/[0.07]
-          blur-[90px]
-          dark:bg-cyan-500/[0.06]
-        "
-      />
-
-      {/* Subtle dot texture */}
       <div
         className="
           absolute
           inset-0
-          opacity-[0.025]
-          dark:opacity-[0.035]
-          [background-image:radial-gradient(circle,#64748b_1px,transparent_1px)]
-          [background-size:28px_28px]
+          bg-[radial-gradient(ellipse_at_top_right,rgba(99,102,241,0.07),transparent_55%)]
         "
       />
 
-      {/* Section separator */}
       <div
         className="
           absolute
@@ -221,7 +151,6 @@ const BackgroundEffects = ({ reduceMotion }) => {
           from-transparent
           via-slate-200
           to-transparent
-          dark:via-slate-800
         "
       />
     </div>
@@ -265,19 +194,6 @@ const StatusBadge = () => {
         "
         aria-hidden="true"
       >
-        <span
-          className="
-            absolute
-            inline-flex
-            h-full
-            w-full
-            animate-ping
-            rounded-full
-            bg-emerald-400
-            opacity-60
-          "
-        />
-
         <span
           className="
             relative
@@ -444,34 +360,14 @@ const SocialLink = ({
 // Profile Image
 // ======================================================
 
-const ProfileImage = ({
-  name,
-  reduceMotion,
-}) => {
+const ProfileImage = ({ name }) => {
   return (
     <motion.div
       variants={imageVariants}
       className="flex justify-center lg:justify-end"
     >
       <div className="group relative">
-        {/* Rotating accent ring */}
-        <motion.div
-          animate={
-            reduceMotion
-              ? undefined
-              : {
-                  rotate: 360,
-                }
-          }
-          transition={
-            reduceMotion
-              ? undefined
-              : {
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                }
-          }
+        <div
           className="
             absolute
             -inset-[3px]
@@ -524,16 +420,16 @@ const ProfileImage = ({
         <div
           className="
             relative
-            h-56
-            w-56
+            h-44
+            w-44
             overflow-hidden
             rounded-full
 
             shadow-2xl
             shadow-violet-500/10
 
-            sm:h-64
-            sm:w-64
+            sm:h-52
+            sm:w-52
 
             md:h-72
             md:w-72
@@ -545,6 +441,8 @@ const ProfileImage = ({
           <OptimizedImage
             src={HERO.image}
             alt={`Professional portrait of ${name}`}
+            loading="eager"
+            fetchpriority="high"
             className="
               h-full
               w-full
@@ -600,9 +498,7 @@ export default function Hero() {
         dark:bg-slate-950
       "
     >
-      <BackgroundEffects
-        reduceMotion={reduceMotion}
-      />
+      <BackgroundEffects />
 
       <div
         className="
@@ -613,12 +509,13 @@ export default function Hero() {
           max-w-7xl
           grid-cols-1
           items-center
-          gap-12
+          gap-8
           px-5
-          py-20
+          py-12
 
           sm:px-6
-          sm:py-24
+          sm:gap-10
+          sm:py-16
 
           lg:grid-cols-2
           lg:gap-16
@@ -635,7 +532,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           className="
-            order-2
+            order-1
             flex
             max-w-2xl
             flex-col
@@ -973,13 +870,12 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           className="
-            order-1
+            order-2
             lg:order-2
           "
         >
           <ProfileImage
             name={HERO.name}
-            reduceMotion={reduceMotion}
           />
         </motion.div>
       </div>

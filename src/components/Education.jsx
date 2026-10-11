@@ -499,6 +499,7 @@ export default function Education() {
     <Section
       id="education"
       aria-label="Education and academic background"
+      background="bg-slate-50"
     >
       <SectionHeader />
 

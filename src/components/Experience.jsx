@@ -574,6 +574,7 @@ export default function Experience() {
     <Section
       id="experience"
       aria-label="Development journey"
+      background="bg-slate-50"
     >
       <SectionHeader />
 
