@@ -38,7 +38,7 @@ function SectionHeader({ reduceMotion }) {
     >
       <motion.p
         variants={fadeUp}
-        className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-600"
+        className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
       >
         Portfolio
       </motion.p>
@@ -46,14 +46,14 @@ function SectionHeader({ reduceMotion }) {
       <motion.h2
         id="projects-heading"
         variants={fadeUp}
-        className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
+        className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
       >
         Featured Projects
       </motion.h2>
 
       <motion.p
         variants={fadeUp}
-        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base"
+        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
       >
         A selection of projects showcasing my full-stack development
         skills, modern UI design, and practical problem-solving.
@@ -64,7 +64,7 @@ function SectionHeader({ reduceMotion }) {
 
 function TechTag({ children }) {
   return (
-    <span className="rounded-md border border-slate-200 bg-slate-50 px-2.5 py-1 text-[11px] font-medium text-slate-600">
+    <span className="rounded-md border border-white/10 bg-[#0e1015] px-2.5 py-1 text-[11px] font-medium text-slate-400">
       {children}
     </span>
   );
@@ -81,8 +81,8 @@ function ProjectAction({ href, icon: Icon, children, primary, label }) {
       aria-label={label}
       className={`inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
         primary
-          ? "bg-slate-900 text-white hover:bg-slate-800"
-          : "border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 hover:text-slate-900"
+          ? "bg-violet-600 text-white hover:bg-violet-500"
+          : "border border-white/10 text-slate-400 hover:border-white/20 hover:bg-white/5 hover:text-white"
       }`}
     >
       <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
@@ -92,6 +92,7 @@ function ProjectAction({ href, icon: Icon, children, primary, label }) {
 }
 
 function ProjectCard({ project, reduceMotion }) {
+  const [imageFailed, setImageFailed] = useState(false);
   const tech = Array.isArray(project.tech) ? project.tech : [];
   const liveUrl = project.links?.live;
   const githubUrl = project.links?.github;
@@ -105,14 +106,15 @@ function ProjectCard({ project, reduceMotion }) {
       variants={fadeUp}
       className="h-full min-w-0"
     >
-      <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-slate-200 bg-white p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-slate-300 hover:shadow-lg">
-        <div className="relative aspect-video overflow-hidden bg-slate-100">
-          {project.image ? (
+      <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-white/20 hover:shadow-lg">
+        <div className="relative aspect-video overflow-hidden bg-[#181a21]">
+          {project.image && !imageFailed ? (
             <OptimizedImage
               src={project.image}
               alt={`${project.name} project preview`}
               width="1000"
               height="440"
+              onError={() => setImageFailed(true)}
               className={`h-full w-full object-cover ${
                 reduceMotion
                   ? ""
@@ -121,7 +123,7 @@ function ProjectCard({ project, reduceMotion }) {
             />
           ) : (
             <div
-              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-50 to-slate-100 text-slate-600"
+              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-500/10 to-[#181a21] text-slate-300"
               aria-hidden="true"
             >
               <FiCodepen className="h-8 w-8 text-violet-500" />
@@ -133,11 +135,11 @@ function ProjectCard({ project, reduceMotion }) {
         </div>
 
         <div className="flex flex-1 flex-col p-5">
-          <h3 className="text-base font-semibold tracking-tight text-slate-900">
+          <h3 className="text-base font-semibold tracking-tight text-slate-100">
             {project.name}
           </h3>
 
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-600">
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-400">
             {project.description}
           </p>
 
@@ -148,14 +150,14 @@ function ProjectCard({ project, reduceMotion }) {
               ))}
 
               {tech.length > 6 && (
-                <span className="self-center px-1 text-[11px] text-slate-500">
+                <span className="self-center px-1 text-[11px] text-slate-400">
                   +{tech.length - 6} more
                 </span>
               )}
             </div>
           )}
 
-          <div className="my-4 mt-auto border-t border-slate-100" />
+          <div className="my-4 mt-auto border-t border-white/10" />
 
           <div className="flex gap-2">
             <ProjectAction
@@ -186,7 +188,7 @@ function ProjectCard({ project, reduceMotion }) {
             )}
 
             {!liveUrl && !githubUrl && !serverUrl && (
-              <span className="flex-1 rounded-lg border border-dashed border-slate-200 px-2 py-2 text-center text-xs text-slate-400">
+              <span className="flex-1 rounded-lg border border-dashed border-white/10 px-2 py-2 text-center text-xs text-slate-400">
                 Links coming soon
               </span>
             )}
@@ -215,12 +217,15 @@ export default function Projects() {
     <Section
       id="projects"
       aria-labelledby="projects-heading"
-      background="bg-slate-50"
+      background="bg-[#0e1015]"
     >
       <div className="mx-auto max-w-6xl">
         <SectionHeader reduceMotion={reduceMotion} />
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          id="projects-grid"
+          className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {visibleProjects.map((project, index) => (
             <ProjectCard
               key={project.id ?? project.name ?? index}
@@ -231,7 +236,7 @@ export default function Projects() {
         </div>
 
         {projects.length === 0 && (
-          <p className="py-12 text-center text-sm text-slate-500">
+          <p className="py-12 text-center text-sm text-slate-400">
             No projects found. Please check your project data.
           </p>
         )}
@@ -245,7 +250,7 @@ export default function Projects() {
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               aria-expanded={showAll}
               aria-controls="projects-grid"
-              className="inline-flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition-colors hover:border-slate-300 hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
+              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-[#111318] px-5 py-2.5 text-sm font-semibold text-slate-300 shadow-sm transition-colors hover:border-white/20 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
             >
               {showAll ? "Show Less" : "View More Projects"}
 
@@ -258,9 +263,9 @@ export default function Projects() {
           </div>
         )}
 
-        <div id="projects-grid" className="sr-only" aria-live="polite">
+        <p className="sr-only" aria-live="polite">
           Showing {visibleProjects.length} of {projects.length} projects.
-        </div>
+        </p>
       </div>
     </Section>
   );

@@ -134,10 +134,10 @@ function BackToTop({ reduceMotion }) {
           className="
             fixed bottom-5 right-5 z-50
             flex h-11 w-11 items-center justify-center
-            rounded-xl border border-slate-200
-            bg-white text-slate-700 shadow-lg shadow-slate-900/10
-            transition-colors hover:border-violet-300
-            hover:bg-violet-50 hover:text-violet-700
+            rounded-xl border border-white/10
+            bg-[#111318] text-slate-300 shadow-lg shadow-slate-900/10
+            transition-colors hover:border-violet-400/40
+            hover:bg-violet-500/10 hover:text-violet-300
             focus-visible:outline-none focus-visible:ring-2
             focus-visible:ring-violet-500 focus-visible:ring-offset-2
             sm:bottom-6 sm:right-6
@@ -160,10 +160,10 @@ function SocialLink({ label, href, icon: Icon }) {
       title={label}
       className="
         flex h-10 w-10 items-center justify-center
-        rounded-xl border border-slate-200 bg-white
-        text-slate-500 transition-colors duration-200
-        hover:border-violet-200 hover:bg-violet-50
-        hover:text-violet-700
+        rounded-xl border border-white/10 bg-[#111318]
+        text-slate-400 transition-colors duration-200
+        hover:border-violet-400/40 hover:bg-violet-500/10
+        hover:text-violet-300
         focus-visible:outline-none focus-visible:ring-2
         focus-visible:ring-violet-500
       "
@@ -185,8 +185,8 @@ function FooterNavigation({ reduceMotion }) {
           type="button"
           onClick={() => scrollToSection(id, reduceMotion)}
           className="
-            rounded-sm text-sm text-slate-500
-            transition-colors hover:text-violet-700
+            rounded-sm text-sm text-slate-400
+            transition-colors hover:text-violet-300
             focus-visible:outline-none focus-visible:ring-2
             focus-visible:ring-violet-500
           "
@@ -226,7 +226,7 @@ export default function Footer() {
     <>
       <BackToTop reduceMotion={reduceMotion} />
 
-      <footer className="border-t border-slate-200 bg-white">
+      <footer className="border-t border-white/10 bg-[#111318]">
         <div
           className="h-px w-full bg-gradient-to-r from-transparent via-violet-300 to-transparent"
           aria-hidden="true"
@@ -248,16 +248,16 @@ export default function Footer() {
                 aria-label="Back to homepage"
                 className="
                   rounded-sm text-lg font-bold tracking-tight
-                  text-slate-950 transition-colors
-                  hover:text-violet-700
+                  text-slate-50 transition-colors
+                  hover:text-violet-300
                   focus-visible:outline-none focus-visible:ring-2
                   focus-visible:ring-violet-500
                 "
               >
-                Mehedi <span className="text-violet-600">Robi</span>
+                Mehedi <span className="text-violet-400">Robi</span>
               </button>
 
-              <p className="mt-2 text-xs tracking-wide text-slate-500">
+              <p className="mt-2 text-xs tracking-wide text-slate-400">
                 MERN Stack Developer
               </p>
             </motion.div>
@@ -280,7 +280,7 @@ export default function Footer() {
             {/* Divider */}
             <motion.div
               variants={fadeUp}
-              className="my-7 h-px w-full bg-slate-100"
+              className="my-7 h-px w-full bg-[#181a21]"
               aria-hidden="true"
             />
 

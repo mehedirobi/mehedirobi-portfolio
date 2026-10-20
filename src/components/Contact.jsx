@@ -52,7 +52,7 @@ const SOCIALS = [
     label: "GitHub",
     href: "https://github.com/mehedirobi",
     icon: FaGithub,
-    hover: "hover:border-slate-400 hover:text-slate-950",
+    hover: "hover:border-slate-400 hover:text-white",
   },
   {
     label: "LinkedIn",
@@ -64,7 +64,7 @@ const SOCIALS = [
     label: "X",
     href: "https://x.com/mehedirobii",
     icon: FaXTwitter,
-    hover: "hover:border-slate-400 hover:text-slate-950",
+    hover: "hover:border-slate-400 hover:text-white",
   },
 ];
 
@@ -110,8 +110,8 @@ const stagger = {
 /* -------------------------------------------------------------------------- */
 
 const FIELD_CLASS =
-  "w-full rounded-xl border border-slate-200 bg-white px-4 py-3 " +
-  "text-sm text-slate-900 placeholder:text-slate-400 " +
+  "w-full rounded-xl border border-white/10 bg-[#111318] px-4 py-3 " +
+  "text-sm text-slate-100 placeholder:text-slate-400 " +
   "outline-none transition-colors duration-200 " +
   "focus:border-violet-400 focus:ring-2 focus:ring-violet-500/10";
 
@@ -130,7 +130,7 @@ function SectionHeader({ reduceMotion }) {
     >
       <motion.p
         variants={fadeUp}
-        className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-600"
+        className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-400"
       >
         Get in touch
       </motion.p>
@@ -138,14 +138,14 @@ function SectionHeader({ reduceMotion }) {
       <motion.h2
         id="contact-heading"
         variants={fadeUp}
-        className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
+        className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
       >
         Let's Connect
       </motion.h2>
 
       <motion.p
         variants={fadeUp}
-        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base"
+        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
       >
         Have a project, an opportunity, or an idea to discuss?
         I'd be glad to hear from you.
@@ -163,10 +163,10 @@ function ContactItem({ item, copied, onCopy }) {
   const isCopied = copied === item.label;
 
   return (
-    <Card className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200 bg-white p-4 transition-all duration-200 hover:border-violet-200 hover:shadow-md">
+    <Card className="group flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#111318] p-4 transition-all duration-200 hover:border-violet-400/40 hover:shadow-md">
       <div className="flex min-w-0 items-center gap-3">
         <span
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition-colors duration-200 group-hover:text-white ${item.accent}`}
+          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#181a21] text-slate-400 transition-colors duration-200 group-hover:text-white ${item.accent}`}
         >
           <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
         </span>
@@ -178,7 +178,7 @@ function ContactItem({ item, copied, onCopy }) {
 
           <a
             href={item.href}
-            className="block truncate text-sm font-medium text-slate-800 transition-colors hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+            className="block truncate text-sm font-medium text-slate-200 transition-colors hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
           >
             {item.value}
           </a>
@@ -191,7 +191,7 @@ function ContactItem({ item, copied, onCopy }) {
         aria-label={
           isCopied ? `${item.label} copied` : `Copy ${item.label}`
         }
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-slate-200 text-slate-400 transition-colors hover:border-violet-200 hover:bg-violet-50 hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/10 text-slate-400 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
       >
         {isCopied ? (
           <FiCheck
@@ -225,7 +225,7 @@ function SocialLinks({ reduceMotion }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`Visit my ${label} profile`}
-            className={`flex h-11 w-11 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors duration-200 ${hover} ${
+            className={`flex h-11 w-11 items-center justify-center rounded-xl border border-white/10 bg-[#111318] text-slate-400 transition-colors duration-200 ${hover} ${
               reduceMotion ? "" : "hover:-translate-y-0.5"
             } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500`}
           >
@@ -255,7 +255,7 @@ function FormField({
     <div>
       <label
         htmlFor={id}
-        className="mb-1.5 block text-xs font-semibold text-slate-700"
+        className="mb-1.5 block text-xs font-semibold text-slate-300"
       >
         {label}
       </label>
@@ -301,14 +301,14 @@ function ContactForm({
   return (
     <motion.div
       variants={fadeUp}
-      className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7"
+      className="rounded-2xl border border-white/10 bg-[#111318] p-5 shadow-sm sm:p-7"
     >
       <div className="mb-6">
-        <p className="text-lg font-bold tracking-tight text-slate-950">
+        <p className="text-lg font-bold tracking-tight text-slate-50">
           Send a message
         </p>
 
-        <p className="mt-1 text-sm leading-6 text-slate-500">
+        <p className="mt-1 text-sm leading-6 text-slate-400">
           Fill in the details below to start a conversation.
         </p>
       </div>
@@ -383,7 +383,7 @@ function ContactForm({
           <FiSend className="h-4 w-4" aria-hidden="true" />
         </button>
 
-        <p className="text-center text-xs leading-5 text-slate-500">
+        <p className="text-center text-xs leading-5 text-slate-400">
           Opens your email app with your message prefilled.
           You can review and send it there.
         </p>
@@ -507,7 +507,7 @@ export default function Contact() {
     <Section
       id="contact"
       aria-labelledby="contact-heading"
-      background="bg-slate-50"
+      background="bg-[#0e1015]"
     >
       <div className="mx-auto max-w-6xl">
         <SectionHeader reduceMotion={reduceMotion} />
@@ -525,11 +525,11 @@ export default function Contact() {
             className="min-w-0 space-y-7 lg:pt-2"
           >
             <div>
-              <h3 className="text-lg font-bold tracking-tight text-slate-950">
+              <h3 className="text-lg font-bold tracking-tight text-slate-50">
                 Let's talk
               </h3>
 
-              <p className="mt-2 max-w-md text-sm leading-7 text-slate-600">
+              <p className="mt-2 max-w-md text-sm leading-7 text-slate-400">
                 I'm open to discussing development projects,
                 collaboration, and opportunities to grow as a
                 software developer.
@@ -549,7 +549,7 @@ export default function Contact() {
 
             <div aria-live="polite" role="status">
               {copied && (
-                <p className="text-xs font-medium text-emerald-700">
+                <p className="text-xs font-medium text-emerald-300">
                   {copied} copied to clipboard.
                 </p>
               )}

@@ -14,7 +14,7 @@ import Footer from "./components/Footer";
 export default function App() {
   return (
     <MotionConfig reducedMotion="user">
-      <div className="min-h-screen bg-white text-slate-900 antialiased">
+      <div className="min-h-screen bg-[#09090b] text-slate-100 antialiased">
         <Navbar />
 
         <main className="pt-16">

@@ -1,4 +1,3 @@
-// UI.jsx — Shared UI primitives
 import React from "react";
 
 // ─── Shared Styles ────────────────────────────────────────────────────────────
@@ -6,13 +5,12 @@ import React from "react";
 const focusRing = `
   focus-visible:outline-none
   focus-visible:ring-2
-  focus-visible:ring-slate-900/30
-  dark:focus-visible:ring-white/30
+  focus-visible:ring-violet-400/60
 `;
 
 const surface = `
-  bg-white dark:bg-slate-900
-  border border-slate-200 dark:border-slate-800
+  bg-[#111318]
+  border border-white/10
 `;
 
 // ─── Section ──────────────────────────────────────────────────────────────────
@@ -21,7 +19,7 @@ export const Section = ({
   id,
   children,
   className = "",
-  background = "bg-white dark:bg-slate-950",
+  background = "bg-[#09090b]",
   padding = "py-16 sm:py-20",
   maxWidth = "max-w-6xl",
   ...props
@@ -62,38 +60,28 @@ export const Card = ({
 
 const BADGE_VARIANTS = {
   default: `
-    bg-slate-100 text-slate-600
-    border-slate-200
-    dark:bg-slate-800 dark:text-slate-400
-    dark:border-slate-700
+    bg-[#181a21] text-slate-300
+    border-slate-700
   `,
 
   primary: `
-    bg-sky-50 text-sky-700
-    border-sky-200
-    dark:bg-sky-900/30 dark:text-sky-400
-    dark:border-sky-800/60
+    bg-sky-900/30 text-sky-300
+    border-sky-800/60
   `,
 
   secondary: `
-    bg-violet-50 text-violet-700
-    border-violet-200
-    dark:bg-violet-900/30 dark:text-violet-400
-    dark:border-violet-800/60
+    bg-violet-900/30 text-violet-300
+    border-violet-800/60
   `,
 
   success: `
-    bg-emerald-50 text-emerald-700
-    border-emerald-200
-    dark:bg-emerald-900/30 dark:text-emerald-400
-    dark:border-emerald-800/60
+    bg-emerald-900/30 text-emerald-300
+    border-emerald-800/60
   `,
 
   warning: `
-    bg-amber-50 text-amber-700
-    border-amber-200
-    dark:bg-amber-900/30 dark:text-amber-400
-    dark:border-amber-800/60
+    bg-amber-900/30 text-amber-300
+    border-amber-800/60
   `,
 };
 
@@ -131,31 +119,21 @@ export const Badge = ({
 
 const BUTTON_VARIANTS = {
   primary: `
-    bg-slate-900 text-white
-    dark:bg-white dark:text-slate-900
+    bg-violet-600 text-white
     hover:opacity-85
   `,
 
   secondary: `
-    border border-slate-200
-    text-slate-700
-    hover:bg-slate-50
-    hover:border-slate-300
-
-    dark:border-slate-800
-    dark:text-slate-300
-    dark:hover:bg-slate-900
-    dark:hover:border-slate-700
+    border border-white/15
+    text-slate-300
+    hover:bg-white/5
+    hover:border-white/25
   `,
 
   ghost: `
-    text-slate-600
-    hover:bg-slate-100
-    hover:text-slate-900
-
-    dark:text-slate-400
-    dark:hover:bg-slate-800
-    dark:hover:text-white
+    text-slate-400
+    hover:bg-white/5
+    hover:text-white
   `,
 };
 

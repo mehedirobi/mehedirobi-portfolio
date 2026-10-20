@@ -1,4 +1,4 @@
-﻿import React, { useCallback } from "react";
+import React, { useCallback } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
@@ -52,7 +52,7 @@ const HERO = {
     {
       icon: SiExpress,
       label: "Express.js",
-      color: "text-slate-700",
+      color: "text-slate-300",
     },
     {
       icon: SiReact,
@@ -62,7 +62,7 @@ const HERO = {
     {
       icon: SiNodedotjs,
       label: "Node.js",
-      color: "text-green-700",
+      color: "text-green-500",
     },
   ],
 };
@@ -95,10 +95,10 @@ const fadeUpVariants = {
 
 function StatusBadge() {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700">
+    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">
       <span
         aria-hidden="true"
-        className="h-2 w-2 rounded-full bg-emerald-500"
+        className="h-2 w-2 rounded-full bg-emerald-400/100"
       />
       Open to opportunities
     </div>
@@ -118,7 +118,7 @@ function StackList() {
       {HERO.stack.map(({ icon: Icon, label, color }) => (
         <span
           key={label}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-slate-300"
         >
           <Icon
             aria-hidden="true"
@@ -152,7 +152,7 @@ function SocialLinks({ reduceMotion }) {
               title={label}
               whileHover={reduceMotion ? undefined : { y: -2 }}
               whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-slate-200 bg-white text-slate-500 transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
             >
               <Icon
                 aria-hidden="true"
@@ -180,12 +180,12 @@ function ProfileImage({ reduceMotion }) {
         />
 
         {/* Portrait */}
-        <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-xl shadow-slate-900/10 ring-1 ring-slate-200">
+        <div         className="absolute inset-0 overflow-hidden rounded-full border-4 border-[#111318] bg-[#181a21] shadow-xl shadow-black/40 ring-1 ring-white/10">
           <OptimizedImage
             src={HERO.image}
             alt={`Portrait of ${HERO.name}, ${HERO.role}`}
             loading="eager"
-            fetchPriority="high"
+            fetchpriority="high"
             className={`h-full w-full object-cover ${
               reduceMotion
                 ? ""
@@ -195,10 +195,10 @@ function ProfileImage({ reduceMotion }) {
         </div>
 
         {/* Role label */}
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-slate-200 bg-white px-4 py-2 text-xs font-semibold text-slate-700 shadow-md shadow-slate-900/5 sm:left-auto sm:right-0 sm:translate-x-0">
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-[#111318] px-4 py-2 text-xs font-semibold text-slate-200 shadow-md shadow-black/30 sm:left-auto sm:right-0 sm:translate-x-0">
           <span
             aria-hidden="true"
-            className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-500"
+            className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400/100"
           />
           {HERO.role}
         </div>
@@ -230,12 +230,12 @@ export default function Hero() {
     <section
       id="home"
       aria-labelledby="hero-heading"
-      className="relative isolate scroll-mt-16 overflow-hidden bg-white"
+      className="relative isolate scroll-mt-16 overflow-hidden bg-[#09090b]"
     >
       {/* Subtle background accent */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-0 -z-10 h-[320px] w-[320px] rounded-full bg-violet-100/50 blur-3xl sm:h-[380px] sm:w-[380px]"
+        className="pointer-events-none absolute right-0 top-0 -z-10 h-[320px] w-[320px] rounded-full bg-violet-500/10 blur-3xl sm:h-[380px] sm:w-[380px]"
       />
 
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:px-8 lg:py-12 xl:gap-16">
@@ -253,28 +253,28 @@ export default function Hero() {
           <motion.h1
             id="hero-heading"
             variants={fadeUpVariants}
-            className="max-w-3xl text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.045em] text-slate-950 sm:text-5xl lg:text-[3.35rem] xl:text-[3.8rem]"
+            className="max-w-3xl text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.045em] text-slate-50 sm:text-5xl lg:text-[3.35rem] xl:text-[3.8rem]"
           >
             Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
               {HERO.firstName}
             </span>
 
-            <span className="mt-2 block text-slate-800">
+            <span className="mt-2 block text-slate-200">
               {HERO.role}
             </span>
           </motion.h1>
 
           <motion.p
             variants={fadeUpVariants}
-            className="max-w-2xl text-base leading-7 text-slate-600 sm:text-lg sm:leading-8"
+            className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8"
           >
             {HERO.tagline}
           </motion.p>
 
           <motion.p
             variants={fadeUpVariants}
-            className="max-w-xl text-sm leading-6 text-slate-500 sm:text-base sm:leading-7"
+            className="max-w-xl text-sm leading-6 text-slate-400 sm:text-base sm:leading-7"
           >
             {HERO.description}
           </motion.p>
@@ -293,7 +293,7 @@ export default function Hero() {
               onClick={scrollToProjects}
               whileHover={reduceMotion ? undefined : { y: -1 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
             >
               View Projects
               <HiOutlineArrowRight
@@ -305,7 +305,7 @@ export default function Hero() {
             <a
               href={HERO.resume}
               download
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition-colors hover:border-violet-300 hover:bg-violet-50 hover:text-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
             >
               Download Resume
               <HiOutlineDownload

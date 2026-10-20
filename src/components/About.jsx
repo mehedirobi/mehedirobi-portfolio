@@ -9,19 +9,19 @@ export default function About() {
     <Section id="about" aria-labelledby="about-heading">
       <div className="mx-auto max-w-3xl">
         <div className="mb-5 text-center sm:mb-6">
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-violet-600">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-violet-400">
             Get to Know Me
           </p>
 
           <h2
             id="about-heading"
-            className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl"
           >
             About Me
           </h2>
         </div>
 
-        <p className="text-justify text-[15px] leading-7 text-slate-600 sm:text-base sm:leading-8">
+        <p className="text-pretty text-[15px] leading-7 text-slate-400 sm:text-base sm:leading-8">
           {ABOUT}
         </p>
       </div>

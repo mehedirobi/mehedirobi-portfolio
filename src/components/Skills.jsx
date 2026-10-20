@@ -50,7 +50,7 @@ const SKILLS = [
     accent: "blue",
     skills: [
       { label: "Node.js", icon: SiNodedotjs, color: "text-green-600" },
-      { label: "Express.js", icon: SiExpress, color: "text-slate-700" },
+      { label: "Express.js", icon: SiExpress, color: "text-slate-300" },
       { label: "MongoDB", icon: SiMongodb, color: "text-emerald-600" },
       { label: "REST APIs", icon: HiOutlineServerStack, color: "text-orange-500" },
       { label: "CRUD Operations", icon: FiRefreshCw, color: "text-blue-500" },
@@ -64,9 +64,9 @@ const SKILLS = [
     accent: "cyan",
     skills: [
       { label: "Firebase Auth", icon: SiFirebase, color: "text-amber-500" },
-      { label: "Protected Routes", icon: FiLock, color: "text-slate-600" },
+      { label: "Protected Routes", icon: FiLock, color: "text-slate-400" },
       { label: "Git", icon: SiGit, color: "text-orange-600" },
-      { label: "GitHub", icon: SiGithub, color: "text-slate-800" },
+      { label: "GitHub", icon: SiGithub, color: "text-slate-200" },
       { label: "VS Code", icon: VscVscode, color: "text-blue-500" },
       { label: "Responsive Design", icon: FaCss3Alt, color: "text-blue-500" },
     ],
@@ -75,19 +75,19 @@ const SKILLS = [
 
 const ACCENTS = {
   violet: {
-    icon: "bg-violet-50 text-violet-600",
-    border: "hover:border-violet-200",
-    line: "from-violet-500 to-blue-500",
+    icon: "bg-violet-500/10 text-violet-400",
+    border: "hover:border-violet-500/40",
+    line: "from-violet-500 to-violet-400",
   },
   blue: {
-    icon: "bg-blue-50 text-blue-600",
-    border: "hover:border-blue-200",
-    line: "from-blue-500 to-cyan-500",
+    icon: "bg-violet-500/10 text-violet-400",
+    border: "hover:border-violet-500/40",
+    line: "from-violet-500 to-violet-400",
   },
   cyan: {
-    icon: "bg-cyan-50 text-cyan-600",
-    border: "hover:border-cyan-200",
-    line: "from-cyan-500 to-emerald-500",
+    icon: "bg-violet-500/10 text-violet-400",
+    border: "hover:border-violet-500/40",
+    line: "from-violet-500 to-violet-400",
   },
 };
 
@@ -104,7 +104,7 @@ const fadeUp = {
 
 function SkillTag({ label, icon: Icon, color }) {
   return (
-    <span className="inline-flex select-none items-center gap-1.5 rounded-md border border-slate-200 bg-white px-2.5 py-1.5 text-xs font-medium text-slate-600 transition-colors hover:border-slate-300 hover:text-slate-900">
+    <span className="inline-flex select-none items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-white/20 hover:text-white">
       <Icon
         className={`h-3.5 w-3.5 shrink-0 ${color}`}
         aria-hidden="true"
@@ -122,7 +122,7 @@ function SkillCard({ item, reduceMotion }) {
     <motion.article
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className={`group relative overflow-hidden rounded-xl border border-slate-200 bg-white p-5 shadow-sm shadow-slate-900/[0.02] transition-[border-color,box-shadow] duration-200 hover:shadow-md ${accent.border}`}
+      className={`group relative overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:shadow-md ${accent.border}`}
     >
       <div
         aria-hidden="true"
@@ -137,16 +137,16 @@ function SkillCard({ item, reduceMotion }) {
         </div>
 
         <div className="min-w-0">
-          <h3 className="text-base font-semibold tracking-tight text-slate-900">
+          <h3 className="text-base font-semibold tracking-tight text-slate-100">
             {item.title}
           </h3>
-          <p className="mt-1 text-sm leading-5 text-slate-500">
+          <p className="mt-1 text-sm leading-5 text-slate-400">
             {item.description}
           </p>
         </div>
       </div>
 
-      <div className="my-4 border-t border-slate-100" />
+      <div className="my-4 border-t border-white/10" />
 
       <div className="flex flex-wrap gap-2">
         {item.skills.map((skill) => (
@@ -164,7 +164,7 @@ export default function Skills() {
     <Section
       id="skills"
       aria-labelledby="skills-heading"
-      background="bg-slate-50"
+      background="bg-[#0e1015]"
     >
       <div className="mx-auto max-w-6xl">
         <motion.header
@@ -181,7 +181,7 @@ export default function Skills() {
         >
           <motion.p
             variants={fadeUp}
-            className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-600"
+            className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
           >
             Technical Expertise
           </motion.p>
@@ -189,14 +189,14 @@ export default function Skills() {
           <motion.h2
             id="skills-heading"
             variants={fadeUp}
-            className="text-3xl font-bold tracking-tight text-slate-950 sm:text-4xl"
+            className="text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl"
           >
             Skills & Technologies
           </motion.h2>
 
           <motion.p
             variants={fadeUp}
-            className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base"
+            className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
           >
             The technologies, tools, and concepts I use to build modern
             full-stack web applications.

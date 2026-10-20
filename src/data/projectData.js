@@ -6,7 +6,6 @@ export const projectData = [
     featured: true,
     description:
       "A sports turf booking platform for discovering venues, checking availability, and managing bookings with dedicated customer and turf-owner workflows.",
-    image: "/projects/khelaro.jpg",
     tech: [
       "React",
       "Tailwind CSS",

@@ -1,6 +1,6 @@
-﻿import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { FiArrowUpRight, FiSend } from "react-icons/fi";
+import { FiSend } from "react-icons/fi";
 
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
@@ -30,8 +30,8 @@ function Brand({ onClick }) {
       aria-label="Mehedi Robi — Home"
       className="shrink-0 rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-4"
     >
-      <span className="text-slate-950">Mehedi</span>
-      <span className="bg-gradient-to-r from-violet-600 to-blue-600 bg-clip-text text-transparent">
+      <span className="text-slate-100">Mehedi</span>
+      <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
         {" "}Robi
       </span>
     </button>
@@ -48,15 +48,15 @@ function NavItem({ id, label, active, onClick }) {
       aria-current={isActive ? "location" : undefined}
       className={`${NAV_LINK_BASE} ${
         isActive
-          ? "text-violet-700"
-          : "text-slate-600 hover:bg-slate-100 hover:text-slate-950"
+          ? "text-violet-300"
+          : "text-slate-400 hover:bg-white/5 hover:text-white"
       }`}
     >
       {isActive && (
         <motion.span
           layoutId="navbar-active-indicator"
           transition={{ type: "spring", stiffness: 400, damping: 32 }}
-          className="absolute inset-0 rounded-full bg-violet-200"
+          className="absolute inset-0 rounded-full bg-violet-500/15"
         />
       )}
 
@@ -75,14 +75,14 @@ function MobileNavItem({ id, label, active, onClick }) {
       aria-current={isActive ? "location" : undefined}
       className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500 ${
         isActive
-          ? "bg-violet-50 text-violet-700"
-          : "text-slate-600 hover:bg-slate-50 hover:text-slate-950"
+          ? "bg-violet-500/15 text-violet-300"
+          : "text-slate-300 hover:bg-white/5 hover:text-white"
       }`}
     >
       <span
         aria-hidden="true"
         className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-          isActive ? "bg-violet-600" : "bg-slate-300"
+          isActive ? "bg-violet-400" : "bg-slate-600"
         }`}
       />
       {label}
@@ -112,7 +112,7 @@ function MenuToggle({ open, onClick, buttonRef }) {
       aria-label={open ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={open}
       aria-controls="mobile-navigation"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-700 transition-colors hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 xl:hidden"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 xl:hidden"
     >
       <span className="sr-only">
         {open ? "Close menu" : "Open menu"}
@@ -281,9 +281,9 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b bg-white/95 transition-[border-color,box-shadow] duration-200 ${
+        className={`fixed inset-x-0 top-0 z-50 border-b bg-[#09090b]/95 backdrop-blur-md transition-[border-color,box-shadow] duration-200 ${
           scrolled
-            ? "border-slate-200 shadow-sm shadow-slate-900/[0.04]"
+            ? "border-white/10 shadow-sm shadow-black/20"
             : "border-transparent"
         }`}
       >
@@ -325,7 +325,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
               transition={{ duration: reduceMotion ? 0 : 0.16 }}
-              className="absolute inset-x-0 top-full border-t border-slate-200 bg-white shadow-lg shadow-slate-900/[0.06] xl:hidden"
+              className="absolute inset-x-0 top-full border-t border-white/10 bg-[#09090b] shadow-lg shadow-black/40 xl:hidden"
             >
               <nav
                 aria-label="Mobile navigation"
@@ -342,7 +342,7 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                <div className="mt-3 border-t border-slate-100 pt-3">
+                <div className="mt-3 border-t border-white/10 pt-3">
                   <HireMeButton
                     onClick={(event) => scrollTo(event, "contact")}
                     className="w-full"
@@ -369,11 +369,6 @@ export default function Navbar() {
           />
         )}
       </AnimatePresence>
-
-      {/* Optional shortcut for returning to the top is intentionally omitted. */}
-      <span className="sr-only">
-        <FiArrowUpRight aria-hidden="true" />
-      </span>
     </>
   );
 }
