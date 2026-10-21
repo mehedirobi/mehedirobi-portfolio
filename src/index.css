@@ -28,7 +28,6 @@ html {
 
 body {
   margin: 0;
-  min-width: 320px;
   min-height: 100vh;
   line-height: 1.6;
   background: var(--color-surface);

@@ -58,7 +58,7 @@ const SOCIALS = [
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/mehedirobii/",
     icon: FaLinkedin,
-    hover: "hover:border-sky-400 hover:text-sky-600",
+    hover: "hover:border-sky-400 hover:text-sky-300",
   },
   {
     label: "X",
@@ -195,7 +195,7 @@ function ContactItem({ item, copied, onCopy }) {
       >
         {isCopied ? (
           <FiCheck
-            className="h-4 w-4 text-emerald-600"
+            className="h-4 w-4 text-emerald-300"
             aria-hidden="true"
           />
         ) : (
@@ -275,7 +275,7 @@ function FormField({
       {error && (
         <p
           id={`${id}-error`}
-          className="mt-1.5 text-xs text-red-600"
+          className="mt-1.5 text-xs text-red-300"
           role="alert"
         >
           {error}
@@ -304,9 +304,9 @@ function ContactForm({
       className="rounded-2xl border border-white/10 bg-[#111318] p-5 shadow-sm sm:p-7"
     >
       <div className="mb-6">
-        <p className="text-lg font-bold tracking-tight text-slate-50">
+        <h3 className="text-lg font-bold tracking-tight text-slate-50">
           Send a message
-        </p>
+        </h3>
 
         <p className="mt-1 text-sm leading-6 text-slate-400">
           Fill in the details below to start a conversation.
@@ -364,7 +364,7 @@ function ContactForm({
           <p
             className={`mt-1.5 text-right text-xs tabular-nums ${
               messageLength >= MESSAGE_LIMIT * 0.9
-                ? "text-amber-600"
+                ? "text-amber-300"
                 : "text-slate-400"
             }`}
             aria-live="polite"
@@ -555,7 +555,7 @@ export default function Contact() {
               )}
 
               {copyError && (
-                <p className="text-xs text-red-600">
+                <p className="text-xs text-red-300">
                   {copyError}
                 </p>
               )}

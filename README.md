@@ -8,8 +8,8 @@ A responsive portfolio showcasing my full-stack projects, skills, education, and
 
 ## Featured projects
 
-- **Khelaro** — Sports turf booking platform ([client](https://github.com/mehedirobi/khelaro-client), [server](https://github.com/mehedirobi/khelaro-server), [live demo](https://khelaro.netlify.app/))
-- **UrbanFix** — Civic issue reporting platform ([client](https://github.com/mehedirobi/urban-fix), [server](https://github.com/mehedirobi/urban-fix-server), [live demo](https://urban-fix-project-01.netlify.app/))
+- **Khelaro** — Sports turf booking platform ([client](https://github.com/mehedirobi/khelaro-client), [server](https://github.com/mehedirobi/khelaro-server))
+- **UrbanFix** — Civic issue reporting platform ([client](https://github.com/mehedirobi/urban-fix), [server](https://github.com/mehedirobi/urban-fix-server))
 - **PawMart** — Pet adoption and supply portal ([client](https://github.com/mehedirobi/pawmart-project), [server](https://github.com/mehedirobi/pawmart-project-server), [live demo](https://pawmart-project-01.netlify.app/))
 
 ## Built with

@@ -108,6 +108,7 @@ function StatusBadge() {
 function StackList() {
   return (
     <div
+      role="group"
       aria-label="Primary technology stack"
       className="flex flex-wrap items-center gap-2"
     >
@@ -180,12 +181,12 @@ function ProfileImage({ reduceMotion }) {
         />
 
         {/* Portrait */}
-        <div         className="absolute inset-0 overflow-hidden rounded-full border-4 border-[#111318] bg-[#181a21] shadow-xl shadow-black/40 ring-1 ring-white/10">
+        <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-[#111318] bg-[#181a21] shadow-xl shadow-black/40 ring-1 ring-white/10">
           <OptimizedImage
             src={HERO.image}
             alt={`Portrait of ${HERO.name}, ${HERO.role}`}
             loading="eager"
-            fetchpriority="high"
+            fetchPriority="high"
             className={`h-full w-full object-cover ${
               reduceMotion
                 ? ""
@@ -244,7 +245,7 @@ export default function Hero() {
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
-          className="order-2 flex min-w-0 flex-col items-start gap-5 lg:order-1"
+          className="order-1 flex min-w-0 flex-col items-start gap-5"
         >
           <motion.div variants={fadeUpVariants}>
             <StatusBadge />
@@ -321,7 +322,7 @@ export default function Hero() {
         </motion.div>
 
         {/* Right: Profile image */}
-        <div className="order-1 flex items-center justify-center lg:order-2 lg:justify-end">
+        <div className="order-2 flex items-center justify-center lg:justify-end">
           <ProfileImage reduceMotion={reduceMotion} />
         </div>
       </div>

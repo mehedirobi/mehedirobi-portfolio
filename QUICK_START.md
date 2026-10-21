@@ -50,4 +50,4 @@ public/
 - Project previews are local, optimized images in `public/projects/`.
 - The contact form validates its fields and opens a prefilled email draft; it does not send messages through a backend.
 
-The portfolio uses a light theme, responsive Tailwind CSS layouts, and Framer Motion animations that respect the reduced-motion preference.
+The portfolio uses a dark theme, responsive Tailwind CSS layouts, and Framer Motion animations that respect the reduced-motion preference.

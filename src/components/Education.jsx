@@ -55,7 +55,7 @@ export default function Education() {
         {/* Featured education card */}
         <Card
           as="article"
-          className="group relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-[#111318] p-0 shadow-sm transition-all duration-300 hover:border-violet-400/40 hover:shadow-xl hover:shadow-slate-200/60"
+          className="group relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 bg-[#111318] p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-violet-400/40 hover:shadow-lg hover:shadow-violet-950/20"
         >
           {/* Accent line */}
           <div

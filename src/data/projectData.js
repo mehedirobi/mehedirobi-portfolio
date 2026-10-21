@@ -6,6 +6,7 @@ export const projectData = [
     featured: true,
     description:
       "A sports turf booking platform for discovering venues, checking availability, and managing bookings with dedicated customer and turf-owner workflows.",
+      image: "/projects/khelaro.png",
     tech: [
       "React",
       "Tailwind CSS",
@@ -14,12 +15,11 @@ export const projectData = [
       "MongoDB",
     ],
     links: {
-      live: "https://khelaro.netlify.app/",
-      github: "https://github.com/mehedirobi/khelaro-client",
+      live: "https://khelaro-project.netlify.app/",
+      client: "https://github.com/mehedirobi/khelaro",
       server: "https://github.com/mehedirobi/khelaro-server",
     },
   },
-
   {
     id: 2,
     name: "UrbanFix",
@@ -37,12 +37,11 @@ export const projectData = [
       "MongoDB",
     ],
     links: {
-      live: "https://urban-fix-project-01.netlify.app/",
-      github: "https://github.com/mehedirobi/urban-fix",
-      server: "https://github.com/mehedirobi/urban-fix-server",
+      live: "https://urbanfix-project-01.netlify.app/",
+      client: "https://github.com/mehedirobi/urbanfix",
+      server: "https://github.com/mehedirobi/urbanfix-server",
     },
   },
-
   {
     id: 3,
     name: "PawMart",
@@ -61,15 +60,14 @@ export const projectData = [
     ],
     links: {
       live: "https://pawmart-project-01.netlify.app/",
-      github: "https://github.com/mehedirobi/pawmart-project",
-      server: "https://github.com/mehedirobi/pawmart-project-server",
+      client: "https://github.com/mehedirobi/pawmart",
+      server: "https://github.com/mehedirobi/pawmart-server",
     },
   },
-
   {
     id: 4,
     name: "ToyVerse",
-    category: "fullstack",
+    category: "frontend",
     featured: false,
     description:
       "A full-stack toy marketplace with product browsing, search, filtering, and product management backed by a database.",
@@ -83,10 +81,10 @@ export const projectData = [
     ],
     links: {
       live: "https://toyverse-project-01.netlify.app/",
-      github: "https://github.com/mehedirobi/toyverse-project",
+      client: "https://github.com/mehedirobi/toyverse",
+      server: "https://github.com/mehedirobi/toyverse-server",
     },
   },
-
   {
     id: 5,
     name: "Hero App",
@@ -98,10 +96,10 @@ export const projectData = [
     tech: ["React", "Tailwind CSS"],
     links: {
       live: "https://hero-io-web-app-01.netlify.app/",
-      github: "https://github.com/mehedirobi/hero-web-app",
+      client: "https://github.com/mehedirobi/hero-web-app",
+      server: "",
     },
   },
-
   {
     id: 6,
     name: "CS Ticket System",
@@ -113,7 +111,9 @@ export const projectData = [
     tech: ["React", "Tailwind CSS"],
     links: {
       live: "https://cs-ticket-system-website-01.netlify.app/",
-      github: "https://github.com/mehedirobi/cs-ticket-system-website",
+      client:
+        "https://github.com/mehedirobi/cs-ticket-system-website",
+      server: "",
     },
   },
 ];

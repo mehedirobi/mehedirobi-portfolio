@@ -4,7 +4,6 @@ import { FaGithub } from "react-icons/fa";
 import {
   FiArrowDown,
   FiArrowUp,
-  FiCode,
   FiExternalLink,
 } from "react-icons/fi";
 import { FiCodepen } from "react-icons/fi";
@@ -70,20 +69,26 @@ function TechTag({ children }) {
   );
 }
 
-function ProjectAction({ href, icon: Icon, children, primary, label }) {
-  if (!href) return null;
+function ProjectAction({
+  href,
+  icon: Icon,
+  children,
+  primary,
+  label,
+}) {
+  const baseClass = `inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
+    primary
+      ? "bg-violet-600 text-white hover:bg-violet-500"
+      : "border border-white/10 text-slate-400 hover:border-white/20 hover:bg-white/5 hover:text-white"
+  }`;
 
   return (
     <a
-      href={href}
+      href={href || "#"}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className={`inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
-        primary
-          ? "bg-violet-600 text-white hover:bg-violet-500"
-          : "border border-white/10 text-slate-400 hover:border-white/20 hover:bg-white/5 hover:text-white"
-      }`}
+      className={baseClass}
     >
       <Icon className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
       <span>{children}</span>
@@ -93,10 +98,15 @@ function ProjectAction({ href, icon: Icon, children, primary, label }) {
 
 function ProjectCard({ project, reduceMotion }) {
   const [imageFailed, setImageFailed] = useState(false);
+
   const tech = Array.isArray(project.tech) ? project.tech : [];
-  const liveUrl = project.links?.live;
-  const githubUrl = project.links?.github;
-  const serverUrl = project.links?.server;
+  const links = project.links ?? {};
+
+  const isFullStack = project.category?.toLowerCase() === "fullstack";
+
+  const liveUrl = links.live;
+  const clientUrl = links.client ?? links.github;
+  const serverUrl = links.server;
 
   return (
     <motion.article
@@ -170,14 +180,18 @@ function ProjectCard({ project, reduceMotion }) {
             </ProjectAction>
 
             <ProjectAction
-              href={githubUrl}
+              href={clientUrl}
               icon={FaGithub}
-              label={`View ${project.name} source code`}
+              label={
+                isFullStack
+                  ? `View ${project.name} client source code`
+                  : `View ${project.name} GitHub repository`
+              }
             >
-              {serverUrl ? "Client" : "GitHub"}
+              {isFullStack ? "Client" : "GitHub"}
             </ProjectAction>
 
-            {serverUrl && (
+            {isFullStack && (
               <ProjectAction
                 href={serverUrl}
                 icon={FaGithub}
@@ -185,12 +199,6 @@ function ProjectCard({ project, reduceMotion }) {
               >
                 Server
               </ProjectAction>
-            )}
-
-            {!liveUrl && !githubUrl && !serverUrl && (
-              <span className="flex-1 rounded-lg border border-dashed border-white/10 px-2 py-2 text-center text-xs text-slate-400">
-                Links coming soon
-              </span>
             )}
           </div>
         </div>
@@ -203,10 +211,8 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false);
   const reduceMotion = useReducedMotion();
 
-  // Keep the full source array; never truncate the source data.
   const projects = Array.isArray(projectData) ? projectData : [];
 
-  // Show the first three initially, or the complete array after clicking.
   const visibleProjects = showAll
     ? projects
     : projects.slice(0, INITIAL_PROJECTS);
