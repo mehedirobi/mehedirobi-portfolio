@@ -1,20 +1,38 @@
 # Mehedi Robi — MERN Stack Developer
 
-A responsive portfolio showcasing my full-stack projects, skills, education, and contact information.
+A responsive portfolio featuring selected full-stack projects, technical skills, education, and contact information.
 
-## Portfolio
-
-[View the live portfolio](https://mehedirobi-portfolio.netlify.app/)
+**Live portfolio:** [mehedirobi-portfolio.netlify.app](https://mehedirobi-portfolio.netlify.app/)
 
 ## Featured projects
 
-- **Khelaro** — Sports turf booking platform ([client](https://github.com/mehedirobi/khelaro-client), [server](https://github.com/mehedirobi/khelaro-server))
-- **UrbanFix** — Civic issue reporting platform ([client](https://github.com/mehedirobi/urban-fix), [server](https://github.com/mehedirobi/urban-fix-server))
-- **PawMart** — Pet adoption and supply portal ([client](https://github.com/mehedirobi/pawmart-project), [server](https://github.com/mehedirobi/pawmart-project-server), [live demo](https://pawmart-project-01.netlify.app/))
+### Khelaro
+
+A sports turf booking platform for discovering venues, checking availability, and managing bookings.
+
+![Khelaro project preview](./public/projects/optimized/khelaro-480.webp)
+
+[Live demo](https://khelaro-project.netlify.app/) · [Client code](https://github.com/mehedirobi/khelaro) · [Server code](https://github.com/mehedirobi/khelaro-server)
+
+### UrbanFix
+
+A civic issue reporting platform with authentication, role-based dashboards, and issue tracking workflows.
+
+![UrbanFix project preview](./public/projects/optimized/urban-fix-480.webp)
+
+[Live demo](https://urbanfix-project-01.netlify.app/) · [Client code](https://github.com/mehedirobi/urbanfix) · [Server code](https://github.com/mehedirobi/urbanfix-server)
+
+### PawMart
+
+A pet adoption and supplies platform with category-based browsing, listing management, and order workflows.
+
+![PawMart project preview](./public/projects/optimized/pawmart-480.webp)
+
+[Live demo](https://pawmart-project-01.netlify.app/) · [Client code](https://github.com/mehedirobi/pawmart) · [Server code](https://github.com/mehedirobi/pawmart-server)
 
 ## Built with
 
-React, JavaScript, Tailwind CSS, Framer Motion, React Icons, and Vite.
+React 18, JavaScript, Vite, Tailwind CSS, Framer Motion, and React Icons.
 
 ## Run locally
 
@@ -23,10 +41,17 @@ npm install
 npm run dev
 ```
 
-Create a production build with:
+Create and preview a production build:
 
 ```bash
 npm run build
+npm run preview
+```
+
+Run the linter:
+
+```bash
+npm run lint
 ```
 
 ## Contact
