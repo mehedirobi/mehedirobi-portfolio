@@ -3,6 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem("portfolio-theme");
+        const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+        document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
+      } catch {
+        document.documentElement.dataset.theme = "dark";
+      }
+    </script>
     <meta name="description" content="Mehedi Robi is a MERN Stack Developer building responsive web applications with React, Node.js, Express, and MongoDB. Explore selected projects and get in touch." />
     <meta name="author" content="Mehedi Robi" />
     <meta name="theme-color" content="#09090b" />
@@ -15,11 +24,27 @@
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Mehedi Robi, MERN Stack Developer" />
+    <meta property="og:site_name" content="Mehedi Robi Portfolio" />
+    <meta property="og:locale" content="en_US" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Mehedi Robi | MERN Stack Developer" />
     <meta name="twitter:description" content="Explore Mehedi Robi's selected full-stack projects, technical skills, and contact information." />
     <meta name="twitter:image" content="https://mehedirobi-portfolio.netlify.app/social-preview.jpg" />
     <meta name="robots" content="index, follow" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Mehedi Robi",
+        "url": "https://mehedirobi-portfolio.netlify.app/",
+        "jobTitle": "MERN Stack Developer",
+        "image": "https://mehedirobi-portfolio.netlify.app/social-preview.jpg",
+        "sameAs": [
+          "https://github.com/mehedirobi",
+          "https://x.com/mehedirobii"
+        ]
+      }
+    </script>
     <title>Mehedi Robi | MERN Stack Developer</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>

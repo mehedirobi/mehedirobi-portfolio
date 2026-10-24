@@ -13,11 +13,51 @@
   font-optical-sizing: auto;
   font-weight: 400;
 
-  --color-ink: #f4f4f5;
-  --color-surface: #09090b;
-  --color-subtle: #111318;
-  --color-accent: #8b5cf6;
-  --tw-ring-offset-color: #09090b;
+  --color-canvas: 9 9 11;
+  --color-canvas-alt: 14 16 21;
+  --color-surface: 17 19 24;
+  --color-surface-raised: 24 26 33;
+  --color-strong: 244 244 245;
+  --color-primary: 203 213 225;
+  --color-muted: 148 163 184;
+  --color-border: 39 39 42;
+  --color-border-strong: 63 63 70;
+  --color-overlay: 255 255 255;
+  --color-accent: 167 139 250;
+  --color-accent-hover: 196 181 253;
+  --color-accent-button: 124 58 237;
+  --color-accent-button-hover: 109 40 217;
+  --color-info: 125 211 252;
+  --color-success: 110 231 183;
+  --color-success-solid: 4 120 87;
+  --color-warning: 252 211 77;
+  --color-danger: 252 165 165;
+  --color-scrollbar-hover: 113 113 122;
+  --tw-ring-offset-color: rgb(var(--color-canvas));
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --color-canvas: 248 250 252;
+  --color-canvas-alt: 241 245 249;
+  --color-surface: 255 255 255;
+  --color-surface-raised: 248 250 252;
+  --color-strong: 15 23 42;
+  --color-primary: 51 65 85;
+  --color-muted: 71 85 105;
+  --color-border: 226 232 240;
+  --color-border-strong: 203 213 225;
+  --color-overlay: 15 23 42;
+  --color-accent: 109 40 217;
+  --color-accent-hover: 91 33 182;
+  --color-accent-button: 109 40 217;
+  --color-accent-button-hover: 91 33 182;
+  --color-info: 3 105 161;
+  --color-success: 4 120 87;
+  --color-success-solid: 4 120 87;
+  --color-warning: 146 64 14;
+  --color-danger: 185 28 28;
+  --color-scrollbar-hover: 100 116 139;
 }
 
 html {
@@ -28,10 +68,10 @@ html {
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100dvh;
   line-height: 1.6;
-  background: var(--color-surface);
-  color: var(--color-ink);
+  background: rgb(var(--color-canvas));
+  color: rgb(var(--color-strong));
 }
 
 *,
@@ -71,13 +111,13 @@ button:disabled {
 }
 
 :focus-visible {
-  outline: 2px solid var(--color-accent);
+  outline: 2px solid rgb(var(--color-accent));
   outline-offset: 3px;
 }
 
 ::selection {
-  background-color: rgb(139 92 246 / 0.28);
-  color: var(--color-ink);
+  background-color: rgb(var(--color-accent) / 0.28);
+  color: rgb(var(--color-strong));
 }
 
 ::-webkit-scrollbar {
@@ -85,16 +125,16 @@ button:disabled {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-subtle);
+  background: rgb(var(--color-canvas-alt));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3f3f46;
+  background: rgb(var(--color-border-strong));
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #71717a;
+  background: rgb(var(--color-scrollbar-hover));
 }
 
 @media (prefers-reduced-motion: reduce) {

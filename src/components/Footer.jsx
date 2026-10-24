@@ -50,7 +50,7 @@ const STACK = [
   {
     label: "Framer Motion",
     icon: SiFramer,
-    color: "text-violet-500",
+    color: "text-accent",
   },
 ];
 
@@ -134,12 +134,12 @@ function BackToTop({ reduceMotion }) {
           className="
             fixed bottom-5 right-5 z-50
             flex h-11 w-11 items-center justify-center
-            rounded-xl border border-white/10
-            bg-[#111318] text-slate-300 shadow-lg shadow-slate-900/10
+            rounded-xl border border-default
+            bg-surface text-primary shadow-lg shadow-slate-900/10
             transition-colors hover:border-violet-400/40
-            hover:bg-violet-500/10 hover:text-violet-300
+            hover:bg-accent/10 hover:text-accent
             focus-visible:outline-none focus-visible:ring-2
-            focus-visible:ring-violet-500 focus-visible:ring-offset-2
+            focus-visible:ring-accent focus-visible:ring-offset-2
             sm:bottom-6 sm:right-6
           "
         >
@@ -160,12 +160,12 @@ function SocialLink({ label, href, icon: Icon }) {
       title={label}
       className="
         flex h-10 w-10 items-center justify-center
-        rounded-xl border border-white/10 bg-[#111318]
-        text-slate-400 transition-colors duration-200
-        hover:border-violet-400/40 hover:bg-violet-500/10
-        hover:text-violet-300
+        rounded-xl border border-default bg-surface
+        text-muted transition-colors duration-200
+        hover:border-violet-400/40 hover:bg-accent/10
+        hover:text-accent
         focus-visible:outline-none focus-visible:ring-2
-        focus-visible:ring-violet-500
+        focus-visible:ring-accent
       "
     >
       <Icon className="h-[17px] w-[17px]" aria-hidden="true" />
@@ -185,10 +185,10 @@ function FooterNavigation({ reduceMotion }) {
           type="button"
           onClick={() => scrollToSection(id, reduceMotion)}
           className="
-            rounded-sm text-sm text-slate-400
-            transition-colors hover:text-violet-300
+            rounded-sm text-sm text-muted
+            transition-colors hover:text-accent
             focus-visible:outline-none focus-visible:ring-2
-            focus-visible:ring-violet-500
+            focus-visible:ring-accent
           "
         >
           {label}
@@ -201,7 +201,7 @@ function FooterNavigation({ reduceMotion }) {
 function BuiltWith() {
   return (
     <div className="flex items-center gap-2">
-      <span className="text-xs text-slate-400">Built with</span>
+      <span className="text-xs text-muted">Built with</span>
 
       <div className="flex items-center gap-2">
         {STACK.map(({ label, icon: Icon, color }) => (
@@ -226,7 +226,7 @@ export default function Footer() {
     <>
       <BackToTop reduceMotion={reduceMotion} />
 
-      <footer className="border-t border-white/10 bg-[#111318]">
+      <footer className="border-t border-default bg-surface">
         <div
           className="h-px w-full bg-gradient-to-r from-transparent via-violet-300 to-transparent"
           aria-hidden="true"
@@ -248,16 +248,16 @@ export default function Footer() {
                 aria-label="Back to homepage"
                 className="
                   rounded-sm text-lg font-bold tracking-tight
-                  text-slate-50 transition-colors
-                  hover:text-violet-300
+                  text-strong transition-colors
+                  hover:text-accent
                   focus-visible:outline-none focus-visible:ring-2
-                  focus-visible:ring-violet-500
+                  focus-visible:ring-accent
                 "
               >
-                Mehedi <span className="text-violet-400">Robi</span>
+                Mehedi <span className="text-accent">Robi</span>
               </button>
 
-              <p className="mt-2 text-xs tracking-wide text-slate-400">
+              <p className="mt-2 text-xs tracking-wide text-muted">
                 MERN Stack Developer
               </p>
             </m.div>
@@ -280,7 +280,7 @@ export default function Footer() {
             {/* Divider */}
             <m.div
               variants={fadeUp}
-              className="my-7 h-px w-full bg-[#181a21]"
+              className="my-7 h-px w-full bg-surface-raised"
               aria-hidden="true"
             />
 
@@ -292,7 +292,7 @@ export default function Footer() {
                 text-center sm:flex-row sm:justify-between
               "
             >
-              <p className="text-xs leading-5 text-slate-400">
+              <p className="text-xs leading-5 text-muted">
                 © {currentYear} Mehedi Robi. All rights reserved.
               </p>
 

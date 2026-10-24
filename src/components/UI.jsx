@@ -5,12 +5,12 @@ import React from "react";
 const focusRing = `
   focus-visible:outline-none
   focus-visible:ring-2
-  focus-visible:ring-violet-400/60
+  focus-visible:ring-accent/60
 `;
 
 const surface = `
-  bg-[#111318]
-  border border-white/10
+  bg-surface
+  border border-default
 `;
 
 // ─── Section ──────────────────────────────────────────────────────────────────
@@ -19,7 +19,7 @@ export const Section = ({
   id,
   children,
   className = "",
-  background = "bg-[#09090b]",
+  background = "bg-canvas",
   padding = "py-16 sm:py-20",
   maxWidth = "max-w-6xl",
   ...props
@@ -60,28 +60,28 @@ export const Card = ({
 
 const BADGE_VARIANTS = {
   default: `
-    bg-[#181a21] text-slate-300
-    border-slate-700
+    bg-surface-raised text-primary
+    border-line-strong
   `,
 
   primary: `
-    bg-sky-900/30 text-sky-300
-    border-sky-800/60
+    bg-info/10 text-info
+    border-info/30
   `,
 
   secondary: `
-    bg-violet-900/30 text-violet-300
-    border-violet-800/60
+    bg-accent/10 text-accent
+    border-accent/30
   `,
 
   success: `
-    bg-emerald-900/30 text-emerald-300
-    border-emerald-800/60
+    bg-success/10 text-success
+    border-success/30
   `,
 
   warning: `
-    bg-amber-900/30 text-amber-300
-    border-amber-800/60
+    bg-warning/10 text-warning
+    border-warning/30
   `,
 };
 
@@ -119,21 +119,21 @@ export const Badge = ({
 
 const BUTTON_VARIANTS = {
   primary: `
-    bg-violet-600 text-white
+    bg-accent-button text-white
     hover:opacity-85
   `,
 
   secondary: `
-    border border-white/15
-    text-slate-300
-    hover:bg-white/5
-    hover:border-white/25
+    border border-line-strong
+    text-primary
+    hover:bg-overlay/5
+    hover:border-line-strong
   `,
 
   ghost: `
-    text-slate-400
-    hover:bg-white/5
-    hover:text-white
+    text-muted
+    hover:bg-overlay/5
+    hover:text-strong
   `,
 };
 

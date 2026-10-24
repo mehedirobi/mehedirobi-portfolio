@@ -54,7 +54,7 @@ const HERO = {
     {
       icon: SiExpress,
       label: "Express.js",
-      color: "text-slate-300",
+      color: "text-primary",
     },
     {
       icon: SiReact,
@@ -97,10 +97,10 @@ const fadeUpVariants = {
 
 function StatusBadge() {
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1.5 text-xs font-medium text-emerald-300">
+    <div className="inline-flex items-center gap-2 rounded-full border border-success/25 bg-success/10 px-3 py-1.5 text-xs font-medium text-success">
       <span
         aria-hidden="true"
-        className="h-2 w-2 rounded-full bg-emerald-400/100"
+        className="h-2 w-2 rounded-full bg-success-solid"
       />
       Open to opportunities
     </div>
@@ -114,14 +114,14 @@ function StackList() {
       aria-label="Primary technology stack"
       className="flex flex-wrap items-center gap-2"
     >
-      <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+      <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
         Tech stack
       </span>
 
       {HERO.stack.map(({ icon: Icon, label, color }) => (
         <span
           key={label}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-slate-300"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-default bg-overlay/5 px-2.5 py-1.5 text-xs font-medium text-primary"
         >
           <Icon
             aria-hidden="true"
@@ -137,7 +137,7 @@ function StackList() {
 function SocialLinks({ reduceMotion }) {
   return (
     <div className="flex flex-wrap items-center gap-3">
-      <span className="text-xs font-medium text-slate-400">
+      <span className="text-xs font-medium text-muted">
         Connect
       </span>
 
@@ -155,7 +155,7 @@ function SocialLinks({ reduceMotion }) {
               title={label}
               whileHover={reduceMotion ? undefined : { y: -2 }}
               whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-slate-400 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-default bg-overlay/5 text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               <Icon
                 aria-hidden="true"
@@ -183,7 +183,7 @@ function ProfileImage({ reduceMotion }) {
         />
 
         {/* Portrait */}
-        <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-[#111318] bg-[#181a21] shadow-xl shadow-black/40 ring-1 ring-white/10">
+        <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-surface bg-surface-raised shadow-xl shadow-black/40 ring-1 ring-default">
           <OptimizedImage
             src={HERO.image}
             srcSet={HERO.imageSrcSet}
@@ -202,10 +202,10 @@ function ProfileImage({ reduceMotion }) {
         </div>
 
         {/* Role label */}
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-white/10 bg-[#111318] px-4 py-2 text-xs font-semibold text-slate-200 shadow-md shadow-black/30 sm:left-auto sm:right-0 sm:translate-x-0">
+        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-default bg-surface px-4 py-2 text-xs font-semibold text-primary shadow-md shadow-black/30 sm:left-auto sm:right-0 sm:translate-x-0">
           <span
             aria-hidden="true"
-            className="mr-2 inline-block h-2 w-2 rounded-full bg-emerald-400/100"
+            className="mr-2 inline-block h-2 w-2 rounded-full bg-success-solid"
           />
           {HERO.role}
         </div>
@@ -237,12 +237,12 @@ export default function Hero() {
     <section
       id="home"
       aria-labelledby="hero-heading"
-      className="relative isolate scroll-mt-16 overflow-hidden bg-[#09090b]"
+      className="relative isolate scroll-mt-16 overflow-hidden bg-canvas"
     >
       {/* Subtle background accent */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-0 -z-10 h-[320px] w-[320px] rounded-full bg-violet-500/10 blur-3xl sm:h-[380px] sm:w-[380px]"
+        className="pointer-events-none absolute right-0 top-0 -z-10 h-[320px] w-[320px] rounded-full bg-accent/10 blur-3xl sm:h-[380px] sm:w-[380px]"
       />
 
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:px-8 lg:py-12 xl:gap-16">
@@ -260,28 +260,28 @@ export default function Hero() {
           <m.h1
             id="hero-heading"
             variants={fadeUpVariants}
-            className="max-w-3xl text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.045em] text-slate-50 sm:text-5xl lg:text-[3.35rem] xl:text-[3.8rem]"
+            className="max-w-3xl text-display font-extrabold text-strong"
           >
             Hi, I'm{" "}
             <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
               {HERO.firstName}
             </span>
 
-            <span className="mt-2 block text-slate-200">
+            <span className="mt-2 block text-primary">
               {HERO.role}
             </span>
           </m.h1>
 
           <m.p
             variants={fadeUpVariants}
-            className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8"
+            className="max-w-2xl text-base leading-7 text-primary sm:text-lg sm:leading-8"
           >
             {HERO.tagline}
           </m.p>
 
           <m.p
             variants={fadeUpVariants}
-            className="max-w-xl text-sm leading-6 text-slate-400 sm:text-base sm:leading-7"
+            className="max-w-xl text-sm leading-6 text-muted sm:text-base sm:leading-7"
           >
             {HERO.description}
           </m.p>
@@ -300,7 +300,7 @@ export default function Hero() {
               onClick={scrollToProjects}
               whileHover={reduceMotion ? undefined : { y: -1 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-violet-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-violet-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               View Projects
               <HiOutlineArrowRight
@@ -312,7 +312,7 @@ export default function Hero() {
             <a
               href={HERO.resume}
               download
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-5 py-2.5 text-sm font-semibold text-slate-200 transition-colors hover:border-violet-400/40 hover:bg-violet-500/10 hover:text-violet-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line-strong bg-overlay/5 px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               Download Resume
               <HiOutlineDownload

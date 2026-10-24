@@ -44,7 +44,7 @@ const SKILLS = [
     icon: HiOutlineServerStack,
     skills: [
       { label: "Node.js", icon: SiNodedotjs, color: "text-green-600" },
-      { label: "Express.js", icon: SiExpress, color: "text-slate-300" },
+      { label: "Express.js", icon: SiExpress, color: "text-primary" },
       { label: "REST APIs", icon: HiOutlineServerStack, color: "text-orange-500" },
       { label: "CRUD Operations", icon: FiRefreshCw, color: "text-blue-500" },
     ],
@@ -63,9 +63,9 @@ const SKILLS = [
     icon: FiTool,
     skills: [
       { label: "Git", icon: SiGit, color: "text-orange-600" },
-      { label: "GitHub", icon: SiGithub, color: "text-slate-200" },
+      { label: "GitHub", icon: SiGithub, color: "text-primary" },
       { label: "VS Code", icon: VscVscode, color: "text-blue-500" },
-      { label: "Vite", icon: SiVite, color: "text-violet-400" },
+      { label: "Vite", icon: SiVite, color: "text-accent" },
     ],
   },
   {
@@ -74,9 +74,9 @@ const SKILLS = [
     icon: FiLock,
     skills: [
       { label: "Firebase Auth", icon: SiFirebase, color: "text-amber-500" },
-      { label: "Protected Routes", icon: FiLock, color: "text-slate-400" },
+      { label: "Protected Routes", icon: FiLock, color: "text-muted" },
       { label: "Responsive Design", icon: TbLayoutDashboard, color: "text-blue-500" },
-      { label: "Reusable Components", icon: FiTool, color: "text-violet-400" },
+      { label: "Reusable Components", icon: FiTool, color: "text-accent" },
     ],
   },
 ];
@@ -94,7 +94,7 @@ const fadeUp = {
 
 function SkillTag({ label, icon: Icon, color }) {
   return (
-    <span className="inline-flex select-none items-center gap-1.5 rounded-md border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:border-white/20 hover:text-white">
+    <span className="inline-flex select-none items-center gap-1.5 rounded-md border border-default bg-overlay/5 px-2.5 py-1.5 text-xs font-medium text-primary transition-colors hover:border-line-strong hover:text-strong">
       <Icon
         className={`h-3.5 w-3.5 shrink-0 ${color}`}
         aria-hidden="true"
@@ -111,7 +111,7 @@ function SkillCard({ item, reduceMotion }) {
     <m.article
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:border-violet-500/40 hover:shadow-md"
+      className="group relative overflow-hidden rounded-xl border border-default bg-surface p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:border-violet-500/40 hover:shadow-md"
     >
       <div
         aria-hidden="true"
@@ -120,22 +120,22 @@ function SkillCard({ item, reduceMotion }) {
 
       <div className="flex items-start gap-3.5">
         <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-500/10 text-violet-400"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent"
         >
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
 
         <div className="min-w-0">
-          <h3 className="text-base font-semibold tracking-tight text-slate-100">
+          <h3 className="text-base font-semibold tracking-tight text-strong">
             {item.title}
           </h3>
-          <p className="mt-1 text-sm leading-5 text-slate-400">
+          <p className="mt-1 text-sm leading-5 text-muted">
             {item.description}
           </p>
         </div>
       </div>
 
-      <div className="my-4 border-t border-white/10" />
+      <div className="my-4 border-t border-default" />
 
       <div className="flex flex-wrap gap-2">
         {item.skills.map((skill) => (
@@ -146,14 +146,14 @@ function SkillCard({ item, reduceMotion }) {
   );
 }
 
-export default function Skills() {
+export default function Skills({ id = "skills" }) {
   const reduceMotion = useReducedMotion();
 
   return (
     <Section
-      id="skills"
+      id={id}
       aria-labelledby="skills-heading"
-      background="bg-[#0e1015]"
+      background="bg-canvas-alt"
     >
       <div className="mx-auto max-w-6xl">
         <m.header
@@ -170,7 +170,7 @@ export default function Skills() {
         >
           <m.p
             variants={fadeUp}
-            className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
+            className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-accent"
           >
             Technical Expertise
           </m.p>
@@ -178,14 +178,14 @@ export default function Skills() {
           <m.h2
             id="skills-heading"
             variants={fadeUp}
-            className="text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl"
+            className="text-section font-bold tracking-tight text-strong"
           >
             Skills & Technologies
           </m.h2>
 
           <m.p
             variants={fadeUp}
-            className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
+            className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base"
           >
             The technologies, tools, and concepts I use to build modern
             full-stack web applications.

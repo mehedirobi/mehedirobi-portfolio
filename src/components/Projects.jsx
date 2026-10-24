@@ -37,7 +37,7 @@ function SectionHeader({ reduceMotion }) {
     >
       <m.p
         variants={fadeUp}
-        className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
+        className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-accent"
       >
         Portfolio
       </m.p>
@@ -45,14 +45,14 @@ function SectionHeader({ reduceMotion }) {
       <m.h2
         id="projects-heading"
         variants={fadeUp}
-        className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
+        className="text-section font-bold tracking-tight text-strong"
       >
         Featured Projects
       </m.h2>
 
       <m.p
         variants={fadeUp}
-        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
+        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base"
       >
         A selection of projects showcasing my full-stack development
         skills, modern UI design, and practical problem-solving.
@@ -63,7 +63,7 @@ function SectionHeader({ reduceMotion }) {
 
 function TechTag({ children }) {
   return (
-    <span className="rounded-md border border-white/10 bg-[#0e1015] px-2.5 py-1 text-[11px] font-medium text-slate-400">
+    <span className="rounded-md border border-default bg-canvas-alt px-2.5 py-1 text-[11px] font-medium text-muted">
       {children}
     </span>
   );
@@ -78,10 +78,10 @@ function ProjectAction({
 }) {
   if (!href) return null;
 
-  const baseClass = `inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
+  const baseClass = `inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
     primary
-      ? "bg-violet-600 text-white hover:bg-violet-500"
-      : "border border-white/10 text-slate-400 hover:border-white/20 hover:bg-white/5 hover:text-white"
+      ? "bg-accent-button text-white hover:bg-accent-button-hover"
+      : "border border-default text-muted hover:border-line-strong hover:bg-overlay/5 hover:text-strong"
   }`;
 
   return (
@@ -118,8 +118,8 @@ function ProjectCard({ project, reduceMotion }) {
       variants={fadeUp}
       className="h-full min-w-0"
     >
-      <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-white/20 hover:shadow-lg">
-        <div className="relative aspect-video overflow-hidden bg-[#181a21]">
+      <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-default bg-surface p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-line-strong hover:shadow-lg">
+        <div className="relative aspect-video overflow-hidden bg-surface-raised">
           {project.image && !imageFailed ? (
             <OptimizedImage
               src={project.image}
@@ -138,10 +138,10 @@ function ProjectCard({ project, reduceMotion }) {
             />
           ) : (
             <div
-              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-500/10 to-[#181a21] text-slate-300"
+              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-500/10 to-surface-raised text-primary"
               aria-hidden="true"
             >
-              <FiCodepen className="h-8 w-8 text-violet-500" />
+              <FiCodepen className="h-8 w-8 text-accent" />
               <span className="px-4 text-center text-lg font-semibold">
                 {project.name}
               </span>
@@ -150,11 +150,11 @@ function ProjectCard({ project, reduceMotion }) {
         </div>
 
         <div className="flex flex-1 flex-col p-5">
-          <h3 className="text-base font-semibold tracking-tight text-slate-100">
+          <h3 className="text-base font-semibold tracking-tight text-strong">
             {project.name}
           </h3>
 
-          <p className="mt-2 line-clamp-3 text-sm leading-6 text-slate-400">
+          <p className="mt-2 line-clamp-3 text-sm leading-6 text-muted">
             {project.description}
           </p>
 
@@ -165,14 +165,14 @@ function ProjectCard({ project, reduceMotion }) {
               ))}
 
               {tech.length > 6 && (
-                <span className="self-center px-1 text-[11px] text-slate-400">
+                <span className="self-center px-1 text-[11px] text-muted">
                   +{tech.length - 6} more
                 </span>
               )}
             </div>
           )}
 
-          <div className="my-4 mt-auto border-t border-white/10" />
+          <div className="my-4 mt-auto border-t border-default" />
 
           <div className="flex flex-wrap gap-2">
             <ProjectAction
@@ -212,7 +212,7 @@ function ProjectCard({ project, reduceMotion }) {
   );
 }
 
-export default function Projects() {
+export default function Projects({ id = "projects" }) {
   const [showAll, setShowAll] = useState(false);
   const reduceMotion = useReducedMotion();
 
@@ -226,9 +226,9 @@ export default function Projects() {
 
   return (
     <Section
-      id="projects"
+      id={id}
       aria-labelledby="projects-heading"
-      background="bg-[#0e1015]"
+      background="bg-canvas-alt"
     >
       <div className="mx-auto max-w-6xl">
         <SectionHeader reduceMotion={reduceMotion} />
@@ -247,7 +247,7 @@ export default function Projects() {
         </div>
 
         {projects.length === 0 && (
-          <p className="py-12 text-center text-sm text-slate-400">
+          <p className="py-12 text-center text-sm text-muted">
             No projects found. Please check your project data.
           </p>
         )}
@@ -261,7 +261,7 @@ export default function Projects() {
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               aria-expanded={showAll}
               aria-controls="projects-grid"
-              className="inline-flex items-center gap-2 rounded-lg border border-white/10 bg-[#111318] px-5 py-2.5 text-sm font-semibold text-slate-300 shadow-sm transition-colors hover:border-white/20 hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50"
+              className="inline-flex items-center gap-2 rounded-lg border border-default bg-surface px-5 py-2.5 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-line-strong hover:bg-overlay/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
             >
               {showAll ? "Show Less" : "View More Projects"}
 

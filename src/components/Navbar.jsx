@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { FiSend } from "react-icons/fi";
+import { FiMoon, FiSend, FiSun } from "react-icons/fi";
 
 const NAV_ITEMS = [
   { id: "home", label: "Home" },
@@ -17,9 +17,9 @@ const SCROLL_OFFSET = HEADER_HEIGHT + 16;
 const DESKTOP_BREAKPOINT = 1280;
 
 const NAV_LINK_BASE =
-  "relative rounded-full px-3 py-2 text-[13px] font-medium " +
+  "relative rounded-full px-3 py-3 text-[13px] font-medium " +
   "transition-colors duration-200 focus-visible:outline-none " +
-  "focus-visible:ring-2 focus-visible:ring-violet-500 " +
+  "focus-visible:ring-2 focus-visible:ring-accent " +
   "focus-visible:ring-offset-2";
 
 function Brand({ onClick }) {
@@ -28,10 +28,10 @@ function Brand({ onClick }) {
       type="button"
       onClick={onClick}
       aria-label="Mehedi Robi — Home"
-      className="shrink-0 rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-4"
+      className="shrink-0 rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
     >
-      <span className="text-slate-100">Mehedi</span>
-      <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
+      <span className="text-strong">Mehedi</span>
+      <span className="bg-gradient-to-r from-accent to-accent-hover bg-clip-text text-transparent">
         {" "}Robi
       </span>
     </button>
@@ -48,14 +48,12 @@ function NavItem({ id, label, active, onClick }) {
       aria-current={isActive ? "location" : undefined}
       className={`${NAV_LINK_BASE} ${
         isActive
-          ? "text-violet-300"
-          : "text-slate-400 hover:bg-white/5 hover:text-white"
+          ? "text-accent"
+          : "text-muted hover:bg-overlay/5 hover:text-strong"
       }`}
     >
       {isActive && (
-        <m.span
-          layoutId="navbar-active-indicator"
-          transition={{ type: "spring", stiffness: 400, damping: 32 }}
+        <span
           className="absolute inset-0 rounded-full bg-violet-500/15"
         />
       )}
@@ -73,10 +71,10 @@ function MobileNavItem({ id, label, active, onClick }) {
       type="button"
       onClick={(event) => onClick(event, id)}
       aria-current={isActive ? "location" : undefined}
-      className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-violet-500 ${
+      className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${
         isActive
-          ? "bg-violet-500/15 text-violet-300"
-          : "text-slate-300 hover:bg-white/5 hover:text-white"
+          ? "bg-violet-500/15 text-accent"
+          : "text-primary hover:bg-overlay/5 hover:text-strong"
       }`}
     >
       <span
@@ -95,7 +93,7 @@ function HireMeButton({ onClick, className = "" }) {
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-violet-600 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-violet-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 focus-visible:ring-offset-2 active:bg-violet-800 ${className}`}
+      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:bg-accent-button-hover ${className}`}
     >
       <FiSend aria-hidden="true" className="h-3.5 w-3.5" />
       <span>Hire Me</span>
@@ -112,7 +110,7 @@ function MenuToggle({ open, onClick, buttonRef }) {
       aria-label={open ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={open}
       aria-controls="mobile-navigation"
-      className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-slate-300 transition-colors hover:bg-white/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-400 xl:hidden"
+      className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-primary transition-colors hover:bg-overlay/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent xl:hidden"
     >
       <span className="sr-only">
         {open ? "Close menu" : "Open menu"}
@@ -139,7 +137,24 @@ function MenuToggle({ open, onClick, buttonRef }) {
   );
 }
 
-export default function Navbar() {
+function ThemeToggle({ theme, onToggle, className = "" }) {
+  const isLight = theme === "light";
+  const Icon = isLight ? FiMoon : FiSun;
+
+  return (
+    <button
+      type="button"
+      onClick={onToggle}
+      aria-label={`Switch to ${isLight ? "dark" : "light"} theme`}
+      aria-pressed={isLight}
+      className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-primary transition-colors hover:border-line-strong hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
+    >
+      <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+    </button>
+  );
+}
+
+export default function Navbar({ theme, onToggleTheme }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -240,10 +255,28 @@ export default function Navbar() {
   useEffect(() => {
     if (!open) return;
 
+    const mobileNavigation = document.getElementById("mobile-navigation");
+    const focusableItems = mobileNavigation?.querySelectorAll(
+      'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
+    );
+    const firstItem = focusableItems?.[0];
+    const lastItem = focusableItems?.[focusableItems.length - 1];
+
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setOpen(false);
         menuButtonRef.current?.focus();
+        return;
+      }
+
+      if (event.key === "Tab" && firstItem && lastItem) {
+        if (event.shiftKey && document.activeElement === firstItem) {
+          event.preventDefault();
+          lastItem.focus();
+        } else if (!event.shiftKey && document.activeElement === lastItem) {
+          event.preventDefault();
+          firstItem.focus();
+        }
       }
     };
 
@@ -255,6 +288,7 @@ export default function Navbar() {
 
     document.addEventListener("keydown", handleKeyDown);
     window.addEventListener("resize", handleResize);
+    firstItem?.focus();
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -276,14 +310,15 @@ export default function Navbar() {
 
   const closeMenu = useCallback(() => {
     setOpen(false);
+    menuButtonRef.current?.focus();
   }, []);
 
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b bg-[#09090b]/95 backdrop-blur-md transition-[border-color,box-shadow] duration-200 ${
+        className={`fixed inset-x-0 top-0 z-50 border-b bg-canvas/95 backdrop-blur-md transition-[border-color,box-shadow] duration-200 ${
           scrolled
-            ? "border-white/10 shadow-sm shadow-black/20"
+            ? "border-default shadow-sm shadow-black/20"
             : "border-transparent"
         }`}
       >
@@ -304,11 +339,18 @@ export default function Navbar() {
             ))}
           </nav>
 
-          <div className="hidden xl:block">
+          <div className="hidden items-center gap-2 xl:flex">
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
             <HireMeButton
               onClick={(event) => scrollTo(event, "contact")}
             />
           </div>
+
+          <ThemeToggle
+            theme={theme}
+            onToggle={onToggleTheme}
+            className="xl:hidden"
+          />
 
           <MenuToggle
             open={open}
@@ -325,7 +367,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
               transition={{ duration: reduceMotion ? 0 : 0.16 }}
-              className="absolute inset-x-0 top-full border-t border-white/10 bg-[#09090b] shadow-lg shadow-black/40 xl:hidden"
+              className="absolute inset-x-0 top-full border-t border-default bg-canvas shadow-lg shadow-black/40 xl:hidden"
             >
               <nav
                 aria-label="Mobile navigation"
@@ -342,7 +384,7 @@ export default function Navbar() {
                   ))}
                 </div>
 
-                <div className="mt-3 border-t border-white/10 pt-3">
+                <div className="mt-3 border-t border-default pt-3">
                   <HireMeButton
                     onClick={(event) => scrollTo(event, "contact")}
                     className="w-full"
@@ -365,7 +407,7 @@ export default function Navbar() {
             exit={reduceMotion ? undefined : { opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.15 }}
             onClick={closeMenu}
-            className="fixed inset-x-0 bottom-0 top-16 z-40 cursor-default bg-slate-950/20 xl:hidden"
+            className="fixed inset-x-0 bottom-0 top-16 z-40 cursor-default bg-overlay/10 xl:hidden"
           />
         )}
       </AnimatePresence>
