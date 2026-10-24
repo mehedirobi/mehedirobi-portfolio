@@ -84,14 +84,14 @@ Final Lighthouse run against the local production preview, using mobile emulatio
 
 | Category / metric | Final result |
 |---|---:|
-| Performance | 98 |
+| Performance | 99 |
 | Accessibility | 100 |
 | Best Practices | 100 |
 | SEO | 100 |
-| Largest Contentful Paint | 1.7 s |
+| Largest Contentful Paint | 1.6 s |
 | Cumulative Layout Shift | 0 |
-| Total Blocking Time | 110 ms |
-| First Contentful Paint | 1.4 s |
+| Total Blocking Time | 90 ms |
+| First Contentful Paint | 1.5 s |
 
 These are local production-preview results, not a measurement of the deployed Netlify site. There is no comparable production baseline.
 
