@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { AnimatePresence, m, useReducedMotion } from "framer-motion";
 import { FiSend } from "react-icons/fi";
 
 const NAV_ITEMS = [
@@ -53,7 +53,7 @@ function NavItem({ id, label, active, onClick }) {
       }`}
     >
       {isActive && (
-        <motion.span
+        <m.span
           layoutId="navbar-active-indicator"
           transition={{ type: "spring", stiffness: 400, damping: 32 }}
           className="absolute inset-0 rounded-full bg-violet-500/15"
@@ -119,17 +119,17 @@ function MenuToggle({ open, onClick, buttonRef }) {
       </span>
 
       <span className="flex w-5 flex-col gap-[5px]" aria-hidden="true">
-        <motion.span
+        <m.span
           animate={open ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.18 }}
           className="h-0.5 w-5 rounded-full bg-current"
         />
-        <motion.span
+        <m.span
           animate={open ? { opacity: 0 } : { opacity: 1 }}
           transition={{ duration: 0.12 }}
           className="h-0.5 w-5 rounded-full bg-current"
         />
-        <motion.span
+        <m.span
           animate={open ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
           transition={{ duration: 0.18 }}
           className="h-0.5 w-5 rounded-full bg-current"
@@ -319,7 +319,7 @@ export default function Navbar() {
 
         <AnimatePresence initial={false}>
           {open && (
-            <motion.div
+            <m.div
               id="mobile-navigation"
               initial={reduceMotion ? false : { opacity: 0, y: -6 }}
               animate={{ opacity: 1, y: 0 }}
@@ -349,14 +349,14 @@ export default function Navbar() {
                   />
                 </div>
               </nav>
-            </motion.div>
+            </m.div>
           )}
         </AnimatePresence>
       </header>
 
       <AnimatePresence>
         {open && (
-          <motion.button
+          <m.button
             type="button"
             aria-label="Close navigation menu"
             tabIndex={-1}

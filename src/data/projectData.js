@@ -6,7 +6,11 @@ export const projectData = [
     featured: true,
     description:
       "A sports turf booking platform for discovering venues, checking availability, and managing bookings with dedicated customer and turf-owner workflows.",
-      image: "/projects/khelaro.png",
+    image: "/projects/optimized/khelaro-960.webp",
+    imageSrcSet:
+      "/projects/optimized/khelaro-480.webp 480w, /projects/optimized/khelaro-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 428,
     tech: [
       "React",
       "Tailwind CSS",
@@ -27,7 +31,11 @@ export const projectData = [
     featured: true,
     description:
       "A civic issue reporting platform with authentication, role-based dashboards, and workflows for reporting and tracking public infrastructure problems.",
-    image: "/projects/urban-fix.jpg",
+    image: "/projects/optimized/urban-fix-960.webp",
+    imageSrcSet:
+      "/projects/optimized/urban-fix-480.webp 480w, /projects/optimized/urban-fix-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 420,
     tech: [
       "React",
       "Tailwind CSS",
@@ -49,7 +57,11 @@ export const projectData = [
     featured: true,
     description:
       "A pet adoption and supplies platform featuring category-based browsing, Firebase authentication, listing management, and order workflows.",
-    image: "/projects/pawmart.jpg",
+    image: "/projects/optimized/pawmart-960.webp",
+    imageSrcSet:
+      "/projects/optimized/pawmart-480.webp 480w, /projects/optimized/pawmart-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 420,
     tech: [
       "React",
       "Tailwind CSS",
@@ -67,11 +79,15 @@ export const projectData = [
   {
     id: 4,
     name: "ToyVerse",
-    category: "frontend",
+    category: "fullstack",
     featured: false,
     description:
       "A full-stack toy marketplace with product browsing, search, filtering, and product management backed by a database.",
-    image: "/projects/toyverse.jpg",
+    image: "/projects/optimized/toyverse-960.webp",
+    imageSrcSet:
+      "/projects/optimized/toyverse-480.webp 480w, /projects/optimized/toyverse-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 425,
     tech: [
       "React",
       "Tailwind CSS",
@@ -82,7 +98,7 @@ export const projectData = [
     links: {
       live: "https://toyverse-project-01.netlify.app/",
       client: "https://github.com/mehedirobi/toyverse",
-      server: "https://github.com/mehedirobi/toyverse-server",
+      server: "",
     },
   },
   {
@@ -92,7 +108,11 @@ export const projectData = [
     featured: false,
     description:
       "An interactive superhero discovery application featuring character search, dynamic routing, and individual character detail pages.",
-    image: "/projects/hero-app.jpg",
+    image: "/projects/optimized/hero-app-960.webp",
+    imageSrcSet:
+      "/projects/optimized/hero-app-480.webp 480w, /projects/optimized/hero-app-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 420,
     tech: ["React", "Tailwind CSS"],
     links: {
       live: "https://hero-io-web-app-01.netlify.app/",
@@ -107,7 +127,11 @@ export const projectData = [
     featured: false,
     description:
       "A responsive customer-support dashboard with ticket status filters, data tables, and an interface for organizing support workflows.",
-    image: "/projects/cs-ticket-system.jpg",
+    image: "/projects/optimized/cs-ticket-system-960.webp",
+    imageSrcSet:
+      "/projects/optimized/cs-ticket-system-480.webp 480w, /projects/optimized/cs-ticket-system-960.webp 960w",
+    imageWidth: 960,
+    imageHeight: 422,
     tech: ["React", "Tailwind CSS"],
     links: {
       live: "https://cs-ticket-system-website-01.netlify.app/",

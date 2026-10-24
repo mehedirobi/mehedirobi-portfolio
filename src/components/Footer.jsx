@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AnimatePresence,
-  motion,
+  m,
   useReducedMotion,
 } from "framer-motion";
 import {
@@ -114,7 +114,7 @@ function BackToTop({ reduceMotion }) {
   return (
     <AnimatePresence>
       {visible && (
-        <motion.button
+        <m.button
           type="button"
           initial={
             reduceMotion
@@ -144,7 +144,7 @@ function BackToTop({ reduceMotion }) {
           "
         >
           <FiArrowUp className="h-[18px] w-[18px]" aria-hidden="true" />
-        </motion.button>
+        </m.button>
       )}
     </AnimatePresence>
   );
@@ -233,7 +233,7 @@ export default function Footer() {
         />
 
         <div className="mx-auto max-w-6xl px-5 py-10 sm:px-6 sm:py-12">
-          <motion.div
+          <m.div
             variants={stagger}
             initial={reduceMotion ? false : "hidden"}
             whileInView="show"
@@ -241,7 +241,7 @@ export default function Footer() {
             className="flex flex-col items-center"
           >
             {/* Brand */}
-            <motion.div variants={fadeUp} className="text-center">
+            <m.div variants={fadeUp} className="text-center">
               <button
                 type="button"
                 onClick={() => scrollToSection("home", reduceMotion)}
@@ -260,32 +260,32 @@ export default function Footer() {
               <p className="mt-2 text-xs tracking-wide text-slate-400">
                 MERN Stack Developer
               </p>
-            </motion.div>
+            </m.div>
 
             {/* Navigation */}
-            <motion.div variants={fadeUp} className="mt-7 w-full">
+            <m.div variants={fadeUp} className="mt-7 w-full">
               <FooterNavigation reduceMotion={reduceMotion} />
-            </motion.div>
+            </m.div>
 
             {/* Social links */}
-            <motion.div
+            <m.div
               variants={fadeUp}
               className="mt-6 flex items-center gap-2.5"
             >
               {SOCIALS.map((social) => (
                 <SocialLink key={social.label} {...social} />
               ))}
-            </motion.div>
+            </m.div>
 
             {/* Divider */}
-            <motion.div
+            <m.div
               variants={fadeUp}
               className="my-7 h-px w-full bg-[#181a21]"
               aria-hidden="true"
             />
 
             {/* Footer bottom */}
-            <motion.div
+            <m.div
               variants={fadeUp}
               className="
                 flex w-full flex-col items-center gap-4
@@ -297,8 +297,8 @@ export default function Footer() {
               </p>
 
               <BuiltWith />
-            </motion.div>
-          </motion.div>
+            </m.div>
+          </m.div>
         </div>
       </footer>
     </>

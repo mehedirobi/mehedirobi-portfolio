@@ -214,18 +214,38 @@ Button.displayName = "Button";
 
 export const OptimizedImage = ({
   src,
+  srcSet,
+  sizes,
   alt = "",
   className = "",
-  ...props
+  width,
+  height,
+  loading = "lazy",
+  fetchPriority,
+  onLoad,
+  onError,
 }) => {
   return (
-    <img
-      src={src}
-      alt={alt}
-      loading="lazy"
-      decoding="async"
-      className={className}
-      {...props}
-    />
+    <picture className="block h-full w-full">
+      {srcSet && (
+        <source
+          type="image/webp"
+          srcSet={srcSet}
+          sizes={sizes}
+        />
+      )}
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        loading={loading}
+        decoding="async"
+        fetchpriority={fetchPriority}
+        onLoad={onLoad}
+        onError={onError}
+        className={className}
+      />
+    </picture>
   );
 };

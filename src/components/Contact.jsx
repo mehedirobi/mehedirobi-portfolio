@@ -1,10 +1,6 @@
-import React, {
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
-  motion,
+  m,
   useReducedMotion,
 } from "framer-motion";
 import {
@@ -15,7 +11,6 @@ import {
 import {
   FiCheck,
   FiCopy,
-  FiExternalLink,
   FiMail,
   FiPhone,
   FiSend,
@@ -56,7 +51,7 @@ const SOCIALS = [
   },
   {
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/mehedirobii/",
+    href: "https://www.linkedin.com/in/mehedirobi/",
     icon: FaLinkedin,
     hover: "hover:border-sky-400 hover:text-sky-300",
   },
@@ -121,36 +116,36 @@ const FIELD_CLASS =
 
 function SectionHeader({ reduceMotion }) {
   return (
-    <motion.header
+    <m.header
       variants={stagger}
       initial={reduceMotion ? false : "hidden"}
       whileInView="show"
       viewport={VIEWPORT}
       className="mb-10 text-center sm:mb-12"
     >
-      <motion.p
+      <m.p
         variants={fadeUp}
         className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-violet-400"
       >
         Get in touch
-      </motion.p>
+      </m.p>
 
-      <motion.h2
+      <m.h2
         id="contact-heading"
         variants={fadeUp}
         className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
       >
         Let's Connect
-      </motion.h2>
+      </m.h2>
 
-      <motion.p
+      <m.p
         variants={fadeUp}
         className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
       >
         Have a project, an opportunity, or an idea to discuss?
         I'd be glad to hear from you.
-      </motion.p>
-    </motion.header>
+      </m.p>
+    </m.header>
   );
 }
 
@@ -299,7 +294,7 @@ function ContactForm({
   const messageLength = form.message.length;
 
   return (
-    <motion.div
+    <m.div
       variants={fadeUp}
       className="rounded-2xl border border-white/10 bg-[#111318] p-5 shadow-sm sm:p-7"
     >
@@ -388,7 +383,7 @@ function ContactForm({
           You can review and send it there.
         </p>
       </form>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -512,7 +507,7 @@ export default function Contact() {
       <div className="mx-auto max-w-6xl">
         <SectionHeader reduceMotion={reduceMotion} />
 
-        <motion.div
+        <m.div
           variants={stagger}
           initial={reduceMotion ? false : "hidden"}
           whileInView="show"
@@ -520,7 +515,7 @@ export default function Contact() {
           className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12"
         >
           {/* Contact information */}
-          <motion.div
+          <m.div
             variants={fadeUp}
             className="min-w-0 space-y-7 lg:pt-2"
           >
@@ -562,10 +557,10 @@ export default function Contact() {
             </div>
 
             <SocialLinks reduceMotion={reduceMotion} />
-          </motion.div>
+          </m.div>
 
           {/* Contact form */}
-          <motion.div variants={fadeUp} className="min-w-0">
+          <m.div variants={fadeUp} className="min-w-0">
             <ContactForm
               form={form}
               errors={errors}
@@ -573,8 +568,8 @@ export default function Contact() {
               onSubmit={handleSubmit}
               reduceMotion={reduceMotion}
             />
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
     </Section>
   );

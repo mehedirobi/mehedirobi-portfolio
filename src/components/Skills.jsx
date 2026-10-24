@@ -1,5 +1,4 @@
-import React from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { m, useReducedMotion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { HiOutlineServerStack } from "react-icons/hi2";
 import {
@@ -20,7 +19,6 @@ import {
   SiGit,
   SiGithub,
   SiVite,
-  SiFigma,
 } from "react-icons/si";
 
 import { VscVscode } from "react-icons/vsc";
@@ -30,10 +28,8 @@ import { Section } from "./UI";
 const SKILLS = [
   {
     title: "Frontend Development",
-    description:
-      "Creating responsive, accessible, and user-friendly interfaces.",
+    description: "Building responsive, user-focused interfaces.",
     icon: TbLayoutDashboard,
-    accent: "violet",
     skills: [
       { label: "JavaScript (ES6+)", icon: SiJavascript, color: "text-yellow-500" },
       { label: "React.js", icon: SiReact, color: "text-cyan-500" },
@@ -43,53 +39,47 @@ const SKILLS = [
     ],
   },
   {
-    title: "Backend & Databases",
-    description:
-      "Building APIs, handling application logic, and integrating databases.",
+    title: "Backend Development",
+    description: "Developing server-side features and REST APIs.",
     icon: HiOutlineServerStack,
-    accent: "blue",
     skills: [
       { label: "Node.js", icon: SiNodedotjs, color: "text-green-600" },
       { label: "Express.js", icon: SiExpress, color: "text-slate-300" },
-      { label: "MongoDB", icon: SiMongodb, color: "text-emerald-600" },
       { label: "REST APIs", icon: HiOutlineServerStack, color: "text-orange-500" },
       { label: "CRUD Operations", icon: FiRefreshCw, color: "text-blue-500" },
     ],
   },
   {
-    title: "Authentication & Tools",
-    description:
-      "Managing authentication, version control, and modern development workflows.",
-    icon: FiTool,
-    accent: "cyan",
+    title: "Database",
+    description: "Working with document databases and application data.",
+    icon: HiOutlineServerStack,
     skills: [
-      { label: "Firebase Auth", icon: SiFirebase, color: "text-amber-500" },
-      { label: "Protected Routes", icon: FiLock, color: "text-slate-400" },
+      { label: "MongoDB", icon: SiMongodb, color: "text-emerald-600" },
+    ],
+  },
+  {
+    title: "Tools",
+    description: "Using modern tools for development and version control.",
+    icon: FiTool,
+    skills: [
       { label: "Git", icon: SiGit, color: "text-orange-600" },
       { label: "GitHub", icon: SiGithub, color: "text-slate-200" },
       { label: "VS Code", icon: VscVscode, color: "text-blue-500" },
-      { label: "Responsive Design", icon: FaCss3Alt, color: "text-blue-500" },
+      { label: "Vite", icon: SiVite, color: "text-violet-400" },
+    ],
+  },
+  {
+    title: "Core Competencies",
+    description: "Applying maintainable patterns and user-focused practices.",
+    icon: FiLock,
+    skills: [
+      { label: "Firebase Auth", icon: SiFirebase, color: "text-amber-500" },
+      { label: "Protected Routes", icon: FiLock, color: "text-slate-400" },
+      { label: "Responsive Design", icon: TbLayoutDashboard, color: "text-blue-500" },
+      { label: "Reusable Components", icon: FiTool, color: "text-violet-400" },
     ],
   },
 ];
-
-const ACCENTS = {
-  violet: {
-    icon: "bg-violet-500/10 text-violet-400",
-    border: "hover:border-violet-500/40",
-    line: "from-violet-500 to-violet-400",
-  },
-  blue: {
-    icon: "bg-violet-500/10 text-violet-400",
-    border: "hover:border-violet-500/40",
-    line: "from-violet-500 to-violet-400",
-  },
-  cyan: {
-    icon: "bg-violet-500/10 text-violet-400",
-    border: "hover:border-violet-500/40",
-    line: "from-violet-500 to-violet-400",
-  },
-};
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -116,22 +106,21 @@ function SkillTag({ label, icon: Icon, color }) {
 
 function SkillCard({ item, reduceMotion }) {
   const Icon = item.icon;
-  const accent = ACCENTS[item.accent];
 
   return (
-    <motion.article
+    <m.article
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className={`group relative overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:shadow-md ${accent.border}`}
+      className="group relative overflow-hidden rounded-xl border border-white/10 bg-[#111318] p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:border-violet-500/40 hover:shadow-md"
     >
       <div
         aria-hidden="true"
-        className={`absolute inset-x-5 top-0 h-0.5 bg-gradient-to-r ${accent.line} opacity-0 transition-opacity group-hover:opacity-100`}
+        className="absolute inset-x-5 top-0 h-0.5 bg-violet-400 opacity-0 transition-opacity group-hover:opacity-100"
       />
 
       <div className="flex items-start gap-3.5">
         <div
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${accent.icon}`}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-500/10 text-violet-400"
         >
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
@@ -153,7 +142,7 @@ function SkillCard({ item, reduceMotion }) {
           <SkillTag key={skill.label} {...skill} />
         ))}
       </div>
-    </motion.article>
+    </m.article>
   );
 }
 
@@ -167,7 +156,7 @@ export default function Skills() {
       background="bg-[#0e1015]"
     >
       <div className="mx-auto max-w-6xl">
-        <motion.header
+        <m.header
           initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
@@ -179,31 +168,31 @@ export default function Skills() {
           }}
           className="mx-auto mb-8 max-w-2xl text-center sm:mb-10"
         >
-          <motion.p
+          <m.p
             variants={fadeUp}
             className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
           >
             Technical Expertise
-          </motion.p>
+          </m.p>
 
-          <motion.h2
+          <m.h2
             id="skills-heading"
             variants={fadeUp}
             className="text-3xl font-bold tracking-tight text-slate-100 sm:text-4xl"
           >
             Skills & Technologies
-          </motion.h2>
+          </m.h2>
 
-          <motion.p
+          <m.p
             variants={fadeUp}
             className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
           >
             The technologies, tools, and concepts I use to build modern
             full-stack web applications.
-          </motion.p>
-        </motion.header>
+          </m.p>
+        </m.header>
 
-        <motion.div
+        <m.div
           initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true, amount: 0.12 }}
@@ -213,7 +202,7 @@ export default function Skills() {
               transition: { staggerChildren: reduceMotion ? 0 : 0.08 },
             },
           }}
-          className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+          className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
         >
           {SKILLS.map((item) => (
             <SkillCard
@@ -222,7 +211,7 @@ export default function Skills() {
               reduceMotion={reduceMotion}
             />
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </Section>
   );

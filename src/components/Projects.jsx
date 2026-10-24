@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useState } from "react";
+import { m, useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
 import {
   FiArrowDown,
@@ -29,35 +29,35 @@ const fadeUp = {
 
 function SectionHeader({ reduceMotion }) {
   return (
-    <motion.header
+    <m.header
       initial={reduceMotion ? false : "hidden"}
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
       className="mb-8 text-center sm:mb-10"
     >
-      <motion.p
+      <m.p
         variants={fadeUp}
         className="mb-2 text-xs font-semibold uppercase tracking-[0.17em] text-violet-400"
       >
         Portfolio
-      </motion.p>
+      </m.p>
 
-      <motion.h2
+      <m.h2
         id="projects-heading"
         variants={fadeUp}
         className="text-3xl font-bold tracking-tight text-slate-50 sm:text-4xl"
       >
         Featured Projects
-      </motion.h2>
+      </m.h2>
 
-      <motion.p
+      <m.p
         variants={fadeUp}
         className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-400 sm:text-base"
       >
         A selection of projects showcasing my full-stack development
         skills, modern UI design, and practical problem-solving.
-      </motion.p>
-    </motion.header>
+      </m.p>
+    </m.header>
   );
 }
 
@@ -76,6 +76,8 @@ function ProjectAction({
   primary,
   label,
 }) {
+  if (!href) return null;
+
   const baseClass = `inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500/50 ${
     primary
       ? "bg-violet-600 text-white hover:bg-violet-500"
@@ -84,7 +86,7 @@ function ProjectAction({
 
   return (
     <a
-      href={href || "#"}
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
@@ -98,6 +100,7 @@ function ProjectAction({
 
 function ProjectCard({ project, reduceMotion }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   const tech = Array.isArray(project.tech) ? project.tech : [];
   const links = project.links ?? {};
@@ -109,8 +112,7 @@ function ProjectCard({ project, reduceMotion }) {
   const serverUrl = links.server;
 
   return (
-    <motion.article
-      layout={!reduceMotion}
+    <m.article
       initial={reduceMotion ? false : "hidden"}
       animate="visible"
       variants={fadeUp}
@@ -121,14 +123,17 @@ function ProjectCard({ project, reduceMotion }) {
           {project.image && !imageFailed ? (
             <OptimizedImage
               src={project.image}
+              srcSet={project.imageSrcSet}
+              sizes="(max-width: 639px) 100vw, (max-width: 1023px) 50vw, 33vw"
               alt={`${project.name} project preview`}
-              width="1000"
-              height="440"
+              width={project.imageWidth}
+              height={project.imageHeight}
+              onLoad={() => setImageLoaded(true)}
               onError={() => setImageFailed(true)}
-              className={`h-full w-full object-cover ${
-                reduceMotion
-                  ? ""
-                  : "transition-transform duration-500 group-hover:scale-[1.03]"
+              className={`h-full w-full object-cover transition-opacity duration-200 ${
+                imageLoaded ? "opacity-100" : "animate-pulse opacity-0"
+              } ${
+                reduceMotion ? "" : "transition-transform group-hover:scale-[1.03]"
               }`}
             />
           ) : (
@@ -169,7 +174,7 @@ function ProjectCard({ project, reduceMotion }) {
 
           <div className="my-4 mt-auto border-t border-white/10" />
 
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <ProjectAction
               href={liveUrl}
               icon={FiExternalLink}
@@ -191,7 +196,7 @@ function ProjectCard({ project, reduceMotion }) {
               {isFullStack ? "Client" : "GitHub"}
             </ProjectAction>
 
-            {isFullStack && (
+            {isFullStack && serverUrl && (
               <ProjectAction
                 href={serverUrl}
                 icon={FaGithub}
@@ -203,7 +208,7 @@ function ProjectCard({ project, reduceMotion }) {
           </div>
         </div>
       </Card>
-    </motion.article>
+    </m.article>
   );
 }
 
@@ -249,7 +254,7 @@ export default function Projects() {
 
         {hasMore && (
           <div className="mt-8 flex justify-center sm:mt-10">
-            <motion.button
+            <m.button
               type="button"
               onClick={() => setShowAll((current) => !current)}
               whileHover={reduceMotion ? undefined : { y: -2 }}
@@ -265,7 +270,7 @@ export default function Projects() {
               ) : (
                 <FiArrowDown className="h-4 w-4" aria-hidden="true" />
               )}
-            </motion.button>
+            </m.button>
           </div>
         )}
 

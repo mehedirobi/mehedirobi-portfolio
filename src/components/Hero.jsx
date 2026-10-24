@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useCallback } from "react";
+import { m, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import {
   HiOutlineMail,
@@ -23,7 +23,9 @@ const HERO = {
   description:
     "I focus on reusable UI components, REST APIs, authentication, and database-driven features with clean, maintainable code.",
   resume: "/mehedirobi-resume.pdf",
-  image: "/projects/Mehedi-Robi-Professional.jpg",
+  image: "/projects/optimized/mehedi-robi-professional-800.webp",
+  imageSrcSet:
+    "/projects/optimized/mehedi-robi-professional-480.webp 480w, /projects/optimized/mehedi-robi-professional-800.webp 800w",
 
   socials: [
     {
@@ -144,7 +146,7 @@ function SocialLinks({ reduceMotion }) {
           const isEmail = href.startsWith("mailto:");
 
           return (
-            <motion.a
+            <m.a
               key={label}
               href={href}
               target={isEmail ? undefined : "_blank"}
@@ -159,7 +161,7 @@ function SocialLinks({ reduceMotion }) {
                 aria-hidden="true"
                 className="h-[18px] w-[18px]"
               />
-            </motion.a>
+            </m.a>
           );
         })}
       </div>
@@ -169,7 +171,7 @@ function SocialLinks({ reduceMotion }) {
 
 function ProfileImage({ reduceMotion }) {
   return (
-    <motion.div
+    <m.div
       variants={fadeUpVariants}
       className="mx-auto w-full max-w-[360px] lg:max-w-[390px]"
     >
@@ -184,7 +186,11 @@ function ProfileImage({ reduceMotion }) {
         <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-[#111318] bg-[#181a21] shadow-xl shadow-black/40 ring-1 ring-white/10">
           <OptimizedImage
             src={HERO.image}
+            srcSet={HERO.imageSrcSet}
+            sizes="(max-width: 1023px) 72vw, 390px"
             alt={`Portrait of ${HERO.name}, ${HERO.role}`}
+            width="800"
+            height="1000"
             loading="eager"
             fetchPriority="high"
             className={`h-full w-full object-cover ${
@@ -204,7 +210,7 @@ function ProfileImage({ reduceMotion }) {
           {HERO.role}
         </div>
       </div>
-    </motion.div>
+    </m.div>
   );
 }
 
@@ -241,17 +247,17 @@ export default function Hero() {
 
       <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:px-8 lg:py-12 xl:gap-16">
         {/* Left: Hero content */}
-        <motion.div
+        <m.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           className="order-1 flex min-w-0 flex-col items-start gap-5"
         >
-          <motion.div variants={fadeUpVariants}>
+          <m.div variants={fadeUpVariants}>
             <StatusBadge />
-          </motion.div>
+          </m.div>
 
-          <motion.h1
+          <m.h1
             id="hero-heading"
             variants={fadeUpVariants}
             className="max-w-3xl text-[2.65rem] font-extrabold leading-[1.08] tracking-[-0.045em] text-slate-50 sm:text-5xl lg:text-[3.35rem] xl:text-[3.8rem]"
@@ -264,32 +270,32 @@ export default function Hero() {
             <span className="mt-2 block text-slate-200">
               {HERO.role}
             </span>
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             variants={fadeUpVariants}
             className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg sm:leading-8"
           >
             {HERO.tagline}
-          </motion.p>
+          </m.p>
 
-          <motion.p
+          <m.p
             variants={fadeUpVariants}
             className="max-w-xl text-sm leading-6 text-slate-400 sm:text-base sm:leading-7"
           >
             {HERO.description}
-          </motion.p>
+          </m.p>
 
-          <motion.div variants={fadeUpVariants}>
+          <m.div variants={fadeUpVariants}>
             <StackList />
-          </motion.div>
+          </m.div>
 
           {/* Primary actions */}
-          <motion.div
+          <m.div
             variants={fadeUpVariants}
             className="flex w-full flex-wrap gap-3 pt-1"
           >
-            <motion.button
+            <m.button
               type="button"
               onClick={scrollToProjects}
               whileHover={reduceMotion ? undefined : { y: -1 }}
@@ -301,7 +307,7 @@ export default function Hero() {
                 aria-hidden="true"
                 className="h-4 w-4"
               />
-            </motion.button>
+            </m.button>
 
             <a
               href={HERO.resume}
@@ -314,12 +320,12 @@ export default function Hero() {
                 className="h-4 w-4"
               />
             </a>
-          </motion.div>
+          </m.div>
 
-          <motion.div variants={fadeUpVariants} className="pt-1">
+          <m.div variants={fadeUpVariants} className="pt-1">
             <SocialLinks reduceMotion={reduceMotion} />
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
 
         {/* Right: Profile image */}
         <div className="order-2 flex items-center justify-center lg:justify-end">
