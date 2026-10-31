@@ -3,18 +3,21 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Mehedi Robi is a MERN Stack Developer building responsive web applications with React, Node.js, Express, and MongoDB. Explore selected projects and get in touch." />
+    <meta name="author" content="Mehedi Robi" />
+    <meta name="theme-color" content="#09090b" />
     <script>
       try {
         const savedTheme = localStorage.getItem("portfolio-theme");
         const systemTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
-        document.documentElement.dataset.theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
+        const theme = savedTheme === "light" || savedTheme === "dark" ? savedTheme : systemTheme;
+        document.documentElement.dataset.theme = theme;
+        document.querySelector('meta[name="theme-color"]').content =
+          theme === "light" ? "#f8fafc" : "#09090b";
       } catch {
         document.documentElement.dataset.theme = "dark";
       }
     </script>
-    <meta name="description" content="Mehedi Robi is a MERN Stack Developer building responsive web applications with React, Node.js, Express, and MongoDB. Explore selected projects and get in touch." />
-    <meta name="author" content="Mehedi Robi" />
-    <meta name="theme-color" content="#09090b" />
     <link rel="canonical" href="https://mehedirobi-portfolio.netlify.app/" />
     <meta property="og:title" content="Mehedi Robi | MERN Stack Developer" />
     <meta property="og:description" content="Explore Mehedi Robi's projects and skills in full-stack web development." />

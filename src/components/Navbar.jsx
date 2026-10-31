@@ -170,6 +170,7 @@ export default function Navbar({ theme, onToggleTheme }) {
       const section = document.getElementById(id);
 
       setOpen(false);
+      if (open) menuButtonRef.current?.focus();
 
       if (!section) return;
 
@@ -185,7 +186,7 @@ export default function Navbar({ theme, onToggleTheme }) {
         behavior: reduceMotion ? "auto" : "smooth",
       });
     },
-    [reduceMotion]
+    [open, reduceMotion]
   );
 
   // Keep the active link and header appearance in sync with scrolling.
