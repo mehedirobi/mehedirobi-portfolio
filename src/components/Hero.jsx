@@ -1,3 +1,4 @@
+
 import { m, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiOutlineArrowRight, HiOutlineMail } from "react-icons/hi";
@@ -6,7 +7,7 @@ import { OptimizedImage } from "./UI";
 const HERO = {
   name: "Mehedi Robi",
   intro:
-    "Software engineering-focused developer with hands-on experience building full-stack applications, from database to user interface. I aim to write reliable, efficient, and maintainable software while continuously improving my engineering skills.",
+    "Software engineering-focused developer with hands-on experience building full-stack applications, from database to user interface. I focus on writing reliable, efficient, and maintainable software while continuously improving my engineering skills.",
   image: "/projects/optimized/mehedi-robi-professional-800.webp",
   imageSrcSet:
     "/projects/optimized/mehedi-robi-professional-480.webp 480w, /projects/optimized/mehedi-robi-professional-800.webp 800w",
@@ -43,13 +44,13 @@ const containerVariants = {
 const fadeUpVariants = {
   hidden: {
     opacity: 0,
-    y: 12,
+    y: 14,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.45,
+      duration: 0.5,
       ease: EASE,
     },
   },
@@ -57,7 +58,7 @@ const fadeUpVariants = {
 
 function SocialLinks({ reduceMotion }) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-2.5">
+    <div className="flex items-center justify-center gap-3">
       {HERO.socials.map(({ href, icon: Icon, label }) => {
         const isEmail = href.startsWith("mailto:");
 
@@ -70,8 +71,8 @@ function SocialLinks({ reduceMotion }) {
             aria-label={label}
             title={label}
             whileHover={reduceMotion ? undefined : { y: -2 }}
-            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-default bg-surface text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+            whileTap={reduceMotion ? undefined : { scale: 0.96 }}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-default bg-surface text-muted transition-colors duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
           >
             <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
           </m.a>
@@ -81,59 +82,52 @@ function SocialLinks({ reduceMotion }) {
   );
 }
 
-function ProfileImage({ reduceMotion }) {
+function ProfileImage() {
   return (
     <m.div
       variants={fadeUpVariants}
-      className="mx-auto mb-6 w-full max-w-[250px] sm:max-w-[270px]"
+      className="mb-7 flex justify-center"
     >
-      <div className="relative mx-auto aspect-square w-[min(60vw,210px)] rounded-full border border-default bg-surface p-1.5 shadow-[0_18px_35px_rgba(15,23,42,0.08)]">
-        <div className="overflow-hidden rounded-full bg-surface-raised">
-          <OptimizedImage
-            src={HERO.image}
-            srcSet={HERO.imageSrcSet}
-            sizes="(max-width: 640px) 60vw, 270px"
-            alt={`Portrait of ${HERO.name}`}
-            width="800"
-            height="1000"
-            loading="eager"
-            fetchPriority="high"
-            className={`h-full w-full rounded-full object-cover ${
-              reduceMotion
-                ? ""
-                : "transition-transform duration-500 ease-out hover:scale-[1.03]"
-            }`}
-          />
-        </div>
+      <div className="h-[180px] w-[180px] shrink-0 overflow-hidden rounded-full border border-default bg-surface p-1 shadow-sm sm:h-[200px] sm:w-[200px]">
+        <OptimizedImage
+          src={HERO.image}
+          srcSet={HERO.imageSrcSet}
+          sizes="(max-width: 640px) 180px, 200px"
+          alt={`Portrait of ${HERO.name}`}
+          width="800"
+          height="800"
+          loading="eager"
+          fetchPriority="high"
+          className="block h-full w-full rounded-full object-cover object-center transition-transform duration-500 ease-out hover:scale-[1.04]"
+        />
       </div>
     </m.div>
   );
 }
 
 export default function Hero() {
-  const reduceMotion = useReducedMotion();
+  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = Boolean(shouldReduceMotion);
 
   return (
     <section
       id="home"
       aria-labelledby="hero-heading"
-      className="relative isolate scroll-mt-16 overflow-hidden bg-canvas"
+      className="relative scroll-mt-16 bg-canvas"
     >
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 mx-auto h-64 w-full max-w-5xl rounded-b-[40px] bg-gradient-to-b from-violet-500/10 to-transparent" />
-
-      <div className="mx-auto max-w-3xl px-5 py-16 sm:px-6 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-4xl px-5 py-16 sm:px-6 sm:py-20 lg:py-24">
         <m.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
           className="flex flex-col items-center text-center"
         >
-          <ProfileImage reduceMotion={reduceMotion} />
+          <ProfileImage />
 
           <m.h1
             id="hero-heading"
             variants={fadeUpVariants}
-            className="text-display font-bold tracking-[-0.05em] text-strong"
+            className="text-display font-bold tracking-[-0.045em] text-strong"
           >
             {HERO.name}
           </m.h1>
@@ -145,22 +139,25 @@ export default function Hero() {
             {HERO.intro}
           </m.p>
 
-          <m.div variants={fadeUpVariants} className="mt-6">
+          <m.div variants={fadeUpVariants} className="mt-7">
             <SocialLinks reduceMotion={reduceMotion} />
           </m.div>
 
           <m.div
             variants={fadeUpVariants}
-            className="mt-7 flex flex-wrap items-center justify-center gap-3"
+            className="mt-8 flex flex-wrap items-center justify-center gap-3"
           >
             <m.a
               href="#contact"
-              whileHover={reduceMotion ? undefined : { y: -1 }}
+              whileHover={reduceMotion ? undefined : { y: -2 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-6 py-2.5 text-sm font-semibold text-white shadow-sm transition-colors duration-200 hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
-              Let&apos;s Connect
-              <HiOutlineArrowRight aria-hidden="true" className="h-4 w-4" />
+              Let's Connect
+              <HiOutlineArrowRight
+                aria-hidden="true"
+                className="h-4 w-4"
+              />
             </m.a>
 
             <a
@@ -168,7 +165,7 @@ export default function Hero() {
               target="_blank"
               rel="noopener noreferrer"
               download="Mehedi_Robi_Resume.pdf"
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-default bg-surface px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-default bg-surface px-6 py-2.5 text-sm font-semibold text-primary transition-colors duration-200 hover:border-accent/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               Download Resume
             </a>
