@@ -56,4 +56,40 @@ export const projectData = [
       server: "https://github.com/mehedirobi/pawmart-server",
     },
   },
+  {
+  id: 3,
+  name: "ToyVerse",
+  category: "frontend",
+  featured: true,
+  description:
+    "A playful and interactive toy store website featuring a dynamic homepage, toy details, Firebase authentication, protected routes, and personalized user features.",
+  image: "/projects/optimized/toyverse-960.webp",
+  imageSrcSet:
+    "/projects/optimized/toyverse-480.webp 480w, /projects/optimized/toyverse-960.webp 960w",
+  imageWidth: 960,
+  imageHeight: 420,
+  tech: ["React", "Tailwind CSS", "Firebase", "React Router", "Swiper", "React Helmet"],
+  links: {
+    live: "https://toyverse-project-01.netlify.app/",
+    client: "https://github.com/mehedirobi/toyverse",
+  },
+},
+{
+  id: 4,
+  name: "Hero App",
+  category: "frontend",
+  featured: true,
+  description:
+    "A modern web application hub where users can discover, install, and uninstall web apps from a centralized platform with search functionality and a responsive interface.",
+  image: "/projects/optimized/hero-app-960.webp",
+  imageSrcSet:
+    "/projects/optimized/hero-app-480.webp 480w, /projects/optimized/hero-app-960.webp 960w",
+  imageWidth: 960,
+  imageHeight: 420,
+  tech: ["React", "JavaScript", "Tailwind CSS", "Vite", "Local Storage"],
+  links: {
+    live: "https://hero-io-web-app-01.netlify.app/",
+    client: "https://github.com/mehedirobi/hero-web-app",
+  },
+},
 ];
