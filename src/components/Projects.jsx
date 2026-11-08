@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { m, useReducedMotion } from "framer-motion";
 import { FaGithub } from "react-icons/fa";
@@ -5,8 +6,8 @@ import {
   FiArrowDown,
   FiArrowUp,
   FiExternalLink,
+  FiCodepen,
 } from "react-icons/fi";
-import { FiCodepen } from "react-icons/fi";
 
 import { projectData } from "../data/projectData";
 import { Section, Card, OptimizedImage } from "./UI";
@@ -16,7 +17,10 @@ const INITIAL_PROJECTS = 3;
 const EASE = [0.22, 1, 0.36, 1];
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 14 },
+  hidden: {
+    opacity: 0,
+    y: 14,
+  },
   visible: {
     opacity: 1,
     y: 0,
@@ -54,8 +58,8 @@ function SectionHeader({ reduceMotion }) {
         variants={fadeUp}
         className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base"
       >
-        A selection of projects showcasing my full-stack development
-        skills, modern UI design, and practical problem-solving.
+        A selection of projects showcasing my development
+        skills, technical experience, and practical problem-solving.
       </m.p>
     </m.header>
   );
@@ -73,16 +77,23 @@ function ProjectAction({
   href,
   icon: Icon,
   children,
-  primary,
+  primary = false,
   label,
 }) {
   if (!href) return null;
 
-  const baseClass = `inline-flex min-w-0 flex-1 items-center justify-center gap-1.5 rounded-lg px-2 py-2 text-xs font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 ${
-    primary
-      ? "bg-accent-button text-white hover:bg-accent-button-hover"
-      : "border border-default text-muted hover:border-line-strong hover:bg-overlay/5 hover:text-strong"
-  }`;
+  const baseClass = `
+    inline-flex min-w-0 items-center justify-center gap-1.5
+    rounded-lg px-3 py-2.5 text-xs font-semibold
+    transition-colors duration-200
+    focus-visible:outline-none
+    focus-visible:ring-2 focus-visible:ring-accent/50
+    ${
+      primary
+        ? "bg-accent-button text-white hover:bg-accent-button-hover"
+        : "border border-default bg-surface text-muted hover:border-line-strong hover:bg-overlay/5 hover:text-strong"
+    }
+  `;
 
   return (
     <a
@@ -105,21 +116,26 @@ function ProjectCard({ project, reduceMotion }) {
   const tech = Array.isArray(project.tech) ? project.tech : [];
   const links = project.links ?? {};
 
-  const isFullStack = project.category?.toLowerCase() === "fullstack";
-
   const liveUrl = links.live;
   const clientUrl = links.client ?? links.github;
   const serverUrl = links.server;
 
+  const category = project.category?.toLowerCase().replace(/[\s-]/g, "");
+  const isFullStack =
+    category === "fullstack" || Boolean(serverUrl);
+
   return (
     <m.article
       initial={reduceMotion ? false : "hidden"}
-      animate="visible"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
       variants={fadeUp}
       className="h-full min-w-0"
     >
       <Card className="group flex h-full min-w-0 flex-col overflow-hidden rounded-xl border border-default bg-surface p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-line-strong hover:shadow-lg">
-        <div className="relative aspect-video overflow-hidden bg-surface-raised">
+
+        {/* Project Image */}
+        <div className="relative aspect-video overflow-hidden bg-canvas-alt">
           {project.image && !imageFailed ? (
             <OptimizedImage
               src={project.image}
@@ -130,26 +146,29 @@ function ProjectCard({ project, reduceMotion }) {
               height={project.imageHeight}
               onLoad={() => setImageLoaded(true)}
               onError={() => setImageFailed(true)}
-              className={`h-full w-full object-cover transition-opacity duration-200 ${
-                imageLoaded ? "opacity-100" : "animate-pulse opacity-0"
-              } ${
-                reduceMotion ? "" : "transition-transform group-hover:scale-[1.03]"
-              }`}
+              className={`
+                h-full w-full object-cover
+                transition-opacity duration-300
+                ${imageLoaded ? "opacity-100" : "animate-pulse opacity-0"}
+                ${reduceMotion ? "" : "transition-transform group-hover:scale-[1.03]"}
+              `}
             />
           ) : (
             <div
-              className="flex h-full flex-col items-center justify-center gap-2 bg-gradient-to-br from-violet-500/10 to-surface-raised text-primary"
+              className="flex h-full flex-col items-center justify-center gap-2 text-accent"
               aria-hidden="true"
             >
-              <FiCodepen className="h-8 w-8 text-accent" />
-              <span className="px-4 text-center text-lg font-semibold">
+              <FiCodepen className="h-8 w-8" />
+              <span className="px-4 text-center text-lg font-semibold text-strong">
                 {project.name}
               </span>
             </div>
           )}
         </div>
 
+        {/* Project Content */}
         <div className="flex flex-1 flex-col p-5">
+
           <h3 className="text-base font-semibold tracking-tight text-strong">
             {project.name}
           </h3>
@@ -158,10 +177,13 @@ function ProjectCard({ project, reduceMotion }) {
             {project.description}
           </p>
 
+          {/* Technologies */}
           {tech.length > 0 && (
             <div className="mt-4 flex flex-wrap gap-1.5">
               {tech.slice(0, 6).map((item, index) => (
-                <TechTag key={`${item}-${index}`}>{item}</TechTag>
+                <TechTag key={`${item}-${index}`}>
+                  {item}
+                </TechTag>
               ))}
 
               {tech.length > 6 && (
@@ -172,39 +194,38 @@ function ProjectCard({ project, reduceMotion }) {
             </div>
           )}
 
-          <div className="my-4 mt-auto border-t border-default" />
+          {/* Project Actions */}
+          <div className="mt-auto pt-5">
+            <div className="mb-4 border-t border-default" />
 
-          <div className="flex flex-wrap gap-2">
-            <ProjectAction
-              href={liveUrl}
-              icon={FiExternalLink}
-              primary
-              label={`View ${project.name} live demo`}
-            >
-              Live Demo
-            </ProjectAction>
-
-            <ProjectAction
-              href={clientUrl}
-              icon={FaGithub}
-              label={
-                isFullStack
-                  ? `View ${project.name} client source code`
-                  : `View ${project.name} GitHub repository`
-              }
-            >
-              {isFullStack ? "Client" : "GitHub"}
-            </ProjectAction>
-
-            {isFullStack && serverUrl && (
+            <div className="flex flex-wrap gap-2">
               <ProjectAction
-                href={serverUrl}
-                icon={FaGithub}
-                label={`View ${project.name} server source code`}
+                href={liveUrl}
+                icon={FiExternalLink}
+                primary
+                label={`View ${project.name} live demo`}
               >
-                Server
+                Live Demo
               </ProjectAction>
-            )}
+
+              <ProjectAction
+                href={clientUrl}
+                icon={FaGithub}
+                label={`View ${project.name} client repository`}
+              >
+                {isFullStack ? "Client" : "GitHub"}
+              </ProjectAction>
+
+              {isFullStack && serverUrl && (
+                <ProjectAction
+                  href={serverUrl}
+                  icon={FaGithub}
+                  label={`View ${project.name} server repository`}
+                >
+                  Server
+                </ProjectAction>
+              )}
+            </div>
           </div>
         </div>
       </Card>
@@ -231,8 +252,10 @@ export default function Projects({ id = "projects" }) {
       background="bg-canvas-alt"
     >
       <div className="mx-auto max-w-6xl">
+
         <SectionHeader reduceMotion={reduceMotion} />
 
+        {/* Projects Grid */}
         <div
           id="projects-grid"
           className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
@@ -246,14 +269,16 @@ export default function Projects({ id = "projects" }) {
           ))}
         </div>
 
+        {/* Empty State */}
         {projects.length === 0 && (
           <p className="py-12 text-center text-sm text-muted">
             No projects found. Please check your project data.
           </p>
         )}
 
+        {/* View All / Show Less */}
         {hasMore && (
-          <div className="mt-8 flex justify-center sm:mt-10">
+          <div className="mt-9 flex justify-center">
             <m.button
               type="button"
               onClick={() => setShowAll((current) => !current)}
@@ -261,9 +286,18 @@ export default function Projects({ id = "projects" }) {
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               aria-expanded={showAll}
               aria-controls="projects-grid"
-              className="inline-flex items-center gap-2 rounded-lg border border-default bg-surface px-5 py-2.5 text-sm font-semibold text-primary shadow-sm transition-colors hover:border-line-strong hover:bg-overlay/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
+              className="
+                inline-flex items-center justify-center gap-2
+                rounded-lg border border-default
+                bg-surface px-6 py-3
+                text-sm font-semibold text-primary
+                shadow-sm transition-colors
+                hover:border-line-strong hover:bg-overlay/5
+                focus-visible:outline-none
+                focus-visible:ring-2 focus-visible:ring-accent/50
+              "
             >
-              {showAll ? "Show Less" : "View More Projects"}
+              {showAll ? "Show Less" : "View All Projects"}
 
               {showAll ? (
                 <FiArrowUp className="h-4 w-4" aria-hidden="true" />
@@ -274,9 +308,11 @@ export default function Projects({ id = "projects" }) {
           </div>
         )}
 
+        {/* Screen Reader Status */}
         <p className="sr-only" aria-live="polite">
           Showing {visibleProjects.length} of {projects.length} projects.
         </p>
+
       </div>
     </Section>
   );

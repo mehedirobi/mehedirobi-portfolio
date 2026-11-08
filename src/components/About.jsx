@@ -1,7 +1,10 @@
 import { Section } from "./UI";
 
-const ABOUT =
-  "I'm a MERN Stack Developer passionate about building modern, responsive, and user-focused web applications. I work with MongoDB, Express.js, React.js, and Node.js to develop full-stack solutions, with hands-on experience in RESTful APIs, CRUD operations, Firebase Authentication, protected routes, and database integration. I value clean code, reusable components, maintainable architecture, and thoughtful user experiences. As I continue building real-world projects and strengthening my problem-solving skills, my goal is to grow into a Software Engineer capable of designing and developing reliable, scalable software.";
+const ABOUT = [
+  "I am a Computer Science and Technology diploma graduate with practical experience building frontend and full-stack web applications. I focus on creating responsive interfaces, reliable REST APIs, and user-focused software using JavaScript, React.js, Tailwind CSS, Node.js, Express.js, MongoDB, and Firebase Authentication.",
+
+  "My experience includes reusable UI components, backend logic, database management, authentication, authorization, role-based access control, and CRUD operations. I value clean, maintainable code, performance, usability, and problem-solving, with a strong focus on building reliable, scalable solutions and continuously improving my engineering skills.",
+];
 
 export default function About({ id = "about" }) {
   return (
@@ -20,9 +23,11 @@ export default function About({ id = "about" }) {
           </h2>
         </div>
 
-        <p className="text-pretty text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
-          {ABOUT}
-        </p>
+        <div className="space-y-4 text-pretty text-[15px] leading-7 text-muted sm:text-base sm:leading-8">
+          {ABOUT.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+        </div>
       </div>
     </Section>
   );

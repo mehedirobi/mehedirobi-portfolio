@@ -7,7 +7,6 @@ const NAV_ITEMS = [
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
   { id: "projects", label: "Projects" },
-  { id: "certifications", label: "Certifications" },
   { id: "education", label: "Education" },
   { id: "contact", label: "Contact" },
 ];
@@ -28,10 +27,10 @@ function Brand({ onClick }) {
       type="button"
       onClick={onClick}
       aria-label="Mehedi Robi — Home"
-      className="shrink-0 rounded-sm text-xl font-bold tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
+      className="shrink-0 rounded-full px-2 py-1 text-lg font-bold tracking-tight text-strong transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
     >
       <span className="text-strong">Mehedi</span>
-      <span className="bg-gradient-to-r from-accent to-accent-hover bg-clip-text text-transparent">
+      <span className="bg-gradient-to-r from-violet-500 to-violet-400 bg-clip-text text-transparent">
         {" "}Robi
       </span>
     </button>
@@ -96,7 +95,7 @@ function HireMeButton({ onClick, className = "" }) {
       className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:bg-accent-button-hover ${className}`}
     >
       <FiSend aria-hidden="true" className="h-3.5 w-3.5" />
-      <span>Hire Me</span>
+      <span>Contact Me</span>
     </button>
   );
 }
@@ -317,47 +316,44 @@ export default function Navbar({ theme, onToggleTheme }) {
   return (
     <>
       <header
-        className={`fixed inset-x-0 top-0 z-50 border-b bg-canvas/95 backdrop-blur-md transition-[border-color,box-shadow] duration-200 ${
-          scrolled
-            ? "border-default shadow-sm shadow-black/20"
-            : "border-transparent"
+        className={`fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8 ${
+          scrolled ? "" : ""
         }`}
       >
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-          <Brand onClick={(event) => scrollTo(event, "home")} />
+        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between gap-3">
+          <div className="rounded-full border border-default bg-surface/80 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl backdrop-saturate-150">
+            <Brand onClick={(event) => scrollTo(event, "home")} />
+          </div>
 
-          <nav
-            aria-label="Primary navigation"
-            className="hidden items-center gap-0.5 xl:flex"
-          >
-            {NAV_ITEMS.map((item) => (
-              <NavItem
-                key={item.id}
-                {...item}
-                active={active}
-                onClick={scrollTo}
-              />
-            ))}
-          </nav>
+          <div className="hidden flex-1 justify-center xl:flex">
+            <nav
+              aria-label="Primary navigation"
+              className="inline-flex items-center gap-1 rounded-full border border-default bg-surface/80 px-2 py-1.5 shadow-[0_10px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl backdrop-saturate-150"
+            >
+              {NAV_ITEMS.map((item) => (
+                <NavItem
+                  key={item.id}
+                  {...item}
+                  active={active}
+                  onClick={scrollTo}
+                />
+              ))}
+            </nav>
+          </div>
 
           <div className="hidden items-center gap-2 xl:flex">
             <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <HireMeButton
-              onClick={(event) => scrollTo(event, "contact")}
-            />
+            <HireMeButton onClick={(event) => scrollTo(event, "contact")} />
           </div>
 
-          <ThemeToggle
-            theme={theme}
-            onToggle={onToggleTheme}
-            className="xl:hidden"
-          />
-
-          <MenuToggle
-            open={open}
-            onClick={() => setOpen((previous) => !previous)}
-            buttonRef={menuButtonRef}
-          />
+          <div className="flex items-center gap-2 xl:hidden">
+            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <MenuToggle
+              open={open}
+              onClick={() => setOpen((previous) => !previous)}
+              buttonRef={menuButtonRef}
+            />
+          </div>
         </div>
 
         <AnimatePresence initial={false}>

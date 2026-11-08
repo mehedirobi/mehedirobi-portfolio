@@ -1,11 +1,7 @@
 import { m, useReducedMotion } from "framer-motion";
 import { TbLayoutDashboard } from "react-icons/tb";
 import { HiOutlineServerStack } from "react-icons/hi2";
-import {
-  FiLock,
-  FiRefreshCw,
-  FiTool,
-} from "react-icons/fi";
+import { FiLock, FiTool } from "react-icons/fi";
 
 import {
   SiJavascript,
@@ -18,7 +14,7 @@ import {
   SiFirebase,
   SiGit,
   SiGithub,
-  SiVite,
+  SiNextdotjs,
 } from "react-icons/si";
 
 import { VscVscode } from "react-icons/vsc";
@@ -27,56 +23,67 @@ import { Section } from "./UI";
 
 const SKILLS = [
   {
-    title: "Frontend Development",
-    description: "Building responsive, user-focused interfaces.",
-    icon: TbLayoutDashboard,
+    title: "Programming Languages",
+    description: "Core languages I use to build and reason about modern web applications.",
+    icon: SiJavascript,
     skills: [
       { label: "JavaScript (ES6+)", icon: SiJavascript, color: "text-yellow-500" },
-      { label: "React.js", icon: SiReact, color: "text-cyan-500" },
-      { label: "Tailwind CSS", icon: SiTailwindcss, color: "text-sky-500" },
       { label: "HTML5", icon: SiHtml5, color: "text-orange-500" },
       { label: "CSS3", icon: FaCss3Alt, color: "text-blue-500" },
     ],
   },
   {
+    title: "Frontend Development",
+    description: "Building responsive interfaces and polished user experiences.",
+    icon: TbLayoutDashboard,
+    skills: [
+      { label: "React.js", icon: SiReact, color: "text-cyan-500" },
+      { label: "Next.js (Basic)", icon: SiNextdotjs, color: "text-slate-300" },
+      { label: "Tailwind CSS", icon: SiTailwindcss, color: "text-sky-500" },
+      { label: "Responsive Web Design", icon: TbLayoutDashboard, color: "text-blue-500" },
+    ],
+  },
+  {
     title: "Backend Development",
-    description: "Developing server-side features and REST APIs.",
+    description: "Developing server-side logic and API-driven features.",
     icon: HiOutlineServerStack,
     skills: [
       { label: "Node.js", icon: SiNodedotjs, color: "text-green-600" },
       { label: "Express.js", icon: SiExpress, color: "text-primary" },
-      { label: "REST APIs", icon: HiOutlineServerStack, color: "text-orange-500" },
-      { label: "CRUD Operations", icon: FiRefreshCw, color: "text-blue-500" },
+      { label: "RESTful APIs", icon: HiOutlineServerStack, color: "text-orange-500" },
     ],
   },
   {
-    title: "Database",
-    description: "Working with document databases and application data.",
-    icon: HiOutlineServerStack,
+    title: "Database & Authentication",
+    description: "Working with data storage and secure access flows for web apps.",
+    icon: FiLock,
     skills: [
       { label: "MongoDB", icon: SiMongodb, color: "text-emerald-600" },
+      { label: "Firebase Authentication", icon: SiFirebase, color: "text-amber-500" },
     ],
   },
   {
-    title: "Tools",
-    description: "Using modern tools for development and version control.",
+    title: "Tools & Platforms",
+    description: "Using developer tools and deployment platforms effectively.",
     icon: FiTool,
     skills: [
       { label: "Git", icon: SiGit, color: "text-orange-600" },
       { label: "GitHub", icon: SiGithub, color: "text-primary" },
       { label: "VS Code", icon: VscVscode, color: "text-blue-500" },
-      { label: "Vite", icon: SiVite, color: "text-accent" },
+      { label: "Netlify", icon: FiTool, color: "text-violet-500" },
+      { label: "Vercel", icon: FiTool, color: "text-cyan-500" },
     ],
   },
   {
-    title: "Core Competencies",
-    description: "Applying maintainable patterns and user-focused practices.",
-    icon: FiLock,
+    title: "Core Technical Concepts",
+    description: "Applying maintainable patterns and practical engineering thinking.",
+    icon: TbLayoutDashboard,
     skills: [
-      { label: "Firebase Auth", icon: SiFirebase, color: "text-amber-500" },
-      { label: "Protected Routes", icon: FiLock, color: "text-muted" },
-      { label: "Responsive Design", icon: TbLayoutDashboard, color: "text-blue-500" },
-      { label: "Reusable Components", icon: FiTool, color: "text-accent" },
+      { label: "REST API Integration", icon: HiOutlineServerStack, color: "text-orange-500" },
+      { label: "Authentication & Authorization", icon: FiLock, color: "text-muted" },
+      { label: "Role-Based Access Control", icon: FiLock, color: "text-muted" },
+      { label: "CRUD Operations", icon: FiTool, color: "text-accent" },
+      { label: "Full-Stack Development", icon: TbLayoutDashboard, color: "text-blue-500" },
     ],
   },
 ];
@@ -119,9 +126,7 @@ function SkillCard({ item, reduceMotion }) {
       />
 
       <div className="flex items-start gap-3.5">
-        <div
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent"
-        >
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent/10 text-accent">
           <Icon className="h-5 w-5" aria-hidden="true" />
         </div>
 
@@ -182,14 +187,6 @@ export default function Skills({ id = "skills" }) {
           >
             Skills & Technologies
           </m.h2>
-
-          <m.p
-            variants={fadeUp}
-            className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base"
-          >
-            The technologies, tools, and concepts I use to build modern
-            full-stack web applications.
-          </m.p>
         </m.header>
 
         <m.div

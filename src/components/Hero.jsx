@@ -1,32 +1,15 @@
-import { useCallback } from "react";
 import { m, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
-import {
-  HiOutlineMail,
-  HiOutlineArrowRight,
-  HiOutlineDownload,
-} from "react-icons/hi";
-import {
-  SiMongodb,
-  SiExpress,
-  SiReact,
-  SiNodedotjs,
-} from "react-icons/si";
+import { HiOutlineArrowRight, HiOutlineMail } from "react-icons/hi";
 import { OptimizedImage } from "./UI";
 
 const HERO = {
   name: "Mehedi Robi",
-  firstName: "Mehedi",
-  role: "MERN Stack Developer",
-  tagline:
-    "I build responsive, user-focused web applications with React, Node.js, Express.js, and MongoDB.",
-  description:
-    "I focus on reusable UI components, REST APIs, authentication, and database-driven features with clean, maintainable code.",
-  resume: "/mehedirobi-resume.pdf",
+  intro:
+    "Software engineering-focused developer with hands-on experience building full-stack applications, from database to user interface. I aim to write reliable, efficient, and maintainable software while continuously improving my engineering skills.",
   image: "/projects/optimized/mehedi-robi-professional-800.webp",
   imageSrcSet:
     "/projects/optimized/mehedi-robi-professional-480.webp 480w, /projects/optimized/mehedi-robi-professional-800.webp 800w",
-
   socials: [
     {
       href: "https://github.com/mehedirobi",
@@ -44,29 +27,6 @@ const HERO = {
       label: "Email",
     },
   ],
-
-  stack: [
-    {
-      icon: SiMongodb,
-      label: "MongoDB",
-      color: "text-emerald-600",
-    },
-    {
-      icon: SiExpress,
-      label: "Express.js",
-      color: "text-primary",
-    },
-    {
-      icon: SiReact,
-      label: "React",
-      color: "text-cyan-600",
-    },
-    {
-      icon: SiNodedotjs,
-      label: "Node.js",
-      color: "text-green-500",
-    },
-  ],
 };
 
 const EASE = [0.22, 1, 0.36, 1];
@@ -75,7 +35,7 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.06,
+      staggerChildren: 0.08,
     },
   },
 };
@@ -89,82 +49,34 @@ const fadeUpVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.4,
+      duration: 0.45,
       ease: EASE,
     },
   },
 };
 
-function StatusBadge() {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-success/25 bg-success/10 px-3 py-1.5 text-xs font-medium text-success">
-      <span
-        aria-hidden="true"
-        className="h-2 w-2 rounded-full bg-success-solid"
-      />
-      Open to opportunities
-    </div>
-  );
-}
-
-function StackList() {
-  return (
-    <div
-      role="group"
-      aria-label="Primary technology stack"
-      className="flex flex-wrap items-center gap-2"
-    >
-      <span className="mr-1 text-[11px] font-semibold uppercase tracking-wider text-muted">
-        Tech stack
-      </span>
-
-      {HERO.stack.map(({ icon: Icon, label, color }) => (
-        <span
-          key={label}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-default bg-overlay/5 px-2.5 py-1.5 text-xs font-medium text-primary"
-        >
-          <Icon
-            aria-hidden="true"
-            className={`h-3.5 w-3.5 ${color}`}
-          />
-          {label}
-        </span>
-      ))}
-    </div>
-  );
-}
-
 function SocialLinks({ reduceMotion }) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <span className="text-xs font-medium text-muted">
-        Connect
-      </span>
+    <div className="flex flex-wrap items-center justify-center gap-2.5">
+      {HERO.socials.map(({ href, icon: Icon, label }) => {
+        const isEmail = href.startsWith("mailto:");
 
-      <div className="flex items-center gap-2">
-        {HERO.socials.map(({ href, icon: Icon, label }) => {
-          const isEmail = href.startsWith("mailto:");
-
-          return (
-            <m.a
-              key={label}
-              href={href}
-              target={isEmail ? undefined : "_blank"}
-              rel={isEmail ? undefined : "noopener noreferrer"}
-              aria-label={label}
-              title={label}
-              whileHover={reduceMotion ? undefined : { y: -2 }}
-              whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-default bg-overlay/5 text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
-            >
-              <Icon
-                aria-hidden="true"
-                className="h-[18px] w-[18px]"
-              />
-            </m.a>
-          );
-        })}
-      </div>
+        return (
+          <m.a
+            key={label}
+            href={href}
+            target={isEmail ? undefined : "_blank"}
+            rel={isEmail ? undefined : "noopener noreferrer"}
+            aria-label={label}
+            title={label}
+            whileHover={reduceMotion ? undefined : { y: -2 }}
+            whileTap={reduceMotion ? undefined : { scale: 0.98 }}
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-default bg-surface text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+          >
+            <Icon aria-hidden="true" className="h-[18px] w-[18px]" />
+          </m.a>
+        );
+      })}
     </div>
   );
 }
@@ -173,41 +85,25 @@ function ProfileImage({ reduceMotion }) {
   return (
     <m.div
       variants={fadeUpVariants}
-      className="mx-auto w-full max-w-[360px] lg:max-w-[390px]"
+      className="mx-auto mb-6 w-full max-w-[250px] sm:max-w-[270px]"
     >
-      <div className="relative mx-auto aspect-square w-[min(72vw,280px)] sm:w-[min(65vw,320px)] lg:w-full">
-        {/* Decorative outline */}
-        <div
-          aria-hidden="true"
-          className="absolute -inset-2 rounded-full border border-violet-200"
-        />
-
-        {/* Portrait */}
-        <div className="absolute inset-0 overflow-hidden rounded-full border-4 border-surface bg-surface-raised shadow-xl shadow-black/40 ring-1 ring-default">
+      <div className="relative mx-auto aspect-square w-[min(60vw,210px)] rounded-full border border-default bg-surface p-1.5 shadow-[0_18px_35px_rgba(15,23,42,0.08)]">
+        <div className="overflow-hidden rounded-full bg-surface-raised">
           <OptimizedImage
             src={HERO.image}
             srcSet={HERO.imageSrcSet}
-            sizes="(max-width: 1023px) 72vw, 390px"
-            alt={`Portrait of ${HERO.name}, ${HERO.role}`}
+            sizes="(max-width: 640px) 60vw, 270px"
+            alt={`Portrait of ${HERO.name}`}
             width="800"
             height="1000"
             loading="eager"
             fetchPriority="high"
-            className={`h-full w-full object-cover ${
+            className={`h-full w-full rounded-full object-cover ${
               reduceMotion
                 ? ""
                 : "transition-transform duration-500 ease-out hover:scale-[1.03]"
             }`}
           />
-        </div>
-
-        {/* Role label */}
-        <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-default bg-surface px-4 py-2 text-xs font-semibold text-primary shadow-md shadow-black/30 sm:left-auto sm:right-0 sm:translate-x-0">
-          <span
-            aria-hidden="true"
-            className="mr-2 inline-block h-2 w-2 rounded-full bg-success-solid"
-          />
-          {HERO.role}
         </div>
       </div>
     </m.div>
@@ -217,120 +113,67 @@ function ProfileImage({ reduceMotion }) {
 export default function Hero() {
   const reduceMotion = useReducedMotion();
 
-  const scrollToProjects = useCallback(() => {
-    const projects = document.getElementById("projects");
-
-    if (!projects) return;
-
-    const targetPosition =
-      projects.getBoundingClientRect().top +
-      window.scrollY -
-      80;
-
-    window.scrollTo({
-      top: Math.max(0, targetPosition),
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
-  }, [reduceMotion]);
-
   return (
     <section
       id="home"
       aria-labelledby="hero-heading"
       className="relative isolate scroll-mt-16 overflow-hidden bg-canvas"
     >
-      {/* Subtle background accent */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-0 -z-10 h-[320px] w-[320px] rounded-full bg-accent/10 blur-3xl sm:h-[380px] sm:w-[380px]"
-      />
+      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 mx-auto h-64 w-full max-w-5xl rounded-b-[40px] bg-gradient-to-b from-violet-500/10 to-transparent" />
 
-      <div className="mx-auto grid w-full max-w-7xl grid-cols-1 items-center gap-10 px-5 py-12 sm:gap-12 sm:px-6 sm:py-16 lg:min-h-[calc(100svh-4rem)] lg:grid-cols-[1.1fr_0.9fr] lg:gap-12 lg:px-8 lg:py-12 xl:gap-16">
-        {/* Left: Hero content */}
+      <div className="mx-auto max-w-3xl px-5 py-16 sm:px-6 sm:py-20 lg:py-24">
         <m.div
           variants={containerVariants}
           initial={reduceMotion ? false : "hidden"}
           animate="visible"
-          className="order-1 flex min-w-0 flex-col items-start gap-5"
+          className="flex flex-col items-center text-center"
         >
-          <m.div variants={fadeUpVariants}>
-            <StatusBadge />
-          </m.div>
+          <ProfileImage reduceMotion={reduceMotion} />
 
           <m.h1
             id="hero-heading"
             variants={fadeUpVariants}
-            className="max-w-3xl text-display font-extrabold text-strong"
+            className="text-display font-bold tracking-[-0.05em] text-strong"
           >
-            Hi, I'm{" "}
-            <span className="bg-gradient-to-r from-violet-300 to-violet-500 bg-clip-text text-transparent">
-              {HERO.firstName}
-            </span>
-
-            <span className="mt-2 block text-primary">
-              {HERO.role}
-            </span>
+            {HERO.name}
           </m.h1>
 
           <m.p
             variants={fadeUpVariants}
-            className="max-w-2xl text-base leading-7 text-primary sm:text-lg sm:leading-8"
+            className="mt-4 max-w-2xl text-base leading-7 text-primary sm:text-lg sm:leading-8"
           >
-            {HERO.tagline}
+            {HERO.intro}
           </m.p>
 
-          <m.p
-            variants={fadeUpVariants}
-            className="max-w-xl text-sm leading-6 text-muted sm:text-base sm:leading-7"
-          >
-            {HERO.description}
-          </m.p>
-
-          <m.div variants={fadeUpVariants}>
-            <StackList />
+          <m.div variants={fadeUpVariants} className="mt-6">
+            <SocialLinks reduceMotion={reduceMotion} />
           </m.div>
 
-          {/* Primary actions */}
           <m.div
             variants={fadeUpVariants}
-            className="flex w-full flex-wrap gap-3 pt-1"
+            className="mt-7 flex flex-wrap items-center justify-center gap-3"
           >
-            <m.button
-              type="button"
-              onClick={scrollToProjects}
+            <m.a
+              href="#contact"
               whileHover={reduceMotion ? undefined : { y: -1 }}
               whileTap={reduceMotion ? undefined : { scale: 0.98 }}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-violet-600/20 transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
-              View Projects
-              <HiOutlineArrowRight
-                aria-hidden="true"
-                className="h-4 w-4"
-              />
-            </m.button>
+              Let&apos;s Connect
+              <HiOutlineArrowRight aria-hidden="true" className="h-4 w-4" />
+            </m.a>
 
             <a
-              href={HERO.resume}
-              download
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-line-strong bg-overlay/5 px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+              href="/Mehedi_Robi_Resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              download="Mehedi_Robi_Resume.pdf"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full border border-default bg-surface px-5 py-2.5 text-sm font-semibold text-primary transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
             >
               Download Resume
-              <HiOutlineDownload
-                aria-hidden="true"
-                className="h-4 w-4"
-              />
             </a>
           </m.div>
-
-          <m.div variants={fadeUpVariants} className="pt-1">
-            <SocialLinks reduceMotion={reduceMotion} />
-          </m.div>
         </m.div>
-
-        {/* Right: Profile image */}
-        <div className="order-2 flex items-center justify-center lg:justify-end">
-          <ProfileImage reduceMotion={reduceMotion} />
-        </div>
       </div>
     </section>
   );

@@ -1,44 +1,27 @@
-import { useCallback, useEffect, useState } from "react";
-import {
-  m,
-  useReducedMotion,
-} from "framer-motion";
-import {
-  FaGithub,
-  FaLinkedin,
-  FaXTwitter,
-} from "react-icons/fa6";
-import {
-  FiCheck,
-  FiCopy,
-  FiMail,
-  FiPhone,
-  FiSend,
-} from "react-icons/fi";
+import { useMemo, useState } from "react";
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FiMail, FiMapPin, FiPhone } from "react-icons/fi";
 
-import { Section, Card } from "./UI";
-
-/* -------------------------------------------------------------------------- */
-/* Configuration                                                              */
-/* -------------------------------------------------------------------------- */
-
-const EMAIL = "mehedirobidev@gmail.com";
-const MESSAGE_LIMIT = 500;
+import { Card, Section } from "./UI";
 
 const CONTACTS = [
   {
     label: "Email",
-    value: EMAIL,
-    href: `mailto:${EMAIL}`,
+    value: "mehedirobidev@gmail.com",
+    href: "mailto:mehedirobidev@gmail.com",
     icon: FiMail,
-    accent: "group-hover:bg-accent-button",
   },
   {
     label: "Phone",
     value: "+8801336458100",
     href: "tel:+8801336458100",
     icon: FiPhone,
-    accent: "group-hover:bg-emerald-600",
+  },
+  {
+    label: "Location",
+    value: "Dhaka, Bangladesh",
+    href: "https://maps.google.com/?q=Dhaka+Bangladesh",
+    icon: FiMapPin,
   },
 ];
 
@@ -47,529 +30,278 @@ const SOCIALS = [
     label: "GitHub",
     href: "https://github.com/mehedirobi",
     icon: FaGithub,
-    hover: "hover:border-slate-400 hover:text-strong",
   },
   {
     label: "LinkedIn",
     href: "https://www.linkedin.com/in/mehedirobii/",
     icon: FaLinkedin,
-    hover: "hover:border-sky-400 hover:text-sky-300",
   },
-  {
-    label: "X",
-    href: "https://x.com/mehedirobii",
-    icon: FaXTwitter,
-    hover: "hover:border-slate-400 hover:text-strong",
+   {
+    label: "Email",
+    href: "mailto:mehedirobidev@gmail.com",
+    icon: FiMail,
   },
 ];
 
-const INITIAL_FORM = {
+const initialForm = {
   name: "",
   email: "",
+  subject: "",
   message: "",
 };
 
-const EASE = [0.22, 1, 0.36, 1];
-
-const VIEWPORT = {
-  once: true,
-  amount: 0.15,
-};
-
-const fadeUp = {
-  hidden: {
-    opacity: 0,
-    y: 16,
-  },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: EASE,
-    },
-  },
-};
-
-const stagger = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.07,
-    },
-  },
-};
-
-/* -------------------------------------------------------------------------- */
-/* Shared Styles                                                              */
-/* -------------------------------------------------------------------------- */
-
-const FIELD_CLASS =
-  "w-full rounded-xl border border-default bg-surface px-4 py-3 " +
-  "text-sm text-strong placeholder:text-muted " +
-  "outline-none transition-colors duration-200 " +
-  "focus:border-violet-400 focus:ring-2 focus:ring-accent/10";
-
-/* -------------------------------------------------------------------------- */
-/* Section Header                                                             */
-/* -------------------------------------------------------------------------- */
-
-function SectionHeader({ reduceMotion }) {
-  return (
-    <m.header
-      variants={stagger}
-      initial={reduceMotion ? false : "hidden"}
-      whileInView="show"
-      viewport={VIEWPORT}
-      className="mb-10 text-center sm:mb-12"
-    >
-      <m.p
-        variants={fadeUp}
-        className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-accent"
-      >
-        Get in touch
-      </m.p>
-
-      <m.h2
-        id="contact-heading"
-        variants={fadeUp}
-        className="text-section font-bold tracking-tight text-strong"
-      >
-        Let's Connect
-      </m.h2>
-
-      <m.p
-        variants={fadeUp}
-        className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted sm:text-base"
-      >
-        Have a project, an opportunity, or an idea to discuss?
-        I'd be glad to hear from you.
-      </m.p>
-    </m.header>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Contact Information                                                        */
-/* -------------------------------------------------------------------------- */
-
-function ContactItem({ item, copied, onCopy }) {
-  const Icon = item.icon;
-  const isCopied = copied === item.label;
-
-  return (
-    <Card className="group flex items-center justify-between gap-3 rounded-xl border border-default bg-surface p-4 transition-all duration-200 hover:border-violet-400/40 hover:shadow-md">
-      <div className="flex min-w-0 items-center gap-3">
-        <span
-          className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-surface-raised text-muted transition-colors duration-200 group-hover:text-strong ${item.accent}`}
-        >
-          <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-        </span>
-
-        <div className="min-w-0">
-          <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-muted">
-            {item.label}
-          </p>
-
-          <a
-            href={item.href}
-            className="block truncate text-sm font-medium text-primary transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-          >
-            {item.value}
-          </a>
-        </div>
-      </div>
-
-      <button
-        type="button"
-        onClick={() => onCopy(item.value, item.label)}
-        aria-label={
-          isCopied ? `${item.label} copied` : `Copy ${item.label}`
-        }
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-default text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-      >
-        {isCopied ? (
-          <FiCheck
-            className="h-4 w-4 text-success"
-            aria-hidden="true"
-          />
-        ) : (
-          <FiCopy className="h-4 w-4" aria-hidden="true" />
-        )}
-      </button>
-    </Card>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Social Links                                                               */
-/* -------------------------------------------------------------------------- */
-
-function SocialLinks({ reduceMotion }) {
-  return (
-    <div>
-      <p className="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-        Find me on
-      </p>
-
-      <div className="flex flex-wrap gap-2.5">
-        {SOCIALS.map(({ label, href, icon: Icon, hover }) => (
-          <a
-            key={label}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`Visit my ${label} profile`}
-            className={`flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors duration-200 ${hover} ${
-              reduceMotion ? "" : "hover:-translate-y-0.5"
-            } focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent`}
-          >
-            <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-          </a>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Form Field                                                                 */
-/* -------------------------------------------------------------------------- */
-
-function FormField({
-  id,
-  label,
-  error,
-  as = "input",
-  className = "",
-  ...props
-}) {
-  const Component = as;
-
-  return (
-    <div>
-      <label
-        htmlFor={id}
-        className="mb-1.5 block text-xs font-semibold text-primary"
-      >
-        {label}
-      </label>
-
-      <Component
-        id={id}
-        aria-invalid={Boolean(error)}
-        aria-describedby={error ? `${id}-error` : undefined}
-        className={`${FIELD_CLASS} ${
-          error
-            ? "border-red-400 focus:border-red-500 focus:ring-red-500/10"
-            : ""
-        } ${className}`}
-        {...props}
-      />
-
-      {error && (
-        <p
-          id={`${id}-error`}
-          className="mt-1.5 text-xs text-danger"
-          role="alert"
-        >
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Contact Form                                                               */
-/* -------------------------------------------------------------------------- */
-
-function ContactForm({
-  form,
-  errors,
-  onChange,
-  onSubmit,
-  reduceMotion,
-}) {
-  const messageLength = form.message.length;
-
-  return (
-    <m.div
-      variants={fadeUp}
-      className="rounded-2xl border border-default bg-surface p-5 shadow-sm sm:p-7"
-    >
-      <div className="mb-6">
-        <h3 className="text-lg font-bold tracking-tight text-strong">
-          Send a message
-        </h3>
-
-        <p className="mt-1 text-sm leading-6 text-muted">
-          Fill in the details below to start a conversation.
-        </p>
-      </div>
-
-      <form
-        onSubmit={onSubmit}
-        noValidate
-        aria-label="Contact form"
-        className="space-y-4"
-      >
-        <FormField
-          id="contact-name"
-          name="name"
-          label="Your name"
-          type="text"
-          autoComplete="name"
-          placeholder="Enter your name"
-          value={form.name}
-          onChange={onChange}
-          error={errors.name}
-          required
-        />
-
-        <FormField
-          id="contact-email"
-          name="email"
-          label="Email address"
-          type="email"
-          autoComplete="email"
-          placeholder="you@example.com"
-          value={form.email}
-          onChange={onChange}
-          error={errors.email}
-          required
-        />
-
-        <div>
-          <FormField
-            id="contact-message"
-            name="message"
-            label="Message"
-            as="textarea"
-            rows={5}
-            maxLength={MESSAGE_LIMIT}
-            placeholder="Tell me about your project or opportunity..."
-            value={form.message}
-            onChange={onChange}
-            error={errors.message}
-            className="resize-y"
-            required
-          />
-
-          <p
-            className={`mt-1.5 text-right text-xs tabular-nums ${
-              messageLength >= MESSAGE_LIMIT * 0.9
-                ? "text-warning"
-                : "text-muted"
-            }`}
-            aria-live="polite"
-          >
-            {messageLength}/{MESSAGE_LIMIT}
-          </p>
-        </div>
-
-        <button
-          type="submit"
-          className={`inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent-button px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
-            reduceMotion ? "" : "active:scale-[0.99]"
-          }`}
-        >
-          Open Email Draft
-          <FiSend className="h-4 w-4" aria-hidden="true" />
-        </button>
-
-        <p className="text-center text-xs leading-5 text-muted">
-          Opens your email app with your message prefilled.
-          You can review and send it there.
-        </p>
-      </form>
-    </m.div>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
-/* Contact Section                                                            */
-/* -------------------------------------------------------------------------- */
-
 export default function Contact({ id = "contact" }) {
-  const [form, setForm] = useState(INITIAL_FORM);
+  const [form, setForm] = useState(initialForm);
   const [errors, setErrors] = useState({});
-  const [copied, setCopied] = useState(null);
-  const [copyError, setCopyError] = useState("");
+  const [status, setStatus] = useState({ type: "idle", message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const reduceMotion = useReducedMotion();
-
-  // Clear the copy confirmation automatically and clean up the timer.
-  useEffect(() => {
-    if (!copied) return undefined;
-
-    const timeoutId = window.setTimeout(() => {
-      setCopied(null);
-    }, 1800);
-
-    return () => window.clearTimeout(timeoutId);
-  }, [copied]);
-
-  const handleChange = useCallback((event) => {
-    const { name, value } = event.target;
-
-    setForm((previous) => ({
-      ...previous,
-      [name]: value,
-    }));
-
-    setErrors((previous) => {
-      if (!previous[name]) return previous;
-
-      return {
-        ...previous,
-        [name]: "",
-      };
-    });
-  }, []);
-
-  const handleCopy = useCallback(async (value, label) => {
-    setCopyError("");
-
-    try {
-      if (!navigator.clipboard?.writeText) {
-        throw new Error("Clipboard API unavailable");
-      }
-
-      await navigator.clipboard.writeText(value);
-      setCopied(label);
-    } catch {
-      setCopyError(
-        `Could not copy ${label.toLowerCase()}. Select and copy the contact detail directly.`
-      );
-    }
-  }, []);
-
-  const handleSubmit = useCallback(
-    (event) => {
-      event.preventDefault();
-
-      const name = form.name.trim();
-      const email = form.email.trim();
-      const message = form.message.trim();
-
-      const nextErrors = {};
-
-      if (!name) {
-        nextErrors.name = "Please enter your name.";
-      } else if (name.length > 100) {
-        nextErrors.name = "Name must be 100 characters or fewer.";
-      }
-
-      if (!email) {
-        nextErrors.email = "Please enter your email address.";
-      } else if (
-        email.length > 254 ||
-        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-      ) {
-        nextErrors.email = "Please enter a valid email address.";
-      }
-
-      if (!message) {
-        nextErrors.message = "Please enter a message.";
-      } else if (message.length > MESSAGE_LIMIT) {
-        nextErrors.message = `Message must be ${MESSAGE_LIMIT} characters or fewer.`;
-      }
-
-      setErrors(nextErrors);
-
-      if (Object.keys(nextErrors).length > 0) return;
-
-      const subject = `Portfolio enquiry from ${name}`;
-      const body = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        "",
-        message,
-      ].join("\n");
-
-      const mailtoUrl =
-        `mailto:${EMAIL}` +
-        `?subject=${encodeURIComponent(subject)}` +
-        `&body=${encodeURIComponent(body)}`;
-
-      window.location.href = mailtoUrl;
-    },
+  const formIsComplete = useMemo(
+    () =>
+      Object.values(form).every((value) => String(value).trim().length > 0),
     [form]
   );
 
+  const validateField = (fieldName, value) => {
+    switch (fieldName) {
+      case "name":
+        return value.trim().length >= 2 ? "" : "Please enter your name.";
+      case "email":
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim())
+          ? ""
+          : "Please enter a valid email address.";
+      case "subject":
+        return value.trim().length >= 3 ? "" : "Please add a subject.";
+      case "message":
+        return value.trim().length >= 10 ? "" : "Message must be at least 10 characters long.";
+      default:
+        return "";
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    const nextForm = { ...form, [name]: value };
+
+    setForm(nextForm);
+    setErrors((current) => ({
+      ...current,
+      [name]: validateField(name, value),
+    }));
+
+    if (status.type !== "idle") {
+      setStatus({ type: "idle", message: "" });
+    }
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const nextErrors = Object.fromEntries(
+      Object.entries(form).map(([fieldName, value]) => [
+        fieldName,
+        validateField(fieldName, value),
+      ])
+    );
+
+    const hasErrors = Object.values(nextErrors).some(Boolean);
+    setErrors(nextErrors);
+
+    if (hasErrors || isSubmitting) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setStatus({ type: "loading", message: "Sending your message..." });
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/mehedirobidev@gmail.com", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          subject: form.subject,
+          message: form.message,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Unable to send message.");
+      }
+
+      setStatus({
+        type: "success",
+        message: "Your message has been sent successfully. I will get back to you soon.",
+      });
+      setForm(initialForm);
+      setErrors({});
+    } catch {
+      setStatus({
+        type: "error",
+        message: "Something went wrong while sending your message. Please try again or email me directly.",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <Section
-      id={id}
-      aria-labelledby="contact-heading"
-      background="bg-canvas-alt"
-    >
-      <div className="mx-auto max-w-6xl">
-        <SectionHeader reduceMotion={reduceMotion} />
+    <Section id={id} aria-labelledby="contact-heading" background="bg-canvas-alt">
+      <div className="mx-auto max-w-5xl">
+        <header className="mb-8 text-center sm:mb-10">
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+            Contact
+          </p>
 
-        <m.div
-          variants={stagger}
-          initial={reduceMotion ? false : "hidden"}
-          whileInView="show"
-          viewport={VIEWPORT}
-          className="grid grid-cols-1 items-start gap-7 lg:grid-cols-[0.85fr_1.15fr] lg:gap-12"
-        >
-          {/* Contact information */}
-          <m.div
-            variants={fadeUp}
-            className="min-w-0 space-y-7 lg:pt-2"
+          <h2
+            id="contact-heading"
+            className="text-section font-bold tracking-tight text-strong"
           >
-            <div>
-              <h3 className="text-lg font-bold tracking-tight text-strong">
-                Let's talk
-              </h3>
+            Let&apos;s Connect
+          </h2>
+        </header>
 
-              <p className="mt-2 max-w-md text-sm leading-7 text-muted">
-                I'm open to discussing development projects,
-                collaboration, and opportunities to grow as a
-                software developer.
-              </p>
-            </div>
+        <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
+          <div className="space-y-4">
+            {CONTACTS.map(({ label, value, href, icon: Icon }) => (
+              <Card key={label} className="flex min-h-[140px] flex-col justify-between rounded-2xl border border-default bg-surface p-5">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                  <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+                </div>
 
-            <div className="space-y-3">
-              {CONTACTS.map((item) => (
-                <ContactItem
-                  key={item.label}
-                  item={item}
-                  copied={copied}
-                  onCopy={handleCopy}
+                <div className="mt-5">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-muted">
+                    {label}
+                  </p>
+
+                  <a
+                    href={href}
+                    target={href.startsWith("http") ? "_blank" : undefined}
+                    rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                    className="mt-2 block text-sm font-medium text-primary transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  >
+                    {value}
+                  </a>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          <Card as="form" className="rounded-2xl border border-default bg-surface p-5 sm:p-6" onSubmit={handleSubmit} noValidate>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block text-sm font-medium text-primary">
+                <span className="mb-2 block">Name</span>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.name)}
+                  aria-describedby={errors.name ? "name-error" : undefined}
+                  placeholder="Your name"
+                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
                 />
-              ))}
+                {errors.name && (
+                  <span id="name-error" className="mt-1.5 block text-xs text-danger">
+                    {errors.name}
+                  </span>
+                )}
+              </label>
+
+              <label className="block text-sm font-medium text-primary">
+                <span className="mb-2 block">Email</span>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  aria-invalid={Boolean(errors.email)}
+                  aria-describedby={errors.email ? "email-error" : undefined}
+                  placeholder="your@email.com"
+                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                />
+                {errors.email && (
+                  <span id="email-error" className="mt-1.5 block text-xs text-danger">
+                    {errors.email}
+                  </span>
+                )}
+              </label>
             </div>
 
-            <div aria-live="polite" role="status">
-              {copied && (
-                <p className="text-xs font-medium text-success">
-                  {copied} copied to clipboard.
-                </p>
+            <label className="mt-4 block text-sm font-medium text-primary">
+              <span className="mb-2 block">Subject</span>
+              <input
+                type="text"
+                name="subject"
+                value={form.subject}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.subject)}
+                aria-describedby={errors.subject ? "subject-error" : undefined}
+                placeholder="Project inquiry"
+                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              />
+              {errors.subject && (
+                <span id="subject-error" className="mt-1.5 block text-xs text-danger">
+                  {errors.subject}
+                </span>
               )}
+            </label>
 
-              {copyError && (
-                <p className="text-xs text-danger">
-                  {copyError}
-                </p>
+            <label className="mt-4 block text-sm font-medium text-primary">
+              <span className="mb-2 block">Message</span>
+              <textarea
+                name="message"
+                value={form.message}
+                onChange={handleChange}
+                aria-invalid={Boolean(errors.message)}
+                aria-describedby={errors.message ? "message-error" : undefined}
+                rows="5"
+                placeholder="Tell me about your opportunity or project..."
+                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+              />
+              {errors.message && (
+                <span id="message-error" className="mt-1.5 block text-xs text-danger">
+                  {errors.message}
+                </span>
               )}
+            </label>
+
+            <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <button
+                type="submit"
+                disabled={isSubmitting || !formIsComplete}
+                className="inline-flex min-h-11 items-center justify-center rounded-full bg-accent-button px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {isSubmitting ? "Sending..." : "Send Message"}
+              </button>
+
+              <div aria-live="polite" className="text-sm text-muted">
+                {status.type === "success" && <span className="text-emerald-600">{status.message}</span>}
+                {status.type === "error" && <span className="text-danger">{status.message}</span>}
+                {status.type === "loading" && <span>{status.message}</span>}
+              </div>
             </div>
+          </Card>
+        </div>
 
-            <SocialLinks reduceMotion={reduceMotion} />
-          </m.div>
-
-          {/* Contact form */}
-          <m.div variants={fadeUp} className="min-w-0">
-            <ContactForm
-              form={form}
-              errors={errors}
-              onChange={handleChange}
-              onSubmit={handleSubmit}
-              reduceMotion={reduceMotion}
-            />
-          </m.div>
-        </m.div>
+        <div className="mt-8 flex justify-center gap-3">
+          {SOCIALS.map(({ label, href, icon: Icon }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Visit my ${label} profile`}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            >
+              <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
       </div>
     </Section>
   );

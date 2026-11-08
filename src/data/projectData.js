@@ -5,19 +5,13 @@ export const projectData = [
     category: "fullstack",
     featured: true,
     description:
-      "A sports turf booking platform for discovering venues, checking availability, and managing bookings with dedicated customer and turf-owner workflows.",
+      "A full-stack turf booking platform where users can discover sports venues and reserve available playing slots.",
     image: "/projects/optimized/khelaro-960.webp",
     imageSrcSet:
       "/projects/optimized/khelaro-480.webp 480w, /projects/optimized/khelaro-960.webp 960w",
     imageWidth: 960,
     imageHeight: 428,
-    tech: [
-      "React",
-      "Tailwind CSS",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-    ],
+    tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MongoDB"],
     links: {
       live: "https://khelaro-project.netlify.app/",
       client: "https://github.com/mehedirobi/khelaro",
@@ -30,20 +24,13 @@ export const projectData = [
     category: "fullstack",
     featured: true,
     description:
-      "A civic issue reporting platform with authentication, role-based dashboards, and workflows for reporting and tracking public infrastructure problems.",
+      "A civic issue reporting and management platform for reporting and tracking community problems with authentication and protected workflows.",
     image: "/projects/optimized/urban-fix-960.webp",
     imageSrcSet:
       "/projects/optimized/urban-fix-480.webp 480w, /projects/optimized/urban-fix-960.webp 960w",
     imageWidth: 960,
     imageHeight: 420,
-    tech: [
-      "React",
-      "Tailwind CSS",
-      "Node.js",
-      "Express.js",
-      "Firebase",
-      "MongoDB",
-    ],
+    tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Firebase"],
     links: {
       live: "https://urbanfix-project-01.netlify.app/",
       client: "https://github.com/mehedirobi/urbanfix",
@@ -56,88 +43,17 @@ export const projectData = [
     category: "fullstack",
     featured: true,
     description:
-      "A pet adoption and supplies platform featuring category-based browsing, Firebase authentication, listing management, and order workflows.",
+      "A pet adoption and supplies marketplace with authentication, listing management, ordering workflows, and downloadable PDF reports.",
     image: "/projects/optimized/pawmart-960.webp",
     imageSrcSet:
       "/projects/optimized/pawmart-480.webp 480w, /projects/optimized/pawmart-960.webp 960w",
     imageWidth: 960,
     imageHeight: 420,
-    tech: [
-      "React",
-      "Tailwind CSS",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-      "Firebase",
-    ],
+    tech: ["React", "Tailwind CSS", "Node.js", "Express.js", "MongoDB", "Firebase"],
     links: {
       live: "https://pawmart-project-01.netlify.app/",
       client: "https://github.com/mehedirobi/pawmart",
       server: "https://github.com/mehedirobi/pawmart-server",
-    },
-  },
-  {
-    id: 4,
-    name: "ToyVerse",
-    category: "fullstack",
-    featured: false,
-    description:
-      "A full-stack toy marketplace with product browsing, search, filtering, and product management backed by a database.",
-    image: "/projects/optimized/toyverse-960.webp",
-    imageSrcSet:
-      "/projects/optimized/toyverse-480.webp 480w, /projects/optimized/toyverse-960.webp 960w",
-    imageWidth: 960,
-    imageHeight: 425,
-    tech: [
-      "React",
-      "Tailwind CSS",
-      "Node.js",
-      "Express.js",
-      "MongoDB",
-    ],
-    links: {
-      live: "https://toyverse-project-01.netlify.app/",
-      client: "https://github.com/mehedirobi/toyverse",
-      server: "",
-    },
-  },
-  {
-    id: 5,
-    name: "Hero App",
-    category: "frontend",
-    featured: false,
-    description:
-      "An interactive superhero discovery application featuring character search, dynamic routing, and individual character detail pages.",
-    image: "/projects/optimized/hero-app-960.webp",
-    imageSrcSet:
-      "/projects/optimized/hero-app-480.webp 480w, /projects/optimized/hero-app-960.webp 960w",
-    imageWidth: 960,
-    imageHeight: 420,
-    tech: ["React", "Tailwind CSS"],
-    links: {
-      live: "https://hero-io-web-app-01.netlify.app/",
-      client: "https://github.com/mehedirobi/hero-web-app",
-      server: "",
-    },
-  },
-  {
-    id: 6,
-    name: "CS Ticket System",
-    category: "frontend",
-    featured: false,
-    description:
-      "A responsive customer-support dashboard with ticket status filters, data tables, and an interface for organizing support workflows.",
-    image: "/projects/optimized/cs-ticket-system-960.webp",
-    imageSrcSet:
-      "/projects/optimized/cs-ticket-system-480.webp 480w, /projects/optimized/cs-ticket-system-960.webp 960w",
-    imageWidth: 960,
-    imageHeight: 422,
-    tech: ["React", "Tailwind CSS"],
-    links: {
-      live: "https://cs-ticket-system-website-01.netlify.app/",
-      client:
-        "https://github.com/mehedirobi/cs-ticket-system-website",
-      server: "",
     },
   },
 ];

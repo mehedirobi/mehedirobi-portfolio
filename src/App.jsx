@@ -10,17 +10,39 @@ import DeferredSection from "./components/DeferredSection";
 import NotFound from "./components/NotFound";
 
 const About = lazy(() => import("./components/About"));
-const Certifications = lazy(() => import("./components/Certifications"));
 const Education = lazy(() => import("./components/Education"));
 const Contact = lazy(() => import("./components/Contact"));
 
+const getSystemTheme = () => {
+  if (typeof window === "undefined") return "dark";
+
+  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
+  return mediaQuery.matches ? "light" : "dark";
+};
+
+const getInitialTheme = () => {
+  if (typeof window === "undefined") return "dark";
+
+  try {
+    const storedTheme = window.localStorage.getItem("portfolio-theme");
+    if (storedTheme === "light" || storedTheme === "dark") {
+      return storedTheme;
+    }
+  } catch {
+    // Ignore storage access issues and fall back to system preference.
+  }
+
+  return getSystemTheme();
+};
+
 export default function App() {
-  const [theme, setTheme] = useState(
-    () => document.documentElement.dataset.theme || "dark"
-  );
+  const [theme, setTheme] = useState(getInitialTheme);
 
   useEffect(() => {
-    const color = theme === "light" ? "#f8fafc" : "#09090b";
+    const resolvedTheme = theme === "light" ? "light" : "dark";
+    document.documentElement.dataset.theme = resolvedTheme;
+
+    const color = resolvedTheme === "light" ? "#f8fafc" : "#09090b";
     document.querySelector('meta[name="theme-color"]')?.setAttribute(
       "content",
       color
@@ -28,18 +50,21 @@ export default function App() {
   }, [theme]);
 
   useEffect(() => {
-    let preference;
+    if (typeof window === "undefined") return undefined;
 
-    try {
-      if (window.localStorage.getItem("portfolio-theme")) return undefined;
-      preference = window.matchMedia("(prefers-color-scheme: light)");
-    } catch {
-      return undefined;
-    }
+    const preference = window.matchMedia("(prefers-color-scheme: light)");
 
     const syncSystemTheme = (event) => {
+      try {
+        const savedTheme = window.localStorage.getItem("portfolio-theme");
+        if (savedTheme === "light" || savedTheme === "dark") {
+          return;
+        }
+      } catch {
+        // Ignore storage access issues.
+      }
+
       const nextTheme = event.matches ? "light" : "dark";
-      document.documentElement.dataset.theme = nextTheme;
       setTheme(nextTheme);
     };
 
@@ -97,19 +122,14 @@ export default function App() {
             <Skills />
             <Projects />
             <DeferredSection
-              id="certifications"
-              Component={Certifications}
-              minHeight="min-h-[28rem]"
-            />
-            <DeferredSection
               id="education"
               Component={Education}
-              minHeight="min-h-[28rem]"
+              minHeight="min-h-[22rem]"
             />
             <DeferredSection
               id="contact"
               Component={Contact}
-              minHeight="min-h-[44rem]"
+              minHeight="min-h-[32rem]"
             />
           </main>
 
