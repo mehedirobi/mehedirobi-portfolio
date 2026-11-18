@@ -54,18 +54,18 @@ export default function Certifications({ id = "certifications" }) {
         {/* Featured certification */}
         <Card
           as="article"
-          className="group relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-default bg-surface p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-violet-400/40 hover:shadow-lg hover:shadow-violet-950/20"
+          className="group relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-default bg-surface p-0 shadow-sm transition-[border-color,box-shadow] duration-200 hover:border-accent/40 hover:shadow-lg hover:shadow-accent/10"
         >
           {/* Top accent */}
           <div
-            className="h-1 w-full bg-gradient-to-r from-violet-500 via-violet-400 to-violet-300"
+            className="h-1 w-full bg-gradient-to-r from-accent to-accent-hover"
             aria-hidden="true"
           />
 
           <div className="grid md:grid-cols-[1fr_auto]">
             {/* Main information */}
             <div className="flex min-w-0 items-start gap-4 p-5 sm:gap-5 sm:p-8">
-              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-violet-400/20 bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-105 sm:h-16 sm:w-16">
+              <div className="relative flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-accent/20 bg-accent/10 text-accent transition-transform duration-300 group-hover:scale-105 sm:h-16 sm:w-16">
                 <TbCertificate
                   className="h-8 w-8 sm:h-9 sm:w-9"
                   aria-hidden="true"
@@ -81,7 +81,7 @@ export default function Certifications({ id = "certifications" }) {
 
               <div className="min-w-0 flex-1">
                 <div className="mb-3 flex flex-wrap items-center gap-2">
-                  <span className="rounded-md border border-violet-400/20 bg-accent/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-accent">
+                  <span className="rounded-md border border-accent/20 bg-accent/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-accent">
                     {category}
                   </span>
 
@@ -132,12 +132,12 @@ export default function Certifications({ id = "certifications" }) {
             {/* Decorative credential panel */}
             <div className="relative flex min-h-28 items-center justify-center overflow-hidden border-t border-default bg-canvas-alt px-6 py-5 md:min-h-full md:w-48 md:border-l md:border-t-0 lg:w-56">
               <div
-                className="absolute -right-8 -top-10 h-32 w-32 rounded-full border border-violet-400/20"
+                className="absolute -right-8 -top-10 h-32 w-32 rounded-full border border-accent/20"
                 aria-hidden="true"
               />
 
               <div
-                className="absolute -bottom-12 -left-8 h-32 w-32 rounded-full border border-violet-400/15"
+                className="absolute -bottom-12 -left-8 h-32 w-32 rounded-full border border-accent/15"
                 aria-hidden="true"
               />
 
@@ -155,7 +155,7 @@ export default function Certifications({ id = "certifications" }) {
                   Course completion
                 </p>
 
-                <div className="mx-auto mt-3 h-0.5 w-10 rounded-full bg-violet-400" />
+                <div className="mx-auto mt-3 h-0.5 w-10 rounded-full bg-accent" />
               </div>
             </div>
           </div>

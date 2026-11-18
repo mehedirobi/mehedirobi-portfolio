@@ -58,7 +58,7 @@ const SKILLS = [
     description: "Working with data storage and secure access flows for web apps.",
     icon: FiLock,
     skills: [
-      { label: "MongoDB", icon: SiMongodb, color: "text-emerald-600" },
+      { label: "MongoDB", icon: SiMongodb, color: "text-emerald-400" },
       { label: "Firebase Authentication", icon: SiFirebase, color: "text-amber-500" },
     ],
   },
@@ -70,7 +70,7 @@ const SKILLS = [
       { label: "Git", icon: SiGit, color: "text-orange-600" },
       { label: "GitHub", icon: SiGithub, color: "text-primary" },
       { label: "VS Code", icon: VscVscode, color: "text-blue-500" },
-      { label: "Netlify", icon: FiTool, color: "text-violet-500" },
+      { label: "Netlify", icon: FiTool, color: "text-accent" },
       { label: "Vercel", icon: FiTool, color: "text-cyan-500" },
     ],
   },
@@ -118,11 +118,11 @@ function SkillCard({ item, reduceMotion }) {
     <m.article
       variants={fadeUp}
       whileHover={reduceMotion ? undefined : { y: -3 }}
-      className="group relative overflow-hidden rounded-xl border border-default bg-surface p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:border-violet-500/40 hover:shadow-md"
+      className="group relative overflow-hidden rounded-xl border border-default bg-surface p-5 shadow-sm shadow-black/20 transition-[border-color,box-shadow] duration-200 hover:border-accent/40 hover:shadow-md"
     >
       <div
         aria-hidden="true"
-        className="absolute inset-x-5 top-0 h-0.5 bg-violet-400 opacity-0 transition-opacity group-hover:opacity-100"
+        className="absolute inset-x-5 top-0 h-0.5 bg-accent opacity-0 transition-opacity group-hover:opacity-100"
       />
 
       <div className="flex items-start gap-3.5">

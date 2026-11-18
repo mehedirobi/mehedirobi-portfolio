@@ -56,7 +56,7 @@ function BackToTop({ reduceMotion }) {
       transition={{ duration: 0.18 }}
       onClick={() => scrollToSection("home", reduceMotion)}
       aria-label="Back to top"
-      className="fixed bottom-5 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-primary shadow-lg shadow-slate-900/10 transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 sm:bottom-6 sm:right-6"
+      className="fixed bottom-5 right-5 z-50 flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-primary shadow-lg shadow-slate-900/10 transition-colors hover:border-accent/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 sm:bottom-6 sm:right-6"
     >
       <FiArrowUp className="h-[18px] w-[18px]" aria-hidden="true" />
     </m.button>
@@ -93,7 +93,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`Visit my ${label} profile`}
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors hover:border-accent/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
                 >
                   <Icon className="h-[17px] w-[17px]" aria-hidden="true" />
                 </a>

@@ -203,7 +203,7 @@ export default function Contact({ id = "contact" }) {
                   aria-invalid={Boolean(errors.name)}
                   aria-describedby={errors.name ? "name-error" : undefined}
                   placeholder="Your name"
-                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
                 />
                 {errors.name && (
                   <span id="name-error" className="mt-1.5 block text-xs text-danger">
@@ -222,7 +222,7 @@ export default function Contact({ id = "contact" }) {
                   aria-invalid={Boolean(errors.email)}
                   aria-describedby={errors.email ? "email-error" : undefined}
                   placeholder="your@email.com"
-                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                  className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
                 />
                 {errors.email && (
                   <span id="email-error" className="mt-1.5 block text-xs text-danger">
@@ -242,7 +242,7 @@ export default function Contact({ id = "contact" }) {
                 aria-invalid={Boolean(errors.subject)}
                 aria-describedby={errors.subject ? "subject-error" : undefined}
                 placeholder="Project inquiry"
-                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
               />
               {errors.subject && (
                 <span id="subject-error" className="mt-1.5 block text-xs text-danger">
@@ -261,7 +261,7 @@ export default function Contact({ id = "contact" }) {
                 aria-describedby={errors.message ? "message-error" : undefined}
                 rows="5"
                 placeholder="Tell me about your opportunity or project..."
-                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+                className="w-full rounded-xl border border-default bg-canvas px-3 py-2.5 text-sm text-strong placeholder:text-muted focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20"
               />
               {errors.message && (
                 <span id="message-error" className="mt-1.5 block text-xs text-danger">
@@ -280,7 +280,7 @@ export default function Contact({ id = "contact" }) {
               </button>
 
               <div aria-live="polite" className="text-sm text-muted">
-                {status.type === "success" && <span className="text-emerald-600">{status.message}</span>}
+                {status.type === "success" && <span className="text-success">{status.message}</span>}
                 {status.type === "error" && <span className="text-danger">{status.message}</span>}
                 {status.type === "loading" && <span>{status.message}</span>}
               </div>
@@ -296,7 +296,7 @@ export default function Contact({ id = "contact" }) {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Visit my ${label} profile`}
-              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors hover:border-violet-400/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-muted transition-colors hover:border-accent/40 hover:bg-accent/10 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
             >
               <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
             </a>

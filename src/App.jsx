@@ -1,4 +1,4 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy } from "react";
 import { LazyMotion, MotionConfig, domAnimation } from "framer-motion";
 
 import Navbar from "./components/Navbar";
@@ -13,82 +13,7 @@ const About = lazy(() => import("./components/About"));
 const Education = lazy(() => import("./components/Education"));
 const Contact = lazy(() => import("./components/Contact"));
 
-const getSystemTheme = () => {
-  if (typeof window === "undefined") return "dark";
-
-  const mediaQuery = window.matchMedia("(prefers-color-scheme: light)");
-  return mediaQuery.matches ? "light" : "dark";
-};
-
-const getInitialTheme = () => {
-  if (typeof window === "undefined") return "dark";
-
-  try {
-    const storedTheme = window.localStorage.getItem("portfolio-theme");
-    if (storedTheme === "light" || storedTheme === "dark") {
-      return storedTheme;
-    }
-  } catch {
-    // Ignore storage access issues and fall back to system preference.
-  }
-
-  return getSystemTheme();
-};
-
 export default function App() {
-  const [theme, setTheme] = useState(getInitialTheme);
-
-  useEffect(() => {
-    const resolvedTheme = theme === "light" ? "light" : "dark";
-    document.documentElement.dataset.theme = resolvedTheme;
-
-    const color = resolvedTheme === "light" ? "#f8fafc" : "#09090b";
-    document.querySelector('meta[name="theme-color"]')?.setAttribute(
-      "content",
-      color
-    );
-  }, [theme]);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return undefined;
-
-    const preference = window.matchMedia("(prefers-color-scheme: light)");
-
-    const syncSystemTheme = (event) => {
-      try {
-        const savedTheme = window.localStorage.getItem("portfolio-theme");
-        if (savedTheme === "light" || savedTheme === "dark") {
-          return;
-        }
-      } catch {
-        // Ignore storage access issues.
-      }
-
-      const nextTheme = event.matches ? "light" : "dark";
-      setTheme(nextTheme);
-    };
-
-    preference.addEventListener("change", syncSystemTheme);
-    return () => preference.removeEventListener("change", syncSystemTheme);
-  }, []);
-
-  const toggleTheme = () => {
-    const nextTheme = theme === "light" ? "dark" : "light";
-    document.documentElement.dataset.theme = nextTheme;
-    document.querySelector('meta[name="theme-color"]')?.setAttribute(
-      "content",
-      nextTheme === "light" ? "#f8fafc" : "#09090b"
-    );
-
-    try {
-      window.localStorage.setItem("portfolio-theme", nextTheme);
-    } catch {
-      // Keep the selected theme active for this session if storage is unavailable.
-    }
-
-    setTheme(nextTheme);
-  };
-
   const isNotFound =
     window.location.pathname.replace(/\/+$/, "") !== "" &&
     window.location.pathname !== "/index.html";
@@ -106,7 +31,7 @@ export default function App() {
             Skip to main content
           </a>
 
-          <Navbar theme={theme} onToggleTheme={toggleTheme} />
+          <Navbar />
 
           <main
             id="main-content"

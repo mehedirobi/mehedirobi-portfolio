@@ -1,101 +1,119 @@
+
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, m, useReducedMotion } from "framer-motion";
-import { FiMoon, FiSend, FiSun } from "react-icons/fi";
+import {
+  FiDownload,
+  FiHome,
+  FiCode,
+  FiFolder,
+  FiBookOpen,
+  FiMail,
+} from "react-icons/fi";
 
 const NAV_ITEMS = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "skills", label: "Skills" },
-  { id: "projects", label: "Projects" },
-  { id: "education", label: "Education" },
-  { id: "contact", label: "Contact" },
+  { id: "home", label: "Home", icon: FiHome },
+  { id: "skills", label: "Skills", icon: FiCode },
+  { id: "projects", label: "Projects", icon: FiFolder },
+  { id: "education", label: "Education", icon: FiBookOpen },
+  { id: "contact", label: "Contact", icon: FiMail },
 ];
 
 const HEADER_HEIGHT = 64;
-const SCROLL_OFFSET = HEADER_HEIGHT + 16;
+const SCROLL_OFFSET = HEADER_HEIGHT + 20;
 const DESKTOP_BREAKPOINT = 1280;
 
-const NAV_LINK_BASE =
-  "relative rounded-full px-3 py-3 text-[13px] font-medium " +
-  "transition-colors duration-200 focus-visible:outline-none " +
-  "focus-visible:ring-2 focus-visible:ring-accent " +
-  "focus-visible:ring-offset-2";
+const RESUME_PATH = "/MehediRobi_Resume.pdf";
 
 function Brand({ onClick }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      aria-label="Mehedi Robi — Home"
-      className="shrink-0 rounded-full px-2 py-1 text-lg font-bold tracking-tight text-strong transition-colors hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2"
+      aria-label="Mehedi Robi - Home"
+      className="shrink-0 rounded-lg text-lg font-bold tracking-tight text-strong transition-colors duration-200 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-4"
     >
-      <span className="text-strong">Mehedi</span>
-      <span className="bg-gradient-to-r from-violet-500 to-violet-400 bg-clip-text text-transparent">
-        {" "}Robi
-      </span>
+      <span>Mehedi</span>
+      <span className="text-accent"> Robi</span>
     </button>
   );
 }
 
-function NavItem({ id, label, active, onClick }) {
-  const isActive = active === id;
+function ResumeButton({ mobile = false, onClick }) {
+  return (
+    <a
+      href={RESUME_PATH}
+      download="MehediRobi_Resume.pdf"
+      onClick={onClick}
+      className={`inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-accent/20 bg-accent px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-accent-hover hover:shadow-md hover:shadow-accent/10 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
+        mobile ? "w-full" : ""
+      }`}
+    >
+      <FiDownload aria-hidden="true" className="h-4 w-4" />
+      <span>Download Resume</span>
+    </a>
+  );
+}
+
+function NavItem({ item, active, onClick }) {
+  const isActive = active === item.id;
+  const Icon = item.icon;
 
   return (
     <button
       type="button"
-      onClick={(event) => onClick(event, id)}
+      onClick={(event) => onClick(event, item.id)}
       aria-current={isActive ? "location" : undefined}
-      className={`${NAV_LINK_BASE} ${
+      className={`relative inline-flex min-h-10 items-center gap-2 rounded-full px-3.5 text-[13px] font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
         isActive
           ? "text-accent"
           : "text-muted hover:bg-overlay/5 hover:text-strong"
       }`}
     >
       {isActive && (
-        <span
-          className="absolute inset-0 rounded-full bg-violet-500/15"
+        <m.span
+          layoutId="active-nav-indicator"
+          className="absolute inset-0 rounded-full bg-accent/10"
+          transition={{
+            type: "spring",
+            stiffness: 380,
+            damping: 30,
+          }}
         />
       )}
 
-      <span className="relative z-10">{label}</span>
+      <Icon className="relative z-10 h-3.5 w-3.5" aria-hidden="true" />
+      <span className="relative z-10">{item.label}</span>
     </button>
   );
 }
 
-function MobileNavItem({ id, label, active, onClick }) {
-  const isActive = active === id;
+function MobileNavItem({ item, active, onClick }) {
+  const isActive = active === item.id;
+  const Icon = item.icon;
 
   return (
     <button
       type="button"
-      onClick={(event) => onClick(event, id)}
+      onClick={(event) => onClick(event, item.id)}
       aria-current={isActive ? "location" : undefined}
-      className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${
+      className={`flex min-h-11 w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent ${
         isActive
-          ? "bg-violet-500/15 text-accent"
+          ? "bg-accent/10 text-accent"
           : "text-primary hover:bg-overlay/5 hover:text-strong"
       }`}
     >
-      <span
+      <Icon
         aria-hidden="true"
-        className={`h-1.5 w-1.5 shrink-0 rounded-full ${
-          isActive ? "bg-violet-400" : "bg-slate-600"
+        className={`h-4 w-4 ${
+          isActive ? "text-accent" : "text-muted"
         }`}
       />
-      {label}
-    </button>
-  );
-}
 
-function HireMeButton({ onClick, className = "" }) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-accent-button px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-accent-button-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 active:bg-accent-button-hover ${className}`}
-    >
-      <FiSend aria-hidden="true" className="h-3.5 w-3.5" />
-      <span>Contact Me</span>
+      <span>{item.label}</span>
+
+      {isActive && (
+        <span className="ml-auto h-1.5 w-1.5 rounded-full bg-accent" />
+      )}
     </button>
   );
 }
@@ -109,51 +127,40 @@ function MenuToggle({ open, onClick, buttonRef }) {
       aria-label={open ? "Close navigation menu" : "Open navigation menu"}
       aria-expanded={open}
       aria-controls="mobile-navigation"
-      className="inline-flex h-11 w-11 items-center justify-center rounded-lg text-primary transition-colors hover:bg-overlay/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent xl:hidden"
+      className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-default text-primary transition-colors duration-200 hover:bg-overlay/5 hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent xl:hidden"
     >
-      <span className="sr-only">
-        {open ? "Close menu" : "Open menu"}
-      </span>
-
-      <span className="flex w-5 flex-col gap-[5px]" aria-hidden="true">
+      <span className="flex w-4 flex-col gap-[5px]" aria-hidden="true">
         <m.span
-          animate={open ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
-          transition={{ duration: 0.18 }}
-          className="h-0.5 w-5 rounded-full bg-current"
+          animate={
+            open
+              ? { rotate: 45, y: 6.5 }
+              : { rotate: 0, y: 0 }
+          }
+          transition={{ duration: 0.2 }}
+          className="h-0.5 w-4 rounded-full bg-current"
         />
+
         <m.span
-          animate={open ? { opacity: 0 } : { opacity: 1 }}
+          animate={{ opacity: open ? 0 : 1 }}
           transition={{ duration: 0.12 }}
-          className="h-0.5 w-5 rounded-full bg-current"
+          className="h-0.5 w-4 rounded-full bg-current"
         />
+
         <m.span
-          animate={open ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
-          transition={{ duration: 0.18 }}
-          className="h-0.5 w-5 rounded-full bg-current"
+          animate={
+            open
+              ? { rotate: -45, y: -6.5 }
+              : { rotate: 0, y: 0 }
+          }
+          transition={{ duration: 0.2 }}
+          className="h-0.5 w-4 rounded-full bg-current"
         />
       </span>
     </button>
   );
 }
 
-function ThemeToggle({ theme, onToggle, className = "" }) {
-  const isLight = theme === "light";
-  const Icon = isLight ? FiMoon : FiSun;
-
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      aria-label={`Switch to ${isLight ? "dark" : "light"} theme`}
-      aria-pressed={isLight}
-      className={`inline-flex h-11 w-11 items-center justify-center rounded-xl border border-default bg-surface text-primary transition-colors hover:border-line-strong hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${className}`}
-    >
-      <Icon className="h-[18px] w-[18px]" aria-hidden="true" />
-    </button>
-  );
-}
-
-export default function Navbar({ theme, onToggleTheme }) {
+export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("home");
   const [scrolled, setScrolled] = useState(false);
@@ -162,6 +169,7 @@ export default function Navbar({ theme, onToggleTheme }) {
   const previousOverflowRef = useRef("");
   const reduceMotion = useReducedMotion();
 
+  // Scroll to the selected section.
   const scrollTo = useCallback(
     (event, id) => {
       event?.preventDefault();
@@ -169,7 +177,6 @@ export default function Navbar({ theme, onToggleTheme }) {
       const section = document.getElementById(id);
 
       setOpen(false);
-      if (open) menuButtonRef.current?.focus();
 
       if (!section) return;
 
@@ -185,31 +192,37 @@ export default function Navbar({ theme, onToggleTheme }) {
         behavior: reduceMotion ? "auto" : "smooth",
       });
     },
-    [open, reduceMotion]
+    [reduceMotion]
   );
 
-  // Keep the active link and header appearance in sync with scrolling.
+  // Detect active section and navbar scroll state.
   useEffect(() => {
     let frameId = 0;
 
     const updateNavigation = () => {
       frameId = 0;
 
-      setScrolled(window.scrollY > 12);
+      const currentScroll = window.scrollY;
 
-      const sections = NAV_ITEMS
-        .map(({ id }) => document.getElementById(id))
+      setScrolled(currentScroll > 12);
+
+      const sections = NAV_ITEMS.map(({ id }) => {
+        const element = document.getElementById(id);
+
+        if (!element) return null;
+
+        return {
+          id,
+          top: element.getBoundingClientRect().top + currentScroll,
+        };
+      })
         .filter(Boolean)
-        .map((element) => ({
-          id: element.id,
-          top: element.getBoundingClientRect().top + window.scrollY,
-        }))
         .sort((a, b) => a.top - b.top);
 
       if (!sections.length) return;
 
       const isAtPageBottom =
-        window.scrollY + window.innerHeight >=
+        window.innerHeight + currentScroll >=
         document.documentElement.scrollHeight - 2;
 
       if (isAtPageBottom) {
@@ -217,7 +230,8 @@ export default function Navbar({ theme, onToggleTheme }) {
         return;
       }
 
-      const threshold = window.scrollY + SCROLL_OFFSET + 24;
+      const threshold = currentScroll + SCROLL_OFFSET + 24;
+
       let currentSection = sections[0].id;
 
       for (const section of sections) {
@@ -228,17 +242,23 @@ export default function Navbar({ theme, onToggleTheme }) {
         }
       }
 
-      setActive(currentSection);
+      setActive((previous) =>
+        previous === currentSection ? previous : currentSection
+      );
     };
 
     const handleScroll = () => {
       if (frameId) return;
+
       frameId = window.requestAnimationFrame(updateNavigation);
     };
 
     updateNavigation();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
+
     window.addEventListener("resize", handleScroll);
 
     return () => {
@@ -251,32 +271,14 @@ export default function Navbar({ theme, onToggleTheme }) {
     };
   }, []);
 
-  // Close the mobile menu with Escape or when entering desktop layout.
+  // Close mobile menu using Escape or desktop breakpoint.
   useEffect(() => {
     if (!open) return;
-
-    const mobileNavigation = document.getElementById("mobile-navigation");
-    const focusableItems = mobileNavigation?.querySelectorAll(
-      'button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
-    );
-    const firstItem = focusableItems?.[0];
-    const lastItem = focusableItems?.[focusableItems.length - 1];
 
     const handleKeyDown = (event) => {
       if (event.key === "Escape") {
         setOpen(false);
         menuButtonRef.current?.focus();
-        return;
-      }
-
-      if (event.key === "Tab" && firstItem && lastItem) {
-        if (event.shiftKey && document.activeElement === firstItem) {
-          event.preventDefault();
-          lastItem.focus();
-        } else if (!event.shiftKey && document.activeElement === lastItem) {
-          event.preventDefault();
-          firstItem.focus();
-        }
       }
     };
 
@@ -288,7 +290,6 @@ export default function Navbar({ theme, onToggleTheme }) {
 
     document.addEventListener("keydown", handleKeyDown);
     window.addEventListener("resize", handleResize);
-    firstItem?.focus();
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
@@ -296,7 +297,7 @@ export default function Navbar({ theme, onToggleTheme }) {
     };
   }, [open]);
 
-  // Prevent background scrolling while the mobile menu is open.
+  // Prevent background scrolling while mobile menu is open.
   useEffect(() => {
     if (!open) return;
 
@@ -313,41 +314,47 @@ export default function Navbar({ theme, onToggleTheme }) {
     menuButtonRef.current?.focus();
   }, []);
 
+  const handleMobileNavigation = (event, id) => {
+    scrollTo(event, id);
+    menuButtonRef.current?.focus();
+  };
+
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8 ${
-          scrolled ? "" : ""
-        }`}
-      >
-        <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between gap-3">
-          <div className="rounded-full border border-default bg-surface/80 px-3 py-2 shadow-[0_10px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl backdrop-saturate-150">
-            <Brand onClick={(event) => scrollTo(event, "home")} />
+      <header className="fixed inset-x-0 top-0 z-50 px-4 pt-3 sm:px-6 lg:px-8">
+        <div
+          className={`mx-auto flex w-full max-w-7xl items-center justify-between gap-4 rounded-full border px-4 py-2.5 transition-all duration-300 sm:px-5 ${
+            scrolled
+              ? "border-default bg-surface/90 shadow-[0_8px_30px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+              : "border-default/70 bg-surface/75 backdrop-blur-lg"
+          }`}
+        >
+          {/* Brand */}
+          <Brand onClick={(event) => scrollTo(event, "home")} />
+
+          {/* Desktop Navigation */}
+          <nav
+            aria-label="Primary navigation"
+            className="hidden items-center gap-1 xl:flex"
+          >
+            {NAV_ITEMS.map((item) => (
+              <NavItem
+                key={item.id}
+                item={item}
+                active={active}
+                onClick={scrollTo}
+              />
+            ))}
+          </nav>
+
+          {/* Desktop Resume */}
+          <div className="hidden shrink-0 xl:block">
+            <ResumeButton />
           </div>
 
-          <div className="hidden flex-1 justify-center xl:flex">
-            <nav
-              aria-label="Primary navigation"
-              className="inline-flex items-center gap-1 rounded-full border border-default bg-surface/80 px-2 py-1.5 shadow-[0_10px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl backdrop-saturate-150"
-            >
-              {NAV_ITEMS.map((item) => (
-                <NavItem
-                  key={item.id}
-                  {...item}
-                  active={active}
-                  onClick={scrollTo}
-                />
-              ))}
-            </nav>
-          </div>
-
-          <div className="hidden items-center gap-2 xl:flex">
-            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
-            <HireMeButton onClick={(event) => scrollTo(event, "contact")} />
-          </div>
-
+          {/* Mobile Controls */}
           <div className="flex items-center gap-2 xl:hidden">
-            <ThemeToggle theme={theme} onToggle={onToggleTheme} />
+            <ResumeButton mobile={false} />
             <MenuToggle
               open={open}
               onClick={() => setOpen((previous) => !previous)}
@@ -356,35 +363,36 @@ export default function Navbar({ theme, onToggleTheme }) {
           </div>
         </div>
 
+        {/* Mobile Navigation */}
         <AnimatePresence initial={false}>
           {open && (
             <m.div
               id="mobile-navigation"
-              initial={reduceMotion ? false : { opacity: 0, y: -6 }}
+              initial={reduceMotion ? false : { opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-              transition={{ duration: reduceMotion ? 0 : 0.16 }}
-              className="absolute inset-x-0 top-full border-t border-default bg-canvas shadow-lg shadow-black/40 xl:hidden"
+              exit={reduceMotion ? undefined : { opacity: 0, y: -8 }}
+              transition={{ duration: reduceMotion ? 0 : 0.18 }}
+              className="absolute inset-x-4 top-full mt-3 overflow-hidden rounded-2xl border border-default bg-surface/95 shadow-xl backdrop-blur-xl sm:inset-x-6 xl:hidden"
             >
               <nav
                 aria-label="Mobile navigation"
-                className="mx-auto max-h-[calc(100dvh-4rem)] max-w-7xl overflow-y-auto px-4 py-3 sm:px-6"
+                className="max-h-[calc(100dvh-6rem)] overflow-y-auto p-3"
               >
                 <div className="flex flex-col gap-1">
                   {NAV_ITEMS.map((item) => (
                     <MobileNavItem
                       key={item.id}
-                      {...item}
+                      item={item}
                       active={active}
-                      onClick={scrollTo}
+                      onClick={handleMobileNavigation}
                     />
                   ))}
                 </div>
 
                 <div className="mt-3 border-t border-default pt-3">
-                  <HireMeButton
-                    onClick={(event) => scrollTo(event, "contact")}
-                    className="w-full"
+                  <ResumeButton
+                    mobile
+                    onClick={closeMenu}
                   />
                 </div>
               </nav>
@@ -393,6 +401,7 @@ export default function Navbar({ theme, onToggleTheme }) {
         </AnimatePresence>
       </header>
 
+      {/* Mobile Backdrop */}
       <AnimatePresence>
         {open && (
           <m.button
@@ -404,7 +413,7 @@ export default function Navbar({ theme, onToggleTheme }) {
             exit={reduceMotion ? undefined : { opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.15 }}
             onClick={closeMenu}
-            className="fixed inset-x-0 bottom-0 top-16 z-40 cursor-default bg-overlay/10 xl:hidden"
+            className="fixed inset-0 z-40 cursor-default bg-black/20 backdrop-blur-[2px] xl:hidden"
           />
         )}
       </AnimatePresence>
