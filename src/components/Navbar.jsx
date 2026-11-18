@@ -43,10 +43,19 @@ const DESKTOP_QUERY = "(min-width: 1024px)"; // Tailwind `lg`
 // Shared styles
 // --------------------------------------------------
 
+// Symmetrical glass: no horizontal offset, so the left, middle and right pills
+// all get the same soft edge on both sides. Layers: hairline ring, tight
+// contact shadow, wide ambient shadow, top inner highlight.
 const GLASS =
-  "pointer-events-auto border border-white/40 bg-white/75 backdrop-blur-xl backdrop-saturate-150 " +
-  "shadow-[0_8px_30px_rgba(15,23,42,0.08)] " +
-  "dark:border-white/10 dark:bg-slate-900/70 dark:shadow-[0_8px_30px_rgba(0,0,0,0.3)]";
+  "pointer-events-auto border border-white/50 bg-white/80 backdrop-blur-xl backdrop-saturate-150 " +
+  "shadow-[0_0_0_1px_rgba(15,23,42,0.04),0_2px_8px_rgba(15,23,42,0.06),0_12px_32px_-8px_rgba(15,23,42,0.16),inset_0_1px_0_rgba(255,255,255,0.8)] " +
+  "dark:border-white/10 dark:bg-slate-900/75 " +
+  "dark:shadow-[0_0_0_1px_rgba(255,255,255,0.04),0_2px_8px_rgba(0,0,0,0.3),0_12px_32px_-8px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.06)]";
+
+const GLASS_HOVER =
+  "hover:border-accent/30 " +
+  "hover:shadow-[0_0_0_1px_rgba(15,23,42,0.05),0_4px_12px_rgba(15,23,42,0.08),0_16px_40px_-8px_rgba(15,23,42,0.2),inset_0_1px_0_rgba(255,255,255,0.9)] " +
+  "dark:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.06),0_4px_12px_rgba(0,0,0,0.35),0_16px_40px_-8px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.08)]";
 
 const FOCUS_RING =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent";
@@ -155,8 +164,15 @@ function Brand({ onClick }) {
       href="#home"
       onClick={onClick}
       aria-label="Mehedi Robi - Home"
-      className={`group inline-flex h-12 items-center gap-2.5 justify-self-start rounded-full pl-2 pr-5 transition-all duration-300 hover:border-accent/30 hover:shadow-lg ${GLASS} ${FOCUS_RING}`}
+      className={`group inline-flex h-12 items-center gap-2.5 justify-self-start rounded-full pl-2 pr-5 transition-[border-color,box-shadow] duration-300 ${GLASS} ${GLASS_HOVER} ${FOCUS_RING}`}
     >
+      <span
+        aria-hidden="true"
+        className="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-600 text-[11px] font-bold tracking-wide text-white shadow-sm shadow-blue-600/30 transition-transform duration-300 group-hover:scale-105 motion-reduce:group-hover:scale-100"
+      >
+        MR
+      </span>
+
       <span className="text-base font-bold tracking-tight text-strong">
         Mehedi <span className="text-accent">Robi</span>
       </span>
@@ -177,7 +193,9 @@ function NavItem({ item, isActive, onClick }) {
       onClick={(event) => onClick(event, item.id)}
       aria-current={isActive ? "location" : undefined}
       className={`relative inline-flex h-10 items-center gap-2 rounded-full px-4 text-sm font-medium transition-colors duration-200 ${FOCUS_RING} focus-visible:ring-inset ${
-        isActive ? "text-accent" : "text-muted hover:bg-overlay/5 hover:text-strong"
+        isActive
+          ? "text-accent"
+          : "text-muted hover:bg-overlay/5 hover:text-strong"
       }`}
     >
       {isActive && (
@@ -222,6 +240,9 @@ function DesktopNavigation({ active, onClick }) {
 
 // "header": icon-only below `sm`, labelled from `sm` up
 // "menu":   full-width labelled button inside the mobile panel
+//
+// Colors are explicit (not theme tokens) so the button stays vibrant in both
+// themes. Hover goes DEEPER and glows more; it never gets lighter.
 function ResumeButton({ variant = "header", onClick }) {
   const isMenu = variant === "menu";
 
@@ -230,15 +251,29 @@ function ResumeButton({ variant = "header", onClick }) {
       href={RESUME_PATH}
       download={RESUME_FILENAME}
       onClick={onClick}
-      className={`group pointer-events-auto inline-flex h-12 items-center justify-center gap-2 rounded-full border border-accent/20 bg-accent text-sm font-semibold text-white shadow-md shadow-accent/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-accent-hover hover:shadow-lg hover:shadow-accent/30 active:translate-y-0 motion-reduce:transition-none motion-reduce:hover:translate-y-0 ${FOCUS_RING} focus-visible:ring-offset-2 focus-visible:ring-offset-transparent ${
+      className={`group pointer-events-auto relative inline-flex h-12 items-center justify-center gap-2 overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-blue-600 to-indigo-600 text-sm font-semibold text-white shadow-[0_0_0_1px_rgba(37,99,235,0.15),0_6px_20px_-4px_rgba(37,99,235,0.55),inset_0_1px_0_rgba(255,255,255,0.25)] transition-[transform,box-shadow] duration-300 ease-out hover:-translate-y-0.5 hover:shadow-[0_0_0_1px_rgba(37,99,235,0.25),0_12px_28px_-4px_rgba(37,99,235,0.65),inset_0_1px_0_rgba(255,255,255,0.3)] active:translate-y-0 active:scale-[0.98] motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950 ${
         isMenu ? "w-full px-5" : "w-12 sm:w-auto sm:px-5"
       }`}
     >
+      {/* Deeper gradient fades in on hover (opacity only, so no color banding or washed-out frames) */}
+      <span
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+      />
+
+      {/* Light sweep on hover */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 -left-1/2 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/25 to-transparent opacity-0 transition-[transform,opacity] duration-700 ease-out group-hover:translate-x-[450%] group-hover:opacity-100 motion-reduce:hidden"
+      />
+
       <FiDownload
         aria-hidden="true"
-        className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 motion-reduce:group-hover:translate-y-0"
+        className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 motion-reduce:group-hover:translate-y-0"
       />
-      <span className={isMenu ? undefined : "sr-only sm:not-sr-only"}>
+      <span
+        className={`relative z-10 ${isMenu ? "" : "sr-only sm:not-sr-only"}`}
+      >
         Download Resume
       </span>
     </a>
@@ -258,7 +293,9 @@ function MobileNavItem({ item, isActive, onClick }) {
       onClick={(event) => onClick(event, item.id)}
       aria-current={isActive ? "location" : undefined}
       className={`flex min-h-11 w-full items-center gap-3 rounded-xl px-4 text-sm font-medium transition-colors duration-200 ${FOCUS_RING} focus-visible:ring-inset ${
-        isActive ? "bg-accent/10 text-accent" : "text-primary hover:bg-overlay/5"
+        isActive
+          ? "bg-accent/10 text-accent"
+          : "text-primary hover:bg-overlay/5"
       }`}
     >
       <Icon aria-hidden="true" className="h-4 w-4" />
@@ -287,7 +324,7 @@ function MenuToggle({ open, onClick, buttonRef, controlsId }) {
       aria-label={open ? "Close navigation" : "Open navigation"}
       aria-expanded={open}
       aria-controls={controlsId}
-      className={`inline-flex h-12 w-12 items-center justify-center rounded-full text-primary transition-colors duration-200 hover:text-accent lg:hidden ${GLASS} ${FOCUS_RING}`}
+      className={`inline-flex h-12 w-12 items-center justify-center rounded-full text-primary transition-[color,border-color,box-shadow] duration-200 hover:text-accent lg:hidden ${GLASS} ${GLASS_HOVER} ${FOCUS_RING}`}
     >
       <AnimatePresence mode="wait" initial={false}>
         <m.span
