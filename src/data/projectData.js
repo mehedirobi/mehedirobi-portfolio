@@ -57,7 +57,7 @@ export const projectData = [
     },
   },
   {
-  id: 3,
+  id: 4,
   name: "ToyVerse",
   category: "frontend",
   featured: true,
@@ -75,7 +75,7 @@ export const projectData = [
   },
 },
 {
-  id: 4,
+  id: 5,
   name: "Hero App",
   category: "frontend",
   featured: true,

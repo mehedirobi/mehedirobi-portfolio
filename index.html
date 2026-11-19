@@ -2,45 +2,131 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Mehedi Robi is an Aspiring Software Engineer building practical web applications with React, Node.js, Express, and MongoDB. Explore selected projects and get in touch." />
-    <meta name="author" content="Mehedi Robi" />
-    <meta name="theme-color" content="#0f1218" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Mehedi Robi | Aspiring Software Engineer</title>
+    <meta
+      name="description"
+      content="Mehedi Robi is an Aspiring Software Engineer building practical web applications with React, Node.js, Express, and MongoDB. Explore selected projects and get in touch."
+    />
     <link rel="canonical" href="https://mehedirobi-portfolio.netlify.app/" />
-    <meta property="og:title" content="Mehedi Robi | Aspiring Software Engineer" />
-    <meta property="og:description" content="Explore Mehedi Robi's projects, skills, and full-stack development experience as an aspiring software engineer." />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Browser UI -->
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0f1218" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph (also used as the fallback by X, LinkedIn, Slack, Discord, WhatsApp) -->
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Mehedi Robi Portfolio" />
+    <meta property="og:title" content="Mehedi Robi | Aspiring Software Engineer" />
+    <meta
+      property="og:description"
+      content="Explore Mehedi Robi's projects, skills, and full-stack development experience as an aspiring software engineer."
+    />
     <meta property="og:url" content="https://mehedirobi-portfolio.netlify.app/" />
     <meta property="og:image" content="https://mehedirobi-portfolio.netlify.app/social-preview.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Mehedi Robi, Aspiring Software Engineer" />
-    <meta property="og:site_name" content="Mehedi Robi Portfolio" />
     <meta property="og:locale" content="en_US" />
+
+    <!-- X / Twitter: title, description and image fall back to the Open Graph tags -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Mehedi Robi | Aspiring Software Engineer" />
-    <meta name="twitter:description" content="Explore Mehedi Robi's selected projects, technical skills, and contact information as an aspiring software engineer." />
-    <meta name="twitter:image" content="https://mehedirobi-portfolio.netlify.app/social-preview.jpg" />
-    <meta name="robots" content="index, follow" />
+
+    <!-- Performance: start downloading the Hero portrait before JavaScript runs.
+         srcset and sizes must match Hero.jsx exactly, or the browser downloads it twice. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/webp"
+      href="/projects/optimized/mehedi-robi-professional-800.webp"
+      imagesrcset="/projects/optimized/mehedi-robi-professional-480.webp 480w, /projects/optimized/mehedi-robi-professional-800.webp 800w"
+      imagesizes="(max-width: 640px) 224px, (max-width: 1024px) 256px, (max-width: 1280px) 320px, 352px"
+      fetchpriority="high"
+    />
+
+    <!-- Structured data: WebSite + ProfilePage + Person, linked by @id -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Mehedi Robi",
-        "url": "https://mehedirobi-portfolio.netlify.app/",
-        "jobTitle": "Aspiring Software Engineer",
-        "image": "https://mehedirobi-portfolio.netlify.app/social-preview.jpg",
-        "sameAs": [
-          "https://github.com/mehedirobi",
-          "https://x.com/mehedirobii"
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://mehedirobi-portfolio.netlify.app/#website",
+            "url": "https://mehedirobi-portfolio.netlify.app/",
+            "name": "Mehedi Robi Portfolio",
+            "inLanguage": "en",
+            "publisher": { "@id": "https://mehedirobi-portfolio.netlify.app/#person" }
+          },
+          {
+            "@type": "ProfilePage",
+            "@id": "https://mehedirobi-portfolio.netlify.app/#profile",
+            "url": "https://mehedirobi-portfolio.netlify.app/",
+            "name": "Mehedi Robi | Aspiring Software Engineer",
+            "isPartOf": { "@id": "https://mehedirobi-portfolio.netlify.app/#website" },
+            "mainEntity": { "@id": "https://mehedirobi-portfolio.netlify.app/#person" }
+          },
+          {
+            "@type": "Person",
+            "@id": "https://mehedirobi-portfolio.netlify.app/#person",
+            "name": "Mehedi Robi",
+            "url": "https://mehedirobi-portfolio.netlify.app/",
+            "image": "https://mehedirobi-portfolio.netlify.app/projects/optimized/mehedi-robi-professional-800.webp",
+            "jobTitle": "Aspiring Software Engineer",
+            "description": "Software engineering-focused developer with hands-on experience building frontend and full-stack web applications with React, Node.js, Express, and MongoDB.",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Dhaka",
+              "addressCountry": "BD"
+            },
+            "alumniOf": {
+              "@type": "EducationalOrganization",
+              "name": "Ahsanullah Institute of Technical & Vocational Education & Training (AITVET)"
+            },
+            "knowsAbout": [
+              "JavaScript",
+              "React",
+              "Tailwind CSS",
+              "Node.js",
+              "Express.js",
+              "MongoDB",
+              "REST APIs",
+              "Firebase Authentication",
+              "Full-stack web development"
+            ],
+            "sameAs": [
+              "https://github.com/mehedirobi",
+              "https://www.linkedin.com/in/mehedirobii/",
+              "https://x.com/mehedirobii"
+            ]
+          }
         ]
       }
     </script>
-    <title>Mehedi Robi | Aspiring Software Engineer</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
+
   <body>
     <div id="root"></div>
+
+    <!-- Shown only when JavaScript is disabled; crawlers and readers still get the essentials -->
+    <noscript>
+      <main style="font-family: system-ui, sans-serif; max-width: 40rem; margin: 4rem auto; padding: 0 1rem; line-height: 1.6">
+        <h1>Mehedi Robi</h1>
+        <p>
+          Aspiring Software Engineer building practical web applications with React, Node.js,
+          Express, and MongoDB. Please enable JavaScript to view the full portfolio.
+        </p>
+        <p>
+          <a href="https://github.com/mehedirobi">GitHub</a> &middot;
+          <a href="https://www.linkedin.com/in/mehedirobii/">LinkedIn</a> &middot;
+          <a href="mailto:mehedirobidev@gmail.com">Email</a>
+        </p>
+      </main>
+    </noscript>
+
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

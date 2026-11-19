@@ -711,8 +711,11 @@ export default function Contact({ id = "contact" }) {
       }
 
       // FormSubmit can answer 200 with { success: "false" }
-      const data = await response.json().catch(() => null);
-      if (data && (data.success === false || data.success === "false")) {
+      const data = await response.json();
+      if (!data || typeof data !== "object") {
+        throw new Error("The contact service returned an invalid response.");
+      }
+      if (data.success !== true && data.success !== "true") {
         throw new Error(data.message || "Unable to send message.");
       }
 

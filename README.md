@@ -36,6 +36,8 @@ React 18, JavaScript, Vite, Tailwind CSS, Framer Motion, and React Icons.
 
 ## Run locally
 
+Requires Node.js 20.19+ or 22.12+.
+
 ```bash
 npm install
 npm run dev
@@ -47,6 +49,9 @@ Create and preview a production build:
 npm run build
 npm run preview
 ```
+
+The build outputs to `dist/`, including a branded `404.html`. The Netlify
+redirect rules preserve HTTP 404 responses for unknown paths.
 
 Run the linter:
 

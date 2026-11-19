@@ -3,11 +3,11 @@ import React, { forwardRef, useState } from "react";
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
 /** Joins class names, dropping falsy values and collapsing whitespace. */
-export const cn = (...parts) =>
+const cn = (...parts) =>
   parts.flat().filter(Boolean).join(" ").replace(/\s+/g, " ").trim();
 
-/** Shared focus ring (same as Navbar, Hero, Contact). Other files can import it. */
-export const FOCUS_RING =
+/** Shared focus ring used by interactive components in this module. */
+const FOCUS_RING =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-slate-950";
 
 // Base (non-responsive) utilities in a caller's className. Used so a caller's

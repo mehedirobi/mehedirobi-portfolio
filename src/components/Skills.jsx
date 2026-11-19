@@ -7,7 +7,6 @@ import {
   FiKey,
   FiLayers,
   FiLink,
-  FiLock,
   FiMonitor,
   FiRefreshCw,
   FiShield,
