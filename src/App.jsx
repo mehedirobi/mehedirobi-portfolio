@@ -9,7 +9,6 @@ import Footer from "./components/Footer";
 import DeferredSection from "./components/DeferredSection";
 import NotFound from "./components/NotFound";
 
-const About = lazy(() => import("./components/About"));
 const Education = lazy(() => import("./components/Education"));
 const Contact = lazy(() => import("./components/Contact"));
 
@@ -39,18 +38,17 @@ export default function App() {
             className="pt-16 focus:outline-none"
           >
             <Hero />
-            <DeferredSection
-              id="about"
-              Component={About}
-              minHeight="min-h-[22rem]"
-            />
+
             <Skills />
+
             <Projects />
+
             <DeferredSection
               id="education"
               Component={Education}
               minHeight="min-h-[22rem]"
             />
+
             <DeferredSection
               id="contact"
               Component={Contact}
