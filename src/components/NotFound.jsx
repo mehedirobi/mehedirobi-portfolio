@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { MotionConfig, m } from "framer-motion";
+import { LazyMotion, MotionConfig, domAnimation, m } from "framer-motion";
 import { FiArrowLeft, FiHome } from "react-icons/fi";
 
 // --------------------------------------------------
@@ -186,99 +186,109 @@ export default function NotFound() {
   };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-canvas px-4 py-16 text-strong sm:px-6">
-        {/* Background: soft brand glows + faint grid that fades out toward the edges */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-3xl sm:h-96 sm:w-96" />
-          <div className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-indigo-600/10 blur-3xl sm:h-96 sm:w-96" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,116,139,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.08)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
-        </div>
-
-        <m.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="w-full max-w-xl text-center"
-        >
-          <m.div variants={fadeUp}>
-            <ErrorIllustration path={path} />
-          </m.div>
-
-          <m.p
-            variants={fadeUp}
-            className="mt-10 text-sm font-semibold uppercase tracking-[0.18em] text-accent"
+    // FIX: `m` components only animate inside a LazyMotion provider. This page can
+    // render outside the app's provider (router error/catch-all route), so it
+    // brings its own. Without it, every `m` element stays at its `hidden`
+    // state (opacity: 0) forever.
+    <LazyMotion features={domAnimation}>
+      <MotionConfig reducedMotion="user">
+        <main className="relative isolate grid min-h-dvh place-items-center overflow-hidden bg-canvas px-4 py-16 text-strong sm:px-6">
+          {/* Background: soft brand glows + faint grid that fades out toward the edges */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
           >
-            Error 404
-          </m.p>
-
-          <m.h1
-            ref={headingRef}
-            tabIndex={-1}
-            variants={fadeUp}
-            className="mt-3 text-balance text-3xl font-bold tracking-tight text-strong outline-none sm:text-4xl"
-          >
-            Page not found
-          </m.h1>
-
-          <m.p
-            variants={fadeUp}
-            className="mx-auto mt-4 max-w-md text-pretty text-base leading-7 text-muted sm:text-lg sm:leading-8"
-          >
-            The page you&rsquo;re looking for doesn&rsquo;t exist or may have
-            been moved. Let&rsquo;s get you back on track.
-          </m.p>
+            <div className="absolute -top-24 right-0 h-72 w-72 rounded-full bg-blue-600/10 blur-3xl sm:h-96 sm:w-96" />
+            <div className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-indigo-600/10 blur-3xl sm:h-96 sm:w-96" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(100,116,139,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(100,116,139,0.08)_1px,transparent_1px)] bg-[size:3rem_3rem] [mask-image:radial-gradient(ellipse_at_center,black_30%,transparent_75%)]" />
+          </div>
 
           <m.div
-            variants={fadeUp}
-            className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="w-full max-w-xl text-center"
           >
-            <a href={HOME_PATH} className={BUTTON_PRIMARY}>
-              {/* Deeper gradient crossfades in on hover (never lighter) */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
-              <FiHome
-                aria-hidden="true"
-                className="relative z-10 h-4 w-4"
-              />
-              <span className="relative z-10">Back to Home</span>
-            </a>
+            <m.div variants={fadeUp}>
+              <ErrorIllustration path={path} />
+            </m.div>
 
-            <button type="button" onClick={handleGoBack} className={BUTTON_SECONDARY}>
-              <FiArrowLeft
-                aria-hidden="true"
-                className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5 motion-reduce:group-hover:translate-x-0"
-              />
-              Go Back
-            </button>
+            <m.p
+              variants={fadeUp}
+              className="mt-10 text-sm font-semibold uppercase tracking-[0.18em] text-accent"
+            >
+              Error 404
+            </m.p>
+
+            <m.h1
+              ref={headingRef}
+              tabIndex={-1}
+              variants={fadeUp}
+              className="mt-3 text-balance text-3xl font-bold tracking-tight text-strong outline-none sm:text-4xl"
+            >
+              Page not found
+            </m.h1>
+
+            <m.p
+              variants={fadeUp}
+              className="mx-auto mt-4 max-w-md text-pretty text-base leading-7 text-muted sm:text-lg sm:leading-8"
+            >
+              The page you&rsquo;re looking for doesn&rsquo;t exist or may have
+              been moved. Let&rsquo;s get you back on track.
+            </m.p>
+
+            <m.div
+              variants={fadeUp}
+              className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
+            >
+              <a href={HOME_PATH} className={BUTTON_PRIMARY}>
+                {/* Deeper gradient crossfades in on hover (never lighter) */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <FiHome aria-hidden="true" className="relative z-10 h-4 w-4" />
+                <span className="relative z-10">Back to Home</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={handleGoBack}
+                className={BUTTON_SECONDARY}
+              >
+                <FiArrowLeft
+                  aria-hidden="true"
+                  className="h-4 w-4 transition-transform duration-300 group-hover:-translate-x-0.5 motion-reduce:group-hover:translate-x-0"
+                />
+                Go Back
+              </button>
+            </m.div>
+
+            <m.nav
+              variants={fadeUp}
+              aria-label="Portfolio sections"
+              className="mt-10 border-t border-default pt-6"
+            >
+              <p className="text-xs font-medium text-muted">
+                Or jump straight to
+              </p>
+
+              <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+                {QUICK_LINKS.map(({ href, label }) => (
+                  <li key={href}>
+                    <a
+                      href={href}
+                      className={`relative rounded-sm py-1 text-sm font-medium text-muted transition-colors duration-200 hover:text-strong after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 motion-reduce:after:transition-none ${FOCUS_RING}`}
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </m.nav>
           </m.div>
-
-          <m.nav
-            variants={fadeUp}
-            aria-label="Portfolio sections"
-            className="mt-10 border-t border-default pt-6"
-          >
-            <p className="text-xs font-medium text-muted">
-              Or jump straight to
-            </p>
-
-            <ul className="mt-3 flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              {QUICK_LINKS.map(({ href, label }) => (
-                <li key={href}>
-                  <a
-                    href={href}
-                    className={`relative rounded-sm py-1 text-sm font-medium text-muted transition-colors duration-200 hover:text-strong after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-300 hover:after:scale-x-100 motion-reduce:after:transition-none ${FOCUS_RING}`}
-                  >
-                    {label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </m.nav>
-        </m.div>
-      </main>
-    </MotionConfig>
+        </main>
+      </MotionConfig>
+    </LazyMotion>
   );
 }
