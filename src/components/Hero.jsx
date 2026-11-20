@@ -30,9 +30,13 @@ const HERO = {
     href: "/Mehedi_Robi_Resume.pdf",
     filename: "Mehedi_Robi_Resume.pdf",
   },
-  image: "/projects/optimized/mehedi-robi-professional-800.webp",
-  imageSrcSet:
-    "/projects/optimized/mehedi-robi-professional-480.webp 480w, /projects/optimized/mehedi-robi-professional-800.webp 800w",
+
+  // Profile image (PNG)
+  image: "/projects/optimized/Mehedi_Robi_Professional_Photo.png",
+
+  // No WebP srcSet because the current image is PNG.
+  imageSrcSet: undefined,
+
   socials: [
     {
       href: "https://github.com/mehedirobi",
@@ -127,7 +131,6 @@ function TechStack() {
 
 function SocialLinks() {
   return (
-    // The divider only appears at `xl`, where buttons and icons always share one row
     <ul
       aria-label="Social links"
       className="flex items-center justify-center gap-2.5 xl:border-l xl:border-default xl:pl-6"
@@ -160,8 +163,6 @@ function SocialLinks() {
 
 function ProfileImage() {
   return (
-    // `isolate` keeps the -z-10 glow inside this wrapper (never behind the section background)
-    // Sizes: 224px (mobile) -> 256px (tablet) -> 320px (lg) -> 352px (xl)
     <m.div
       variants={fadeIn}
       className="relative isolate w-full max-w-56 sm:max-w-64 lg:max-w-80 xl:max-w-[22rem]"
@@ -178,8 +179,6 @@ function ProfileImage() {
           <div className="aspect-square overflow-hidden rounded-full bg-surface">
             <OptimizedImage
               src={HERO.image}
-              srcSet={HERO.imageSrcSet}
-              sizes="(max-width: 640px) 224px, (max-width: 1024px) 256px, (max-width: 1280px) 320px, 352px"
               alt={`Portrait of ${HERO.name}`}
               width="800"
               height="800"
@@ -201,13 +200,6 @@ function ProfileImage() {
 export default function Hero() {
   return (
     <MotionConfig reducedMotion="user">
-      {/*
-        Top padding = Navbar height + a fixed 24px gap, the same at every breakpoint:
-          below sm: Navbar ends at 64px  -> 64 + 24 = 88px  (pt-[5.5rem])
-          sm and up: Navbar ends at 68px -> 68 + 24 = 92px  (pt-[5.75rem])
-        If you change the Navbar height, update these two values only.
-        Height comes from the content, so there is no min-height.
-      */}
       <section
         id="home"
         aria-labelledby="hero-heading"
@@ -223,18 +215,13 @@ export default function Hero() {
         </div>
 
         <div className="relative mx-auto max-w-7xl px-4 pb-12 pt-[5.5rem] sm:px-6 sm:pb-16 sm:pt-[5.75rem] lg:px-8">
-          {/*
-            One grid, two direct children. `items-center` on this single grid puts
-            both columns on the same vertical midpoint.
-            Mobile/tablet: 1 column (image first). Desktop: 7 / 5 columns.
-          */}
           <m.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
             className="grid items-center gap-8 sm:gap-10 lg:grid-cols-12 lg:gap-x-12 xl:gap-x-16"
           >
-            {/* Content (first in the DOM for screen readers) */}
+            {/* Content */}
             <div className="mx-auto flex w-full max-w-2xl flex-col items-center text-center lg:col-span-7 lg:mx-0 lg:max-w-none lg:items-start lg:text-left">
               <m.p
                 variants={fadeUp}
@@ -264,19 +251,20 @@ export default function Hero() {
                 <TechStack />
               </m.div>
 
-              {/* Actions: buttons + socials share one row when they fit */}
+              {/* Actions */}
               <m.div
                 variants={fadeUp}
                 className="mt-8 flex w-full flex-wrap items-center justify-center gap-x-6 gap-y-5 lg:justify-start"
               >
                 <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row">
                   <a href="#contact" className={PRIMARY_BUTTON}>
-                    {/* Deeper gradient crossfades in on hover (never lighter) */}
                     <span
                       aria-hidden="true"
                       className="absolute inset-0 bg-gradient-to-r from-blue-700 to-indigo-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                     />
+
                     <span className="relative z-10">Let&rsquo;s Connect</span>
+
                     <HiOutlineArrowRight
                       aria-hidden="true"
                       className="relative z-10 h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 motion-reduce:group-hover:translate-x-0"
@@ -292,6 +280,7 @@ export default function Hero() {
                       aria-hidden="true"
                       className="h-4 w-4 transition-transform duration-300 group-hover:translate-y-0.5 motion-reduce:group-hover:translate-y-0"
                     />
+
                     Download Resume
                   </a>
                 </div>
@@ -300,7 +289,7 @@ export default function Hero() {
               </m.div>
             </div>
 
-            {/* Image: above the content on mobile/tablet, centered in the right column on desktop */}
+            {/* Profile Image */}
             <div className="order-first flex justify-center lg:order-last lg:col-span-5">
               <ProfileImage />
             </div>
